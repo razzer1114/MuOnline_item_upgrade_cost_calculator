@@ -33,23 +33,25 @@ This study aims to calculate the **expected number of Soul Gems** required to en
    -    (3) Regresses to *state 1---(lvl +0)*, for *state i=8,9---(lvl +7, +8)*;
 
 ### **Recursive Formula**
-1. **The "Generalized" expected number of Souls E(i) to reach E(10) from any state i is defined as**
+1. **The "Generalized" expected number of Souls E(i) to reach state 10 ( level 9 ) from any state i is defined as**
 
       E( i ) = 1 + 0.5 * E( i+1 ) + 0.5 * E( i-1 )
 
-   - 1st term "1" : Represents the one Soul taken during the current attempt, regardless of the outcome.
+   - 1st term "*1*" : Represents the one Soul taken during the current attempt, regardless of the outcome.
 
-   - 2nd term "0.5 * E( i+1 )" : If the current process succeeds (with probability 0.5), the system transitions to the next state (i+1). Then the expected Number of Souls is 0.5×E(i+1);
-   if this attempt is successful, the remaining required Souls is the expected number of Souls of the next state i+1
+   - 2nd term "*0.5 * E( i+1 )*" : If the current upgrade succeeds (with probability 0.5), the system transitions to the next state *i+1*. Then the expected Number of Souls is *E(i+1)*;
 
-2. **Special cases**
+   - 3nd term "*0.5 * E( i-1 )*" : If the current upgrade fails (with probability 0.5), the system transitions to the next state *i-1*. Then the expected Number of Souls is *E(i-1)*;
+    
+
+3. **Special cases**
    - **Base Level 0 ----------- State i = 1**
 
-        E(1) = 1 + 0.5 * E(2) + 0.5 * E(1)      % fails at lvl 0 stays at lvl 0
+        E(1) = 1 + 0.5 * E(2) + 0.5 * E(1)      % fails at *lvl 0* stays at *lvl 0* *(state 1)*
 
    - **Level 7 and 8 ----------- State i = 8 and 9**
 
-        E(i) = 1 + 0.5 * E(i+1) + 0.5 * E(1)      % fails at lvl 7 and 8 regresses to lvl 0
+        E(i) = 1 + 0.5 * E(i+1) + 0.5 * E(1)      % fails at *lvl 7* and *lvl 8* regresses to *lvl 0*
   
    - **Final level 9 ----------- Absorbing State i = 10**:
      
