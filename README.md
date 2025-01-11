@@ -4,7 +4,9 @@ Probabilistic Modeling for Item Upgrade in Mu Online
 
 # My First Attempt with Results
 [Excellent w/o luck +0 to +9 costs 230 Sourls](Exemplary_Analysis&Calculation.md)
-
+#
+# This example intends to encourage people to examine my results, to point out what to correct, and to collaborate for further development on this topic. 
+# 
 ## Project Introduction
 ### Objective
 This project leverages mathematical modeling and Markov chain theory to analyze the equipment enhancement system in the MMORPG **MU Online**. It provides a comprehensive probabilistic model to calculate expected enhancement steps and success rates, offering a framework for studying similar systems in other games.
