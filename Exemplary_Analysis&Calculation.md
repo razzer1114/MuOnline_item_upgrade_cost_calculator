@@ -8,7 +8,7 @@ This exemplary study focuses on the enhancement process for *excellent-quality* 
 - **Failure Rate**: 50%.
 - **Soul Gem Consumption**: Each enhancement attempt consumes one Soul Gem.
 
-The goal of this case study is to calculate the **expected number of Soul Gems** required to enhance equipment from +0 to +9. The results also provide insights into the probabilistic nature of the enhancement process.
+This study aims to calculate the **expected number of Soul Gems** required to enhance equipment from +0 to +9. The results also provide insights into the probabilistic nature of the enhancement process.
 
 ---
 
@@ -16,13 +16,18 @@ The goal of this case study is to calculate the **expected number of Soul Gems**
 
 ### **Assumptions**
 1. **Enhancement Levels as States**:
-   - Each level from +0 to +9 is defined as a state \( E(i) \), where \( i \) is the enhancement level+1
-   - For example, The expected number of Soul Gems required to enhance an item from +7 to +9 is E(8).
-   - \( E(10) \) is the absorbing state (end of enhancement).
-
+   - Each level from +0 to +9 is defined as a state i, where i = current level+1, hence 1<=i<=10 in this case study.
+   - For example, a +0 item is in state 1. 
+   - For another example, a +7 item is in state 8, and the expected number of Soul Gems required to enhance this item from +7 to +9 is E(8).
+   - when i = 10, i.e., a +9 item, is in the "absorbing state" (end of upgrade), hence E(10)=0;
+   - Note: the initial idea of this "i=lvl+1" is for future development, since you can not define state 0 as in "No. 0 column in a matrix".  
+   
 2. **Transition Rules**:
-   - Success (\( p = 0.5 \)): Progresses to the next level \( E(i+1) \).
-   - Failure (\( 1-p = 0.5 \)): Either stays at the current level or regresses to \( E(i-1) \).
+   - Success p = 0.5: Progresses to the next level for state i=1,2,3,4,5,6,7---(lvl +0 to +6).
+   - Failure 1-p=0.5:
+   -    (1) Stays at the current lvl(state), for state i=1 or 10---(lvl +0 or +9);
+   -    (2) Regresses one lvl(state), for state i=2,3,4,5,6,7---(lvl +1 to +6);
+   -    (3) Regresses to state 1---(lvl +0), for state i=8,9---(lvl +7, +8);
 
 ### **Recursive Formula**
 The expected number of steps \( E(i) \) to reach \( E(10) \) from any state \( i \) is defined as:
