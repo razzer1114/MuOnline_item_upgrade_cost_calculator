@@ -1,33 +1,34 @@
-# Example: Soul Gem Consumption for +0 to +9 Excellent item Upgrade Soul Cost 
+# Example: Soul Gem Consumption to Upgrade Excellent item *+0* to *+9* 
 
 ## Introduction
 
-This exemplary study focuses on the enhancement process for *excellent-quality* equipment without luck and without using a talisman of luck(for 10% additional success rate). Specifically:
+This exemplary study focuses on the upgrade process for *excellent-quality* item without luck and without using a talisman of luck ( for 10% additional success rate ). Specifically:
 
-- **Success Rate**: 50%.
-- **Failure Rate**: 50%.
+- **Success Rate**: *50%*.
+- **Failure Rate**: *50%*.
 - **Soul Gem Consumption**: Each enhancement attempt consumes one Soul Gem.
 
-This study aims to calculate the **expected number of Soul Gems** required to enhance equipment from +0 to +9. The results also provide insights into the probabilistic nature of the enhancement process.
+This study aims to calculate the **expected number of Soul Gems** required to enhance equipment from *level +0* to *level +9*. The results also provide insights into the probabilistic nature of the enhancement process.
 
 ---
 
-## Enhancement System Modeling
+## Upgrade System Modeling
 
-### **Assumptions**
-1. **Enhancement Levels as States**:
-   - Each level from +0 to +9 is defined as a state i, where i = current level+1, hence 1<=i<=10 in this case study.
-   - For example, a +0 item is in state 1. 
-   - For another example, a +7 item is in state 8, and the expected number of Soul Gems required to enhance this item from +7 to +9 is E(8).
-   - when i = 10, i.e., a +9 item, is in the "absorbing state" (end of upgrade), hence E(10)=0;
-   - Note: the initial idea of this "i=lvl+1" is for future development, since you can not define state 0 as in "No. 0 column in a matrix".  
+### **Assumptions** 
+1. **Item Current Levels as States**:
+   - Each level from *level +0* to *+9* is defined as a *state i*, where *state i = current level + 1*, hence *i>=1* , while *"level" >= 0*.
+   - For example, a *level +0* item is in *state 1*.
+   - The expected number of Souls required to upgrade to *level +9* or *state 10* from *state i* is defined as *E ( i )*
+   - For another example, a *level +7* item is in *state 8*, and the expected number of Soul Gems required to enhance this item from *+7* to *+9* is *E( 8 )*.
+   - when *state i = 10*, i.e., a *level +9* item, is in the "*absorbing state*" (goal of upgrade), hence *E( 10 ) = 0*;
+   - Note: the initial idea of this *"i=lvl+1"* is for **future coding development**, since you can not define state 0 as "No. 0 column in a matrix".  
    
 2. **Transition Rules**:
-   - Success p = 0.5: Progresses to the next level for state i=1,2,3,4,5,6,7---(lvl +0 to +6).
-   - Failure 1-p=0.5:
-   -    (1) Stays at the current lvl(state), for state i=1 or 10---(lvl +0 or +9);
-   -    (2) Regresses one lvl(state), for state i=2,3,4,5,6,7---(lvl +1 to +6);
-   -    (3) Regresses to state 1---(lvl +0), for state i=8,9---(lvl +7, +8);
+   - Success *p = 0.5*: Progresses to the next level for *state i=1,2,3,4,5,6,7,(lvl +0 to +6)*.
+   - Failure *1-p=0.5*:
+   -    (1) Stays at the current lvl(state), for *state i=1 or 10---(lvl +0 or +9)*;
+   -    (2) Regresses one lvl(state), for *state i=2,3,4,5,6,7---(lvl +1 to +6)*;
+   -    (3) Regresses to *state 1---(lvl +0)*, for *state i=8,9---(lvl +7, +8)*;
 
 ### **Recursive Formula**
 1. **The "Generalized" expected number of Souls E(i) to reach E(10) from any state i is defined as**
