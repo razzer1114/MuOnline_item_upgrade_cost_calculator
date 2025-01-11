@@ -31,7 +31,8 @@ This project leverages mathematical modeling and Markov chain theory to analyze 
       - state i = 1 for lvl 0 or 7 or 8 --- state i = 1 or 8 or 9
       - state i - 1 for lvl 1 to 6 --- state i = 2 to 7
       - state ( i_max + 1 ) as a special "explode" state.
-
+        
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% still need revision from here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ### Transition Rules
 - For state \( i \), the recursive formula is:
   \[
