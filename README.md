@@ -1,24 +1,24 @@
 # MuOnline_item_upgrade_cost_calculator
 Probabilistic Modeling for Item Upgrade in Mu Online
-# Markov Chain-Based Probabilistic Modeling for Equipment Enhancement in MU Online
-
-# My First Attempt with Results
-[Excellent item w/o luck +0 to +9 costs 230 Sourls](Exemplary_Analysis&Calculation.md)
+  - My First Attempt with Results
+  - [Excellent item w/o luck +0 to +9 costs 230 Sourls](Exemplary_Analysis&Calculation.md)
 #
-# This example intends to encourage people to examine my results, to point out what to correct, and to collaborate for further development on this topic. 
+  - This example intends to encourage people to examine my results, to point out what to correct, and to collaborate for further development on this topic. 
 # 
 ## Project Introduction
 ### Objective
-This project leverages mathematical modeling and Markov chain theory to analyze the equipment enhancement system in the MMORPG **MU Online**. It provides a comprehensive probabilistic model to calculate expected enhancement steps and success rates, offering a framework for studying similar systems in other games.
+This project leverages Markov chain theory to analyze the item upgrade system in the MMORPG **MU Online**. It provides a comprehensive probabilistic model to calculate the expected number of Gems, offering a framework for studying similar systems in other games.
 
 ### Background
-- **MU Online**: A classic MMORPG where equipment enhancement is a key gameplay mechanic.
-- **Enhancement System**:
+- **MU Online**: A classic MMORPG where item upgrade nt is a key gameplay mechanic.
+- **Upgrade System**:
   - Players attempt to increase equipment levels through repeated trials, facing both success and failure probabilities.
-  - Failure can result in level downgrades or no change, making the process stochastic and complex.
+  - Failure can result in level downgrades or item explode, making the process stochastic and complex.
+- **Markov Chain-Based Probabilistic Modeling**
+  - xxx
 - **Research Questions**:
-  - How can we quantify the expected number of attempts to reach a specific enhancement level?
-  - How can we optimize enhancement strategies or understand system fairness?
+  - How can we quantify the expected number of Gem to reach a specific enhancement level?
+  - How can we optimize enhancement strategies?
 
 ### Key Contributions
 - A Markov chain model for the equipment enhancement process.
@@ -28,7 +28,7 @@ This project leverages mathematical modeling and Markov chain theory to analyze 
 ---
 
 ## Problem Modeling
-### Upgrade Mechanism Modeling
+### Item Upgrade Mechanism Modeling
 - item levels are defined as states i :
   - State i corresponds to item level i-1, i.e., lvl 0 item is state i = 1.
   - State i transitions with probability p (success) to i + 1.
