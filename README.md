@@ -3,7 +3,7 @@ Probabilistic Modeling for Item Upgrade in Mu Online
 # Markov Chain-Based Probabilistic Modeling for Equipment Enhancement in MU Online
 
 # My First Attempt with Results
-[Excellent w/o luck +0 to +9 costs 230 Sourls](Exemplary_Analysis&Calculation.md)
+[Excellent item w/o luck +0 to +9 costs 230 Sourls](Exemplary_Analysis&Calculation.md)
 #
 # This example intends to encourage people to examine my results, to point out what to correct, and to collaborate for further development on this topic. 
 # 
