@@ -30,46 +30,93 @@ This study aims to calculate the **expected number of Soul Gems** required to en
    -    (3) Regresses to state 1---(lvl +0), for state i=8,9---(lvl +7, +8);
 
 ### **Recursive Formula**
-The expected number of steps \( E(i) \) to reach \( E(10) \) from any state \( i \) is defined as:
-\[
-E(i) = 1 + 0.5 \cdot E(i+1) + 0.5 \cdot E(i-1)
-\]
+1. **The "Generalized" expected number of Souls E(i) to reach E(10) from any state i is defined as**
 
-Special cases:
-- **Base Level (0)**:
-  \[
-  E(0) = 1 + 0.5 \cdot E(1) + 0.5 \cdot E(0)
-  \]
-- **Absorbing State (10)**:
-  \[
-  E(10) = 0
-  \]
+      E( i ) = 1 + 0.5 * E( i+1 ) + 0.5 * E( i-1 )
 
+   - 1st term "1" : Represents the one Soul taken during the current attempt, regardless of the outcome.
+
+   - 2nd term "0.5 * E( i+1 )" : If the current process succeeds (with probability 0.5), the system transitions to the next state (i+1). Then the expected Number of Souls is 0.5×E(i+1);
+   if this attempt is successful, the remaining required Souls is the expected number of Souls of the next state i+1
+
+2. **Special cases**
+   - **Base Level 0 ----------- State i = 1**
+
+        E(1) = 1 + 0.5 * E(2) + 0.5 * E(1)      % fails at lvl 0 stays at lvl 0
+
+   - **Level 7 and 8 ----------- State i = 8 and 9**
+
+        E(i) = 1 + 0.5 * E(i+1) + 0.5 * E(1)      % fails at lvl 7 and 8 regresses to lvl 0
+  
+   - **Final level 9 ----------- Absorbing State i = 10**:
+     
+        E(10) = 0    % upgrade goal is achieved.
 ---
 
 ## Step-by-Step Derivation
 
-### **1. Solving for \( E(0) \):**
-Rearrange the formula for \( E(0) \):
-\[
-E(0) = 2 + E(1)
-\]
+### **1. Solving for E( 1 )**
+Rearrange the formula for E( 1 ):
+E(1) = 1 + 0.5 * E(2) + 0.5 * E(1) 
+0.5 * E(1) = 0.5 * E(2) + 1
+E(1) = E(2) + 2 ---------------------------Eq. 1
 
-### **2. Solving for \( E(1) \):**
-\[
-E(1) = 4 + E(2)
-\]
+### **2. Solving for E( 2 )**
+E(2) = 1 + 0.5 * E(3) + 0.5 * E(1)
+combine Eq. 1
+E(2) = 1 + 0.5 * E(3) + 0.5 * ( E(2) + 2 ) 
+E(2) = 1 + 0.5 * E(3) + 0.5 * E(2) + 1 
+0.5 * E(2) = 0.5 * E(3) + 2
+E(2) = E(3) + 4 ---------------------------Eq. 2
 
-### **3. Recursive Substitution:**
-Continue the recursion for \( E(2), E(3), \dots, E(9) \), substituting into prior states to eliminate dependencies.
+### **3. Solving for E( 3 )**
+E(3) = 1 + 0.5 * E(4) + 0.5 * E(2)
+Combine Eq.2 
+E(3) = 1 + 0.5 * E(4) + 0.5 * ( E(3) + 4 ) 
+E(3) = 1 + 0.5 * E(4) + 0.5 * E(3) + 2 
+0.5 * E(3) = 0.5 * E(4) + 3
+E(3) = E(4) + 6 ---------------------------Eq. 3
 
-### **4. Final Formula for \( E(9) \):**
-After expanding and simplifying, the expected steps for \( E(9) \) are:
-\[
-E(9) = 116
-\]
+### **4. Solving for E( 4 )**
+E(4) = 1 + 0.5 * E(5) + 0.5 * E(3)
+Combine Eq.3 
+E(4) = 1 + 0.5 * E(5) + 0.5 * ( E(3) + 6 ) 
+E(4) = 1 + 0.5 * E(5) + 0.5 * E(4) + 3 
+0.5 * E(4) = 0.5 * E(5) + 4
+E(4) = E(5) + 8 ---------------------------Eq. 4
 
----
+### **5. Recursive Substitution:**
+Continue the recursion for E(5), E(6), E(7),
+E(5) = E(6) + 10---------------------------Eq. 5
+E(6) = E(7) + 12---------------------------Eq. 6
+E(7) = E(8) + 14---------------------------Eq. 7
+
+### **6. Combine Eq.1-7:**
+E(1) = E(8) + 2 + 4 + 6 + 8 + 10 + 12 + 14
+E(1) = E(8) + 56---------------------------Eq. 8
+
+### **7. Solving for E( 8 )**
+E(8) = 1 + 0.5 * E(9) + 0.5 * E(1)
+Combine Eq.8
+E(8) = 1 + 0.5 * E(9) + 0.5 * ( E(8) + 56 ) 
+E(8) = 1 + 0.5 * E(9) + 0.5 * E(8) + 28
+0.5 * E(8) = 0.5 * E(9) + 29
+E(8) = E(9) + 58---------------------------Eq. 9
+
+### **8. Solving for E( 9 )**
+E(9) = 1 + 0.5 * E(10) + 0.5 * E(1)
+Combine Eq.8 and E(10) = 0
+E(9) = 1 + 0.5 * ( E(8) + 56 ) 
+Combine Eq.9
+E(9) = 1 + 0.5 * ( E(9) + 58 + 56 ) 
+E(9) = 1 + 0.5 * ( E(9) + 114 ) 
+E(9) = 1 + 0.5 * E(9) + 57
+0.5 * E(9) = 58
+E(9) = 116      ---------------------------Eq. 9
+
+### **9. Solving for E( 9 )**
+
+
 
 ## Key Results
 
