@@ -1,5 +1,7 @@
 # Example: Soul Gem Consumption to Upgrade Excellent item *+0* to *+9* 
-
+#
+# This example intends to encourage people to examine my results, to point out what to correct, and to collaborate for further development on this topic. 
+# 
 ## Introduction
 
 This exemplary study focuses on the upgrade process for *excellent-quality* item without luck and without using a talisman of luck ( for 10% additional success rate ). Specifically:
