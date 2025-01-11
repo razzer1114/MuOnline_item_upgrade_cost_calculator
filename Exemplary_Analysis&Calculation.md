@@ -16,7 +16,8 @@ The goal of this case study is to calculate the **expected number of Soul Gems**
 
 ### **Assumptions**
 1. **Enhancement Levels as States**:
-   - Each level from +0 to +9 is defined as a state \( E(i) \), where \( i \) is the enhancement level.
+   - Each level from +0 to +9 is defined as a state \( E(i) \), where \( i \) is the enhancement level+1
+   - For example, The expected number of Soul Gems required to enhance an item from +7 to +9 is E(8).
    - \( E(10) \) is the absorbing state (end of enhancement).
 
 2. **Transition Rules**:
