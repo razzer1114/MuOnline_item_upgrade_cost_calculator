@@ -9,7 +9,7 @@ E ( 1 ) = 1 + 0.5 * E ( 2 ) + 0.5 * E ( 1 )
   - E ( 1 ) = E ( 2 ) + 2
   - E ( 1 ) =    2 
 
-### Upgrade a level 0 item to level 1 needs Souls
+### Upgrade a level 0 item to level 1 needs 2 Souls
 #
 #
 ## lvl 0 to 2 === State 1 to 3
