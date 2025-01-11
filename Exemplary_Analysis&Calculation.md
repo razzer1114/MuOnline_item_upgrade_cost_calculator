@@ -1,11 +1,11 @@
-# Case Study: Soul Gem Consumption for +0 to +9 Equipment Enhancement in MU Online
+# Example: Soul Gem Consumption for +0 to +9 Excellent item Upgrade Soul Cost 
 
 ## Introduction
 
-In *MU Online*, enhancing equipment is a critical gameplay mechanic. This study focuses on the enhancement process for *excellent-quality* equipment without luck and without using a talisman of luck. Specifically:
+This exemplary study focuses on the enhancement process for *excellent-quality* equipment without luck and without using a talisman of luck(for 10% additional success rate). Specifically:
 
-- **Success Rate**: 50% for each enhancement attempt.
-- **Failure Rate**: 50% (includes level downgrade or no change).
+- **Success Rate**: 50%.
+- **Failure Rate**: 50%.
 - **Soul Gem Consumption**: Each enhancement attempt consumes one Soul Gem.
 
 The goal of this case study is to calculate the **expected number of Soul Gems** required to enhance equipment from +0 to +9. The results also provide insights into the probabilistic nature of the enhancement process.
