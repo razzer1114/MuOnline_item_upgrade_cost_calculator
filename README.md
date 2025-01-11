@@ -2,6 +2,9 @@
 Probabilistic Modeling for Item Upgrade in Mu Online
 # Markov Chain-Based Probabilistic Modeling for Equipment Enhancement in MU Online
 
+
+[Example](Exemplary_Analysis&Calculation.md)
+
 ## Project Introduction
 ### Objective
 This project leverages mathematical modeling and Markov chain theory to analyze the equipment enhancement system in the MMORPG **MU Online**. It provides a comprehensive probabilistic model to calculate expected enhancement steps and success rates, offering a framework for studying similar systems in other games.
