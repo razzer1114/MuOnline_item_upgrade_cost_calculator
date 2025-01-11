@@ -1,7 +1,8 @@
 # MuOnline_item_upgrade_cost_calculator
 Probabilistic Modeling for Item Upgrade in Mu Online
-  - My First Attempt with Results
-  - [Excellent item w/o luck +0 to +9 costs 230 Sourls](Exemplary_Analysis&Calculation.md)
+  - My First Attempts with Results
+    - [Excellent item w/o luck +0 to +9 costs 230 Sourls](Exemplary_Analysis&Calculation.md)
+    - [Easy example](Easy_Start.md)
 #
   - This example intends to encourage people to examine my results, to point out what to correct, and to collaborate for further development on this topic. 
 # 
