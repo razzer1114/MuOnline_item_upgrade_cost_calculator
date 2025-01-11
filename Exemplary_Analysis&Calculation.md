@@ -56,130 +56,147 @@ This study aims to calculate the **expected number of Soul Gems** required to en
 ## Step-by-Step Derivation
 
 ### **1. Solving for E( 1 )**
+
 Rearrange the formula for E( 1 ):
+
 E(1) = 1 + 0.5 * E(2) + 0.5 * E(1) 
+
 0.5 * E(1) = 0.5 * E(2) + 1
+
 E(1) = E(2) + 2 ---------------------------Eq. 1
 
 ### **2. Solving for E( 2 )**
+
 E(2) = 1 + 0.5 * E(3) + 0.5 * E(1)
+
 combine Eq. 1
+
 E(2) = 1 + 0.5 * E(3) + 0.5 * ( E(2) + 2 ) 
+
 E(2) = 1 + 0.5 * E(3) + 0.5 * E(2) + 1 
+
 0.5 * E(2) = 0.5 * E(3) + 2
+
 E(2) = E(3) + 4 ---------------------------Eq. 2
 
 ### **3. Solving for E( 3 )**
+
 E(3) = 1 + 0.5 * E(4) + 0.5 * E(2)
+
 Combine Eq.2 
+
 E(3) = 1 + 0.5 * E(4) + 0.5 * ( E(3) + 4 ) 
+
 E(3) = 1 + 0.5 * E(4) + 0.5 * E(3) + 2 
+
 0.5 * E(3) = 0.5 * E(4) + 3
+
 E(3) = E(4) + 6 ---------------------------Eq. 3
 
 ### **4. Solving for E( 4 )**
+
 E(4) = 1 + 0.5 * E(5) + 0.5 * E(3)
+
 Combine Eq.3 
+
 E(4) = 1 + 0.5 * E(5) + 0.5 * ( E(3) + 6 ) 
+
 E(4) = 1 + 0.5 * E(5) + 0.5 * E(4) + 3 
+
 0.5 * E(4) = 0.5 * E(5) + 4
+
 E(4) = E(5) + 8 ---------------------------Eq. 4
 
 ### **5. Recursive Substitution:**
+
 Continue the recursion for E(5), E(6), E(7),
+
 E(5) = E(6) + 10---------------------------Eq. 5
+
 E(6) = E(7) + 12---------------------------Eq. 6
+
 E(7) = E(8) + 14---------------------------Eq. 7
 
 ### **6. Combine Eq.1-7:**
+
 E(1) = E(8) + 2 + 4 + 6 + 8 + 10 + 12 + 14
+
 E(1) = E(8) + 56---------------------------Eq. 8
 
 ### **7. Solving for E( 8 )**
+
 E(8) = 1 + 0.5 * E(9) + 0.5 * E(1)
+
 Combine Eq.8
+
 E(8) = 1 + 0.5 * E(9) + 0.5 * ( E(8) + 56 ) 
+
 E(8) = 1 + 0.5 * E(9) + 0.5 * E(8) + 28
+
 0.5 * E(8) = 0.5 * E(9) + 29
+
 E(8) = E(9) + 58---------------------------Eq. 9
 
 ### **8. Solving for E( 9 )**
-E(9) = 1 + 0.5 * E(10) + 0.5 * E(1)
-Combine Eq.8 and E(10) = 0
-E(9) = 1 + 0.5 * ( E(8) + 56 ) 
-Combine Eq.9
-E(9) = 1 + 0.5 * ( E(9) + 58 + 56 ) 
-E(9) = 1 + 0.5 * ( E(9) + 114 ) 
-E(9) = 1 + 0.5 * E(9) + 57
-0.5 * E(9) = 58
-E(9) = 116      ---------------------------Eq. 9
 
-### **9. Solving for E( 9 )**
+E(9) = 1 + 0.5 * E(10) + 0.5 * E(1)
+
+Combine Eq.8 and E(10) = 0
+
+E(9) = 1 + 0.5 * ( E(8) + 56 ) 
+
+Combine Eq.9
+
+E(9) = 1 + 0.5 * ( E(9) + 58 + 56 ) 
+
+E(9) = 1 + 0.5 * ( E(9) + 114 ) 
+
+E(9) = 1 + 0.5 * E(9) + 57
+
+0.5 * E(9) = 58
+
+E(9) = 116      ---------------------------Eq. 10
+
+### **9. Back to Solving for E( 8 ) - E( 1 )  **
+
+E(8) = E(9) + 58 = 116 + 58 = 174
+E(8) = 116 + 58 = 174
+
+E(7) = 188
+
+E(6) = 200
+
+E(5) = 210
+
+E(4) = 218
+
+E(3) = 224
+
+E(2) = 228
+
+E(1) = 230
 
 
 
 ## Key Results
 
 - **Expected Soul Gem Consumption**:
-  To enhance a piece of *excellent-quality* equipment from +0 to +9, **116 Soul Gems** are required on average, given a success rate of 50%.
+  To upgrade a piece of *excellent-quality* item from +0 to +9, **230 Soul Gems** are required on "average".
 
 - **Breakdown by Levels**:
-  The expected steps for each level are as follows:
-  | Level | Expected Attempts |
+  The expected Souls for each level to +9 are as follows:
+  | Level | Expected Souls    |
   |-------|-------------------|
-  | +0    | 116               |
-  | +1    | 114               |
-  | +2    | 110               |
-  | +3    | 104               |
-  | +4    | 96                |
-  | +5    | 86                |
-  | +6    | 74                |
-  | +7    | 60                |
-  | +8    | 44                |
-  | +9    | 28                |
+  | +0    | 230               |
+  | +1    | 228               |
+  | +2    | 224               |
+  | +3    | 218               |
+  | +4    | 210               |
+  | +5    | 200               |
+  | +6    | 188               |
+  | +7    | 174               |
+  | +8    | 116               |
+  | +9    | 0                 |
 
 ---
 
-## Code Implementation
-
-The following Python code calculates the expected Soul Gem consumption using the recursive formula:
-
-```python
-def calculate_expected_steps(success_prob, max_level):
-    """
-    Calculate the expected number of attempts to enhance equipment from +0 to +max_level.
-
-    Parameters:
-        success_prob (float): Probability of enhancement success.
-        max_level (int): Maximum enhancement level (e.g., +9 for this case).
-    
-    Returns:
-        expected_steps (list): List of expected steps for each level from +0 to +max_level.
-    """
-    # Initialize expected steps array (including absorbing state at max_level + 1)
-    E = [0] * (max_level + 2)  # +2 to include the absorbing state
-
-    # Recursive calculation from max_level down to +0
-    for i in range(max_level, -1, -1):
-        if i == 0:
-            # Special case for E(0)
-            E[i] = 2 + E[i + 1]
-        else:
-            # General case for E(i)
-            E[i] = 4 + E[i + 1]
-
-    return E
-
-# Parameters
-success_prob = 0.5  # Success probability (50%)
-max_level = 9       # Target enhancement level (+9)
-
-# Calculate expected steps
-expected_steps = calculate_expected_steps(success_prob, max_level)
-
-# Display results
-print(f"Expected number of Soul Gems for each level:")
-for level, steps in enumerate(expected_steps[:-1]):  # Exclude absorbing state
-    print(f"  +{level}: {steps} attempts")
-
-print(f"\nExpected number of Soul Gems to reach +{max_level}: {expected_steps[0]} attempts")
