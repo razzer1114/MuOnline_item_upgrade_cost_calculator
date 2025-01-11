@@ -23,10 +23,14 @@ This project leverages mathematical modeling and Markov chain theory to analyze 
 ---
 
 ## Problem Modeling
-### Enhancement Mechanism Modeling
-- Equipment enhancement levels are defined as states \( E(i) \):
-  - State \( i \) transitions with probability \( p \) (success) to \( i+1 \).
-  - State \( i \) transitions with probability \( 1-p \) (failure) to \( i-1 \) or remains the same.
+### Upgrade Mechanism Modeling
+- item levels are defined as states i :
+  - State i corresponds to item level i-1, i.e., lvl 0 item is state i = 1.
+  - State i transitions with probability p (success) to i + 1.
+  - State i transitions with probability 1-p (failure) to 
+      - state i = 1 for lvl 0 or 7 or 8 --- state i = 1 or 8 or 9
+      - state i - 1 for lvl 1 to 6 --- state i = 2 to 7
+      - state ( i_max + 1 ) as a special "explode" state.
 
 ### Transition Rules
 - For state \( i \), the recursive formula is:
