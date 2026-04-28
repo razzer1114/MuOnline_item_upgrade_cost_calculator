@@ -2,7 +2,7 @@
 
 **Probabilistic modeling for item upgrades in MU Online using absorbing Markov chains**
 
-[current Python code](item_upgrade_to_lvl_9_markov_chain_calculator.py)
+[Current Python code](item_upgrade_to_lvl_9_markov_chain_calculator.py)
 
 ---
 
