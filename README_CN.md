@@ -37,7 +37,7 @@
 
 ---
 
-## 📂 当前内容说明
+## 📂 当前工作及原理讲解
 
 - [原理：+0 到 +9 强化（仅使用灵魂宝石，任意成功率）](Calculator_MK1_CN.md)
 - [代码：+0 到 +9 强化（仅使用灵魂宝石，任意成功率）](item_upgrade_to_lvl_9_markov_chain_calculator.py)
