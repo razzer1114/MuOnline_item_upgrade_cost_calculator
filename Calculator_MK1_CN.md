@@ -1,3 +1,4 @@
+[English_original](Calculator_MK1.md)
 ## 🎯 问题陈述
 
 > 从 +0 强化到 +9，期望需要消耗多少个灵魂宝石？
