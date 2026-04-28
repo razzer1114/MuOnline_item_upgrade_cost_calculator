@@ -12,10 +12,12 @@ The project is intended as a small, transparent, and extensible tool to analyze 
 
 For an excellent item without luck, assuming:
 
-- Success probability: `p = 0.5`
-- Failure probability: `1 - p = 0.5`
 - Cost per attempt: `1 Soul Gem`
 - Target level: `+9`
+- Success probability: `p = 0.5`
+- Failure probability: `1 - p = 0.5`
+- Failure at lvl 2~6 causes item lvl to drop 1, failure at lvl 1,7,8 returns to lvl 1.
+
 
 The expected Soul Gem consumption from `+0` to `+9` is:
 
