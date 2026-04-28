@@ -33,6 +33,25 @@ Expected consumption from each starting level:
 | +8 | 779.833984 |
 | +9 | 0.000000 |
 
+The expected Soul Gem consumption from `+0` to `+7` is:
+
+```text
+206.289062 Soul Gems
+```
+
+Expected consumption from each starting level:
+
+| Starting Level | Expected Soul Gems to +7 |
+|---:|---:|
+| +0 | 206.289062 |
+| +1 | 203.789062 |
+| +2 | 197.539062 |
+| +3 | 185.664062 |
+| +4 | 165.351562 |
+| +5 | 132.382812 |
+| +6 | 80.429687 |
+| +7 | 0.000000 |
+
 ---
 
 ## Example Result (p = 0.5)
@@ -65,6 +84,25 @@ Expected consumption from each starting level:
 | +7 | 174.000000 |
 | +8 | 116.000000 |
 | +9 | 0.000000 |
+
+The expected Soul Gem consumption from `+0` to `+7` is:
+
+```text
+56.000000 Soul Gems
+```
+
+Expected consumption from each starting level:
+
+| Starting Level | Expected Soul Gems to +7 |
+|---:|---:|
+| +0 | 56.000000 |
+| +1 | 54.000000 |
+| +2 | 50.000000 |
+| +3 | 44.000000 |
+| +4 | 36.000000 |
+| +5 | 26.000000 |
+| +6 | 14.000000 |
+| +7 | 0.000000 |
 
 ---
 
@@ -99,6 +137,25 @@ Expected consumption from each starting level:
 | +8 | 31.205863 |
 | +9 | 0.000000 |
 
+The expected Soul Gem consumption from `+0` to `+7` is:
+
+```text
+25.585277 Soul Gems
+```
+
+Expected consumption from each starting level:
+
+| Starting Level | Expected Soul Gems to +7 |
+|---:|---:|
+| +0 | 25.585277 |
+| +1 | 23.918610 |
+| +2 | 21.140832 |
+| +3 | 17.622314 |
+| +4 | 13.609968 |
+| +5 | 9.268404 |
+| +6 | 4.707362 |
+| +7 | 0.000000 |
+
 ---
 
 ## Example Result (p = 0.65)
@@ -131,6 +188,25 @@ Expected consumption from each starting level:
 | +7 | 30.552999 |
 | +8 | 18.516969 |
 | +9 | 0.000000 |
+
+The expected Soul Gem consumption from `+0` to `+7` is:
+
+```text
+19.495484 Soul Gems
+```
+
+Expected consumption from each starting level:
+
+| Starting Level | Expected Soul Gems to +7 |
+|---:|---:|
+| +0 | 19.495484 |
+| +1 | 17.957023 |
+| +2 | 15.590159 |
+| +3 | 12.777232 |
+| +4 | 9.724118 |
+| +5 | 6.541671 |
+| +6 | 3.289585 |
+| +7 | 0.000000 |
 
 ---
 
@@ -165,6 +241,25 @@ Expected consumption from each starting level:
 | +8 | 7.555759 |
 | +9 | 0.000000 |
 
+The expected Soul Gem consumption from `+0` to `+7` is:
+
+```text
+13.000457 Soul Gems
+```
+
+Expected consumption from each starting level:
+
+| Starting Level | Expected Soul Gems to +7 |
+|---:|---:|
+| +0 | 13.000457 |
+| +1 | 11.667124 |
+| +2 | 9.889346 |
+| +3 | 7.963420 |
+| +4 | 5.988112 |
+| +5 | 3.996342 |
+| +6 | 1.999086 |
+| +7 | 0.000000 |
+
 ---
 
 ## Example Result (p = 0.85)
@@ -197,5 +292,24 @@ Expected consumption from each starting level:
 | +7 | 6.283808 |
 | +8 | 3.396653 |
 | +9 | 0.000000 |
+
+The expected Soul Gem consumption from `+0` to `+7` is:
+
+```text
+5.977687 Soul Gems
+```
+
+Expected consumption from each starting level:
+
+| Starting Level | Expected Soul Gems to +7 |
+|---:|---:|
+| +0 | 5.977687 |
+| +1 | 4.801217 |
+| +2 | 3.417134 |
+| +3 | 1.996413 |
+| +4 | 0.569227 |
+| +5 | 0.140900 |
+| +6 | 0.012372 |
+| +7 | 0.000000 |
 
 ---
