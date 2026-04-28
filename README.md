@@ -2,8 +2,9 @@
 
 **Probabilistic modeling for item upgrades in MU Online using absorbing Markov chains**
 
-- [Python Implementation: +0 to +9 Upgrade (Soul Gems, Any Success Rate)](item_upgrade_to_lvl_9_markov_chain_calculator.py)
-- [Simple Case to get a basic understanding](Simple_Case.md)
+- [Explain: +0 to +9 Upgrade (Soul Gems, Any Success Rate)](Calculator_MK1.md)
+- [Code: +0 to +9 Upgrade (Soul Gems, Any Success Rate)](item_upgrade_to_lvl_9_markov_chain_calculator.py)
+- [Simple Case: to get a basic understanding](Simple_Case.md)
 
 ---
 
@@ -38,7 +39,7 @@ These mechanisms introduce **strong stochasticity**, making the total resource c
 ## Current Work Walkthrough 
 - [Explain: +0 to +9 Upgrade (Soul Gems, Any Success Rate)](Calculator_MK1.md)
 - [Code: +0 to +9 Upgrade (Soul Gems, Any Success Rate)](item_upgrade_to_lvl_9_markov_chain_calculator.py)
-- [Simple Case to get a basic understanding](Simple_Case.md)
+- [Simple Case: to get a basic understanding](Simple_Case.md)
 ---
 
 ## Future Work
