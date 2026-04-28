@@ -16,7 +16,7 @@ Transition rules:
 - States 8 to 9: failure returns to state 1
 - State 10: absorbing state
 
-Author: Your Name
+Author: Razz
 License: MIT
 """
 
