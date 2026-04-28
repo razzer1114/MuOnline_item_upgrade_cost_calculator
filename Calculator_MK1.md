@@ -1,3 +1,4 @@
+[中文](Calculator_MK1_CN.md)
 ## 🎯 Problem Statement
 
 > What is the expected number of Soul Gems required to upgrade an item from +0 to +9?
