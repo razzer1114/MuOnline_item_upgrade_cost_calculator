@@ -1,4 +1,4 @@
-# MU Online Item Upgrade Cost Calculator
+# MU Online Item Upgrade Cost Calculator [中文](README_CN.md)
 
 **Probabilistic modeling for item upgrades in MU Online using absorbing Markov chains**
 
