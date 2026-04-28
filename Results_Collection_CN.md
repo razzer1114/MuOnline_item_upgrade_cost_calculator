@@ -1,4 +1,4 @@
-# 当前计算结果
+# 当前计算结果 [English_original](Results_Collection.md)
 
 ---
 
