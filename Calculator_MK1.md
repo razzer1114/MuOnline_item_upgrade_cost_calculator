@@ -315,3 +315,37 @@ $$
 $$
 
 ---
+## Example Result (with Luck)
+
+For an excellent item **with luck**, assuming:
+
+- Cost per attempt: `1 Soul Gem`
+- Target level: `+9`
+- Success probability: `p = 0.6`
+- Failure probability: `1 - p = 0.4`
+- Failure at lvl 2~6 causes item lvl to drop 1, failure at lvl 1,7,8 returns to lvl 1.
+
+
+The expected Soul Gem consumption from `+0` to `+9` is:
+
+```text
+26.223035 Soul Gems
+```
+
+Expected consumption from each starting level:
+
+| Starting Level | Expected Soul Gems to +9 |
+|---:|---:|
+| +0 | 26.223035 |
+| +1 | 24.889702 |
+| +2 | 23.111924 |
+| +3 | 21.185998 |
+| +4 | 19.210689 |
+| +5 | 17.218920 |
+| +6 | 15.221663 |
+| +7 | 13.222578 |
+| +8 | 7.555759 |
+| +9 | 0.000000 |
+
+---
+
