@@ -391,6 +391,6 @@ This project is released under the MIT License.
 
 ## References
 
-- MU Online item enhancement mechanics.
+- MU Online.com.
 - Absorbing Markov chain theory.
 - Expected hitting time for finite Markov chains.
