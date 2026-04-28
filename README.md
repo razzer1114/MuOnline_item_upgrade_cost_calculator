@@ -1,7 +1,7 @@
 # MU Online Item Upgrade Cost Calculator [中文](README_CN.md)
 
 **Probabilistic modeling for item upgrades in MU Online using absorbing Markov chains**
-
+- [**Current Results**](Results_Collection.md)
 - [Explain: +0 to +9 Upgrade (Soul Gems, Any Success Rate)](Calculator_MK1.md)
 - [Code: +0 to +9 Upgrade (Soul Gems, Any Success Rate)](item_upgrade_to_lvl_9_markov_chain_calculator.py)
 - [Simple Case: to get a basic understanding](Simple_Case.md)
