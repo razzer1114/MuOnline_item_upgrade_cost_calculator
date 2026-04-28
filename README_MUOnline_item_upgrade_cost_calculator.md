@@ -2,11 +2,52 @@
 
 **Probabilistic modeling for item upgrades in MU Online using absorbing Markov chains**
 
-This project calculates the expected number of gems required to upgrade an item in **MU Online**. The current example focuses on upgrading an excellent item **without luck** from **+0 to +9**, assuming a constant success probability and one Soul Gem consumed per upgrade attempt.
+---
+
+## 📌 Project Overview
+
+This project develops a **probabilistic framework** to analyze item upgrade systems in games such as MU Online.  
+By modeling the upgrade process as an **absorbing Markov chain**, we compute the **expected number of resources (e.g., Gems)** required to reach a target enhancement level.
 
 The project is intended as a small, transparent, and extensible tool to analyze stochastic item enhancement systems in online games.
 
 ---
+## 🧭 Background
+
+**MU Online** is a classic MMORPG in which equipment enhancement plays a central role in gameplay progression.  
+
+### Upgrade System Characteristics
+
+- Players attempt to increase item levels through repeated enhancement trials  
+- Each attempt consumes a resource (e.g., Soul Gem)  
+- Each attempt has:
+  - a **success probability**  
+  - a **failure probability**
+- Failure may lead to:
+  - level downgrade  
+  - reset to base level  
+  - (in other systems) item destruction  
+
+These mechanisms introduce **strong stochasticity**, making the total resource cost highly uncertain.
+
+---
+
+## 🎯 Problem Statement
+
+> What is the expected number of Soul Gems required to upgrade an item from +0 to +9?
+
+---
+
+## 🧠 Modeling Approach
+
+We model the upgrade process as an **absorbing Markov chain**, where:
+
+- Each item level corresponds to a **state**
+- The target level (+9) is an **absorbing state**
+- Each upgrade attempt is a **state transition**
+
+---
+
 
 ## Example Result
 
@@ -309,324 +350,6 @@ $$
 
 ---
 
-## Repository Structure
-
-A recommended repository structure is:
-
-```text
-mu-online-upgrade-cost-calculator/
-│
-├── README.md
-├── LICENSE
-├── requirements.txt
-│
-├── src/
-│   ├── upgrade_model.py
-│   └── run_example.py
-│
-├── examples/
-│   └── excellent_item_no_luck_p05.py
-│
-├── docs/
-│   ├── model_derivation.md
-│   └── transition_rules.md
-│
-├── results/
-│   └── p05_expected_gems.csv
-│
-└── tests/
-    └── test_model.py
-```
-
-For a minimal first release, `README.md`, `requirements.txt`, and `src/upgrade_model.py` are sufficient.
-
----
-
-## Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/your-username/mu-online-upgrade-cost-calculator.git
-cd mu-online-upgrade-cost-calculator
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-The current version only requires NumPy:
-
-```text
-numpy>=1.24
-```
-
----
-
-## Python Implementation
-
-Create the following file:
-
-```text
-src/upgrade_model.py
-```
-
-```python
-import numpy as np
-
-
-def build_transition_matrix(p: float) -> np.ndarray:
-    """
-    Build the full transition matrix P for the MU Online +0 to +9 upgrade model.
-
-    State definition:
-        State 1  -> item level +0
-        State 2  -> item level +1
-        ...
-        State 10 -> item level +9, absorbing state
-
-    Transition rules:
-        State 1: failure stays at state 1.
-        States 2 to 7: failure downgrades to state i-1.
-        States 8 to 9: failure returns to state 1.
-        State 10: absorbing state.
-
-    Parameters
-    ----------
-    p : float
-        Success probability of each upgrade attempt. Must satisfy 0 < p <= 1.
-
-    Returns
-    -------
-    np.ndarray
-        A 10 x 10 transition matrix P.
-    """
-    if not (0 < p <= 1):
-        raise ValueError("Success probability p must satisfy 0 < p <= 1.")
-
-    n_states = 10
-    P = np.zeros((n_states, n_states), dtype=float)
-
-    # State 1: +0
-    # Failure stays at +0; success goes to +1.
-    P[0, 0] = 1 - p
-    P[0, 1] = p
-
-    # States 2 to 7: +1 to +6
-    # Failure downgrades by one state; success upgrades by one state.
-    for idx in range(1, 7):
-        P[idx, idx - 1] = 1 - p
-        P[idx, idx + 1] = p
-
-    # State 8: +7
-    # Failure returns to +0; success goes to +8.
-    P[7, 0] = 1 - p
-    P[7, 8] = p
-
-    # State 9: +8
-    # Failure returns to +0; success goes to +9.
-    P[8, 0] = 1 - p
-    P[8, 9] = p
-
-    # State 10: +9, absorbing state.
-    P[9, 9] = 1.0
-
-    return P
-
-
-def split_absorbing_chain(P: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """
-    Split the full transition matrix P into Q and R.
-
-    Q contains transient-to-transient transitions.
-    R contains transient-to-absorbing transitions.
-    """
-    Q = P[:9, :9]
-    R = P[:9, 9:]
-    return Q, R
-
-
-def expected_gems(p: float) -> np.ndarray:
-    """
-    Calculate the expected number of gems required to reach +9 from each level.
-
-    The returned array has length 10:
-        result[0] -> expected gems from +0 to +9
-        result[1] -> expected gems from +1 to +9
-        ...
-        result[9] -> expected gems from +9 to +9, which is 0
-
-    Parameters
-    ----------
-    p : float
-        Success probability of each upgrade attempt.
-
-    Returns
-    -------
-    np.ndarray
-        Expected gem consumption from each item level +0 to +9.
-    """
-    P = build_transition_matrix(p)
-    Q, _ = split_absorbing_chain(P)
-
-    I = np.eye(Q.shape[0])
-    ones = np.ones(Q.shape[0])
-
-    # Solve (I - Q)E = 1.
-    # This is numerically preferable to computing inv(I - Q) explicitly.
-    E_transient = np.linalg.solve(I - Q, ones)
-
-    # Add E_10 = 0 for the absorbing target level +9.
-    return np.append(E_transient, 0.0)
-
-
-def expected_gems_table(p: float) -> list[tuple[str, float]]:
-    """
-    Return expected gem consumption as a readable table.
-    """
-    E = expected_gems(p)
-    return [(f"+{level}", float(value)) for level, value in enumerate(E)]
-```
-
----
-
-## Example Script
-
-Create the following file:
-
-```text
-src/run_example.py
-```
-
-```python
-from upgrade_model import expected_gems, expected_gems_table
-
-
-def main() -> None:
-    p = 0.5
-    E = expected_gems(p)
-
-    print(f"Success probability: {p}")
-    print("Expected Soul Gem consumption:")
-
-    for level, value in expected_gems_table(p):
-        print(f"{level} -> +9: {value:.6f}")
-
-    print()
-    print(f"Expected Soul Gems from +0 to +9: {E[0]:.6f}")
-
-
-if __name__ == "__main__":
-    main()
-```
-
-Run the example:
-
-```bash
-python src/run_example.py
-```
-
-Expected output:
-
-```text
-Success probability: 0.5
-Expected Soul Gem consumption:
-+0 -> +9: 230.000000
-+1 -> +9: 228.000000
-+2 -> +9: 224.000000
-+3 -> +9: 218.000000
-+4 -> +9: 210.000000
-+5 -> +9: 200.000000
-+6 -> +9: 188.000000
-+7 -> +9: 174.000000
-+8 -> +9: 116.000000
-+9 -> +9: 0.000000
-
-Expected Soul Gems from +0 to +9: 230.000000
-```
-
----
-
-## Minimal Example
-
-A short standalone example is:
-
-```python
-from src.upgrade_model import expected_gems
-
-p = 0.5
-E = expected_gems(p)
-
-print(E)
-print(f"Expected Soul Gems from +0 to +9: {E[0]:.0f}")
-```
-
----
-
-## Test
-
-Create the following file:
-
-```text
-tests/test_model.py
-```
-
-```python
-import numpy as np
-
-from src.upgrade_model import expected_gems
-
-
-def test_expected_gems_p05() -> None:
-    E = expected_gems(0.5)
-
-    expected = np.array([
-        230,
-        228,
-        224,
-        218,
-        210,
-        200,
-        188,
-        174,
-        116,
-        0,
-    ], dtype=float)
-
-    assert np.allclose(E, expected)
-```
-
-Run tests with:
-
-```bash
-pytest
-```
-
-If `pytest` is used, add it to the development dependencies or install it separately:
-
-```bash
-pip install pytest
-```
-
----
-
-## Notes on Model Scope
-
-The current version assumes:
-
-- constant success probability across all levels;
-- no Talisman of Luck;
-- no additional protection item;
-- no item destruction state;
-- exactly one Soul Gem consumed per attempt;
-- target level is `+9`.
-
-These assumptions are intentionally simple so that the Markov chain structure remains transparent and easy to verify.
-
----
-
 ## Future Work
 
 Possible extensions include:
@@ -648,8 +371,7 @@ Possible extensions include:
 Contributions are welcome. Possible ways to contribute include:
 
 - verifying game mechanics;
-- correcting transition rules;
-- adding new upgrade systems;
+- adding new upgrade systems, like wings using the wing thing;
 - improving mathematical derivations;
 - adding tests and examples;
 - implementing visualization or a web calculator.
