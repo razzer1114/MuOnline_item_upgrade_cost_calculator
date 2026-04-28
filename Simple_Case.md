@@ -1,4 +1,4 @@
-# Simple Case: Expected Soul Gems from +0 to +2
+# Simple Case: Expected Soul Gems from +0 to +2 [中文](Simple_Case_CN.md)
 
 This simple case shows the basic idea of expectation calculation using only three states.
 
