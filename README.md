@@ -2,8 +2,8 @@
 
 **Probabilistic modeling for item upgrades in MU Online using absorbing Markov chains**
 
-[Current Python code for 0 to 9 item upgrade with only Souls for any success rate](item_upgrade_to_lvl_9_markov_chain_calculator.py)
-[Simple Case to get a basic understanding](Simple_Case.md)
+- [Python Implementation: +0 to +9 Upgrade (Soul Gems, Any Success Rate)](item_upgrade_to_lvl_9_markov_chain_calculator.py)
+- [Simple Case to get a basic understanding](Simple_Case.md)
 
 ---
 
