@@ -1,4 +1,4 @@
-# Current Results
+# Current Results [中文](Results_Collection_CN.md)
 
 ---
 
