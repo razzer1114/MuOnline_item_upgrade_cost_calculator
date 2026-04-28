@@ -26,7 +26,7 @@ The project is intended as a small, transparent, and extensible tool to analyze 
 - Failure may lead to:
   - level downgrade  
   - reset to base level  
-  - (in other systems) item destruction  
+  - item destruction  
 
 These mechanisms introduce **strong stochasticity**, making the total resource cost highly uncertain.
 
