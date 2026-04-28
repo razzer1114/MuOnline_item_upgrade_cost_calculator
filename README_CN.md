@@ -2,6 +2,7 @@
 
 **基于吸收马尔可夫链的 MU Online 装备强化概率建模**
 
+- [**干货：计算结果**](Results_Collection_CN.md)
 - [原理：+0 到 +9 强化（仅使用灵魂宝石，任意成功率）](Calculator_MK1_CN.md)
 - [代码：+0 到 +9 强化（仅使用灵魂宝石，任意成功率）](item_upgrade_to_lvl_9_markov_chain_calculator.py)
 - [简单案例：以便快速理解](Simple_Case_CN.md)
