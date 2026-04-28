@@ -4,7 +4,7 @@
 
 This project calculates the expected number of gems required to upgrade an item in **MU Online**. The current example focuses on upgrading an excellent item **without luck** from **+0 to +9**, assuming a constant success probability and one Soul Gem consumed per upgrade attempt.
 
-The project is intended as a small, transparent, and extensible example of how Markov chain theory can be used to analyze stochastic item enhancement systems in online games.
+The project is intended as a small, transparent, and extensible tool to analyze stochastic item enhancement systems in online games.
 
 ---
 
