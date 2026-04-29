@@ -1,4 +1,4 @@
-# 奇迹MU装备强化成本计算器 [English_original](README.md)
+# 奇迹MU装备强化最优策略生成器 [English_original](README.md)
 
 **基于吸收马尔可夫链的奇迹MU装备强化概率建模**
 
