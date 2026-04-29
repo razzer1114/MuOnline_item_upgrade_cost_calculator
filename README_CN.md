@@ -3,13 +3,14 @@
 **基于吸收马尔可夫链的奇迹MU装备强化概率建模**
 
 - [**干货：计算结果**](Results_Collection_CN.md)
-- [原理：+0 到 +9 强化（仅使用灵魂宝石，任意成功率）](Calculator_MK1_CN.md)
-- [原理：+0 到 +9 强化（使用灵魂和祝福宝石，任意成功率，任意宝石选择策略，任意宝石相对价格）](Calculator_MK2_CN.md)
-- [代码：+0 到 +9 强化（使用灵魂和祝福宝石，任意成功率，任意宝石选择策略，任意宝石相对价格）](item_upgrade_to_lvl_9_Bellman_calculator.py)
-- [代码：+0 到 +9 强化（仅使用灵魂宝石，任意成功率）](item_upgrade_to_lvl_9_markov_chain_calculator.py)
-- [代码：+0 到 +7 强化（仅使用灵魂宝石，任意成功率）](item_upgrade_to_lvl_7_markov_chain_calculator.py)
-- [代码：+0 到 +6 强化（使用灵魂和祝福宝石，任意成功率，任意宝石选择策略，任意宝石相对价格）](item_upgrade_to_lvl_6_Bellman_calculator.py)
-- [代码：+0 到 +9 强化 最优策略改变图（使用灵魂和祝福宝石，指定成功率，任意宝石选择策略，任意宝石相对价格）](strategy_switching_cost_curve.py)
+- [原理：+0 到 +9 强化 Markov（仅使用灵魂宝石，任意成功率）](Calculator_MK1_CN.md)
+- [原理：+0 到 +9 强化 Bellman+Markov（使用灵魂和祝福宝石，任意成功率，任意宝石选择策略，任意宝石相对价格）](Calculator_MK2_CN.md)
+- [代码：+0 到 +9 强化 计算所有策略宝石数期望 并排序取优（使用灵魂和祝福宝石，任意成功率，任意宝石选择策略，任意宝石相对价格）](item_upgrade_to_lvl_9_Bellman_calculator.py)
+- [代码：+0 到 +9 强化 计算宝石数期望（仅使用灵魂宝石，任意成功率）](item_upgrade_to_lvl_9_markov_chain_calculator.py)
+- [代码：+0 到 +7 强化 计算宝石数期望（仅使用灵魂宝石，任意成功率）](item_upgrade_to_lvl_7_markov_chain_calculator.py)
+- [代码：+0 到 +6 强化 计算宝石数期望（使用灵魂和祝福宝石，任意成功率，任意宝石选择策略，任意宝石相对价格）](item_upgrade_to_lvl_6_Bellman_calculator.py)
+- [代码：+0 到 +9 强化 生成最优策略曲线图 含策略切换点（使用灵魂和祝福宝石，指定成功率，任意宝石选择策略，任意宝石相对价格）](strategy_switching_cost_curve.py)
+- [代码：+0 到 +9 强化 生成最优策略多曲线3d图 含多个典型成功率（使用灵魂和祝福宝石，指定成功率，任意宝石选择策略，任意宝石相对价格）](Multi_p_cure.py)
 - [简单案例：以便快速理解](Simple_Case_CN.md)
 
 ---
