@@ -8,17 +8,17 @@ import matplotlib.pyplot as plt
 # 1. 基本参数 / Basic Parameters
 # ============================================================
 
-cost_soul = 1  # 灵魂宝石成本 / Cost of Soul gem
+cost_soul = 1
 
 # 固定灵魂成功率，可修改
 # Fixed Soul success probability (can be modified)
-p_soul_fixed = 0.6
+p_soul_fixed = 0.5
 
 # 祝福相对价值扫描范围，可修改
 # Range of relative Bless cost to scan (modifiable)
 cost_min = 0.5
 cost_max = 15
-num_points = 500  # 采样点数 / Number of sampling points
+num_points = 500
 
 output_curve_file = "strategy_switching_cost_curve.png"
 output_switch_table_file = "strategy_switching_points.csv"
@@ -28,8 +28,8 @@ output_switch_table_file = "strategy_switching_points.csv"
 # 2. 状态规则 / State Transition Rules
 # ============================================================
 
-transient_states = list(range(9))  # 暂态 +0 ~ +8 / Transient states
-absorbing_state = 9  # 吸收态 +9 / Absorbing state
+transient_states = list(range(9))
+absorbing_state = 9
 
 
 def fail_state(i):
@@ -81,15 +81,11 @@ def build_transition_matrix(strategy, p_soul):
         action = strategy[i]
 
         if action == "B":
-            # 祝福：100%成功
-            # Bless: deterministic success
             next_state = i + 1
             if next_state < absorbing_state:
                 Q[i, next_state] = 1.0
 
         elif action == "S":
-            # 灵魂：概率成功/失败
-            # Soul: probabilistic success/failure
             success_state = i + 1
             failure_state = fail_state(i)
 
@@ -115,9 +111,6 @@ def evaluate_strategy(strategy, p_soul, cost_bless):
     Compute expected total cost (converted to Soul units)
     """
     Q = build_transition_matrix(strategy, p_soul)
-
-    # 基本矩阵 N = (I - Q)^(-1)
-    # Fundamental matrix
     N = np.linalg.inv(np.eye(9) - Q)
 
     total_cost_vector = np.zeros(9)
@@ -233,7 +226,7 @@ def plot_strategy_switching_curve(
     switch_points,
     p_soul
 ):
-    plt.figure(figsize=(12, 7))
+    plt.figure(figsize=(13, 8))
 
     plt.plot(
         cost_values,
@@ -243,7 +236,7 @@ def plot_strategy_switching_curve(
     )
 
     # 标注切换点 / Mark switching points
-    for sp in switch_points:
+    for k, sp in enumerate(switch_points):
         x = sp["cost_bless"]
         y = sp["expected_total_cost"]
 
@@ -256,10 +249,22 @@ def plot_strategy_switching_curve(
             f'cost={x:.2f}'
         )
 
+        # 增大注释偏移，并采用上下交替，避免文字重叠
+        # Increase annotation offset and alternate positions to avoid overlap
+        offset_list = [
+            (25, 30),
+            (25, -55),
+            (40, 50),
+            (40, -75),
+            (55, 70),
+            (55, -95)
+        ]
+        xy_offset = offset_list[k % len(offset_list)]
+
         plt.annotate(
             label_text,
             xy=(x, y),
-            xytext=(8, 12),
+            xytext=xy_offset,
             textcoords="offset points",
             fontsize=8,
             arrowprops=dict(arrowstyle="->", linewidth=0.8)
