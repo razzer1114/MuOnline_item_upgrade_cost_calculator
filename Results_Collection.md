@@ -313,3 +313,73 @@ Expected consumption from each starting level:
 | +7 | 0.000000 |
 
 ---
+# Visualization of Optimal Upgrade Strategies
+
+This section presents two key visualization results derived from the Markov-chain-based optimization model. These figures illustrate the cost structure and decision boundaries of optimal upgrade strategies under varying parameter conditions.
+
+---
+
+## 1. 3D Mapping of Optimal Expected Cost
+
+![Optimal Cost Surface](bestcost_3d_mapping.png)
+
+This figure visualizes the expected total cost of the optimal strategy in a three-dimensional space:
+
+- X-axis: Soul gem success probability $p_{\text{soul}}$
+- Y-axis: Relative cost of Bless gem $cost_{\text{bless}}$
+- Z-axis: Expected total cost (converted into equivalent Soul gems)
+
+The purpose of this figure is to show:
+
+> The expected resource consumption required to upgrade from +0 to +9 under optimal strategies.
+
+Key observations:
+
+- Lower success probabilities lead to significantly higher expected costs;
+- Higher relative cost of Bless shifts strategies toward Soul-heavy decisions;
+- The surface exhibits strong nonlinearity, indicating complex interactions between probability and cost.
+
+This figure can be interpreted as a **cost response surface**.
+
+---
+
+## 2. Boundary of Bless Usage in Optimal Strategies
+
+![Bless Usage Boundary](bless_need_boundary_map.png)
+
+This figure identifies the decision boundary of whether Bless gems are used in the optimal strategy:
+
+- X-axis: Soul gem success probability $p_{\text{soul}}$
+- Y-axis: Relative cost of Bless gem $cost_{\text{bless}}$
+
+Region meanings:
+
+- **Soul only**: Optimal strategy does not use any Bless gems
+- **Bless needed**: Optimal strategy includes at least one use of Bless gem
+
+The black curve represents the **decision boundary** between these two regions.
+
+This figure reveals an important decision principle:
+
+> Whether it is optimal to introduce deterministic success (Bless) under a given probability-cost configuration.
+
+Structurally, this can be viewed as a **strategy phase diagram**, useful for:
+
+- Guiding resource selection under different economic conditions
+- Understanding risk-cost trade-offs in upgrade systems
+- Identifying critical thresholds in parameter space
+
+---
+
+## Summary
+
+The two figures complement each other:
+
+- The 3D surface shows the **magnitude of cost**
+- The boundary map shows the **structure of strategies**
+
+Together, they describe the full mapping:
+
+> Parameters → Strategy → Cost
+
+This provides a foundation for further analysis, such as phase transitions, threshold detection, and economic optimization.
