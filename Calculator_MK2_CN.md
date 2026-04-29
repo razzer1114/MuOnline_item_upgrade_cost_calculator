@@ -1,4 +1,4 @@
-## 原理概述
+## 原理概述 [English_original](Calculator_MK2.md)
 
 ### 1. 问题定义（Problem Statement）
 
