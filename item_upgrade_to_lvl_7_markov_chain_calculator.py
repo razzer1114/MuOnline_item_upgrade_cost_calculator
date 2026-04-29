@@ -15,7 +15,7 @@ Transition rules:
 - States 2 to 7: failure downgrades to state i - 1
 - State 8: absorbing state
 
-Author: Your Name
+Author: Razz
 License: MIT
 """
 
