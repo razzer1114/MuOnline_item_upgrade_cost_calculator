@@ -2,7 +2,7 @@
 ### A Markov Chain and Bellman-Based Approach
 
 ---
-- [Simple Case: Quick Intuition and Basic Understanding](Simple_Case.md)
+- [**Simple Case**: to get started](Simple_Case.md)
 
 - [**Results: All**](Results_Collection.md)
 
