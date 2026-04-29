@@ -2,6 +2,7 @@
 ### A Markov Chain and Bellman-Based Approach
 
 ---
+- [Simple Case: Quick Intuition and Basic Understanding](Simple_Case.md)
 
 - [**Results: All**](Results_Collection.md)
 
@@ -21,7 +22,7 @@
 
 - [Code: +0 to +9 Upgrade – Multi-Curve 3D Optimal Strategy Visualization (Multiple Typical Success Rates, Soul & Bless Gems)](Multi_p_cure.py)
 
-- [Simple Case: Quick Intuition and Basic Understanding](Simple_Case.md)
+
 
 ---
 ## 1. Problem Statement
