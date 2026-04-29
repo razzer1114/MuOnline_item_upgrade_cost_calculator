@@ -5,6 +5,7 @@
 - [**干货：计算结果**](Results_Collection_CN.md)
 - [原理：+0 到 +9 强化（仅使用灵魂宝石，任意成功率）](Calculator_MK1_CN.md)
 - [原理：+0 到 +9 强化（使用灵魂和祝福宝石，任意成功率，任意宝石选择策略，任意宝石相对价格）](Calculator_MK2_CN.md)
+- [代码：+0 到 +9 强化（使用灵魂和祝福宝石，任意成功率，任意宝石选择策略，任意宝石相对价格）](item_upgrade_to_lvl_9_Bellman_calculator.py)
 - [代码：+0 到 +9 强化（仅使用灵魂宝石，任意成功率）](item_upgrade_to_lvl_9_markov_chain_calculator.py)
 - [代码：+0 到 +7 强化（仅使用灵魂宝石，任意成功率）](item_upgrade_to_lvl_7_markov_chain_calculator.py)
 - [简单案例：以便快速理解](Simple_Case_CN.md)
