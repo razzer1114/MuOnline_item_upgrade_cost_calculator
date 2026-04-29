@@ -1,4 +1,4 @@
-[English](Claculator_MK2.md)
+[English](Calculator_MK2.md)
 
 ## 🎯 问题描述
 
