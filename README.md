@@ -37,6 +37,19 @@ These mechanisms introduce **strong stochasticity**, making the total resource c
 
 ---
 
+## 🧭 Methodology
+
+A Markov chain is a mathematical model used to describe a system that moves between different states with certain probabilities.
+
+In an item upgrade system, each item level can be treated as a state.  
+Each upgrade attempt causes the item to move from one state to another, depending on whether the attempt succeeds or fails.
+
+For this project, the target level is treated as an **absorbing state**, which means that once the item reaches the target level, the upgrade process ends.
+
+This makes the upgrade system suitable for analysis using an **absorbing Markov chain**, allowing us to calculate the expected number of gems required to reach the target level.
+
+---
+
 ## Current Work Walkthrough 
 - [Explain: +0 to +9 Upgrade (Soul Gems, Any Success Rate)](Calculator_MK1.md)
 - [Code: +0 to +9 Upgrade (Soul Gems, Any Success Rate)](item_upgrade_to_lvl_9_markov_chain_calculator.py)
