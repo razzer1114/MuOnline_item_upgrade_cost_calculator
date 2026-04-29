@@ -12,6 +12,29 @@
 - [Simple Case: to get a basic understanding](Simple_Case.md)
 
 ---
+**Probabilistic Modeling for MU Online Item Upgrades using Absorbing Markov Chains**
+
+- [**Results: Computation Outputs & Analysis**](Results_Collection.md)
+
+- [Theory: +0 to +9 Upgrade Markov Model (Soul Gems Only, Any Success Rate)](Calculator_MK1.md)
+
+- [Theory: +0 to +9 Upgrade Bellman + Markov Model (Soul & Bless Gems, Any Success Rate, Any Strategy, Any Relative Cost)](Calculator_MK2.md)
+
+- [Code: +0 to +9 Upgrade – Enumerate All Strategies, Compute Expected Cost, and Rank Optimal (Soul & Bless Gems, Any Success Rate, Any Strategy, Any Relative Cost)](item_upgrade_to_lvl_9_Bellman_calculator.py)
+
+- [Code: +0 to +9 Upgrade – Expected Cost Calculation (Soul Gems Only, Any Success Rate)](item_upgrade_to_lvl_9_markov_chain_calculator.py)
+
+- [Code: +0 to +7 Upgrade – Expected Cost Calculation (Soul Gems Only, Any Success Rate)](item_upgrade_to_lvl_7_markov_chain_calculator.py)
+
+- [Code: +0 to +6 Upgrade – Expected Cost Calculation (Soul & Bless Gems, Any Success Rate, Any Strategy, Any Relative Cost)](item_upgrade_to_lvl_6_Bellman_calculator.py)
+
+- [Code: +0 to +9 Upgrade – Optimal Strategy Cost Curve with Switching Points (Soul & Bless Gems, Fixed Success Rate, Any Strategy, Any Relative Cost)](strategy_switching_cost_curve.py)
+
+- [Code: +0 to +9 Upgrade – Multi-Curve 3D Optimal Strategy Visualization (Multiple Typical Success Rates, Soul & Bless Gems)](Multi_p_cure.py)
+
+- [Simple Case: Quick Intuition and Basic Understanding](Simple_Case.md)
+
+---
 
 ## 📌 Project Overview
 
