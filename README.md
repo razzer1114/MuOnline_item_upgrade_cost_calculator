@@ -22,9 +22,8 @@
 
 - [Code: +0 to +9 Upgrade – Multi-Curve 3D Optimal Strategy Visualization (Multiple Typical Success Rates, Soul & Bless Gems)](Multi_p_cure.py)
 
-
-
 ---
+
 ## 1. Problem Statement
 
 In *MU Online*, upgrading equipment from **+0 to +9** involves stochastic success/failure mechanisms and multiple resource types:
@@ -47,7 +46,19 @@ This problem becomes non-trivial due to:
 
 ## 2. Methodology
 
-### 2.1 Markov Chain Modeling
+### 2.1 Notation
+
+- $p_{soul}$: success probability of a Soul gem  
+- $C_S$: cost of a Soul gem  
+- $C_B$: cost of a Bless gem  
+- $V(i)$: expected cost from state $i$  
+- $f(i)$: failure transition function  
+- $Q$: transient transition matrix  
+- $N$: fundamental matrix  
+
+---
+
+### 2.2 Markov Chain Modeling
 
 The upgrade process is modeled as an **absorbing Markov chain**:
 
@@ -63,19 +74,20 @@ Failure rules:
 
 The expected number of visits is computed using:
 
-\[
+$$
 N = (I - Q)^{-1}
-\]
+$$
 
 ---
 
-### 2.2 Strategy Space
+### 2.3 Strategy Space
 
 - Decision stages: +0 → +6  
-- Total strategies:  
-\[
+- Total strategies:
+
+$$
 2^6 = 64
-\]
+$$
 
 Each strategy defines whether to use:
 
@@ -84,7 +96,7 @@ Each strategy defines whether to use:
 
 ---
 
-### 2.3 Bellman Perspective
+### 2.4 Bellman Perspective
 
 Although solved via enumeration, the structure follows:
 
@@ -92,9 +104,12 @@ Although solved via enumeration, the structure follows:
 
 Each state implicitly satisfies a Bellman equation:
 
-\[
-V(i) = \min \{ C_B + V(i+1),\; C_S + p V(i+1) + (1-p)V(f(i)) \}
-\]
+$$
+V(i) = \min \left\{ 
+C_B + V(i+1),\;
+C_S + p_{soul} V(i+1) + (1 - p_{soul}) V(f(i))
+\right\}
+$$
 
 ---
 
@@ -104,8 +119,8 @@ V(i) = \min \{ C_B + V(i+1),\; C_S + p V(i+1) + (1-p)V(f(i)) \}
 
 ![Optimal Cost Surface](bestcost_3d_mapping.png)
 
-- X-axis: Soul success probability \( p_{soul} \)  
-- Y-axis: Relative Bless cost  
+- X-axis: Soul success probability $p_{soul}$  
+- Y-axis: Relative Bless cost $C_B$  
 - Z-axis: Expected total cost (in Soul units)  
 
 This surface represents:
@@ -132,9 +147,9 @@ The boundary reveals:
 
 ![Strategy Switching](strategy_switching_cost_curve.png)
 
-For fixed \( p_{soul} \):
+For fixed $p_{soul}$:
 
-- X-axis: Bless cost  
+- X-axis: Bless cost $C_B$  
 - Y-axis: expected cost  
 
 Vertical transitions indicate:
@@ -149,9 +164,9 @@ Vertical transitions indicate:
 
 Multiple curves for typical equipment:
 
-- Socket: p = 0.40  
-- Excellent: p = 0.50  
-- Normal: p = 0.60  
+- Socket: $p_{soul} = 0.40$  
+- Excellent: $p_{soul} = 0.50$  
+- Normal: $p_{soul} = 0.60$  
 - Lucky variants: higher success rates  
 
 ---
