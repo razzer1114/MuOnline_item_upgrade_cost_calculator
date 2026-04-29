@@ -3,7 +3,7 @@
 ---
 **Probabilistic Modeling for MU Online Item Upgrades using Absorbing Markov Chains**
 
-- [**Results: Computation Outputs & Analysis**](Results_Collection.md)
+- [**Results: All**](Results_Collection.md)
 
 - [Theory: +0 to +9 Upgrade Markov Model (Soul Gems Only, Any Success Rate)](Calculator_MK1.md)
 
