@@ -77,13 +77,6 @@ These mechanisms introduce **strong stochasticity**, making the total resource c
 
 
 
-## Current Work Walkthrough 
-- [Explain: +0 to +9 Upgrade (Soul Gems, Any Success Rate)](Calculator_MK1.md)
-- [Code: +0 to +9 Upgrade (Soul&Bless Gems, Any Success Rate, Any relative value)](item_upgrade_to_lvl_9_Bellman_calculator.py)
-- [Code: +0 to +9 Upgrade (Soul Gems, Any Success Rate)](item_upgrade_to_lvl_9_markov_chain_calculator.py)
-- [Code: +0 to +7 Upgrade (Soul Gems, Any Success Rate)](item_upgrade_to_lvl_7_markov_chain_calculator.py)
-- [Simple Case: to get a basic understanding](Simple_Case.md)
----
 
 ## Future Work
 
