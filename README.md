@@ -105,10 +105,10 @@ Although solved via enumeration, the structure follows:
 Each state implicitly satisfies a Bellman equation:
 
 $$
-V(i) = \min \left\{ 
+V(i) = \min \{ 
 C_B + V(i+1),\;
 C_S + p_{soul} V(i+1) + (1 - p_{soul}) V(f(i))
-\right\}
+\}
 $$
 
 ---
