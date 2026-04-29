@@ -74,14 +74,6 @@ $$
 
 这些机制使得强化过程具有明显的**随机性与不确定性**，从而使资源消耗难以直观估计。
 
----
-
-## 📂 当前工作及原理讲解
-
-- [原理：+0 到 +9 强化（仅使用灵魂宝石，任意成功率）](Calculator_MK1_CN.md)
-- [代码：+0 到 +9 强化（仅使用灵魂宝石，任意成功率）](item_upgrade_to_lvl_9_markov_chain_calculator.py)
-- [代码：+0 到 +7 强化（仅使用灵魂宝石，任意成功率）](item_upgrade_to_lvl_7_markov_chain_calculator.py)
-- [简单案例](Simple_Case_CN.md)
 
 ---
 
