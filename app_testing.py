@@ -267,9 +267,14 @@ st.set_page_config(
 
 st.title("MU Online 装备强化最优策略计算器")
 st.caption(
-    "Markov Chain + Bellman-style Strategy Optimization / "
-    "马尔可夫链 + Bellman 思路的强化策略优化"
+        "马尔可夫链 + Bellman 思路的强化策略优化"
+    "Markov Chain + Bellman-style Strategy Optimization  "
 )
+st.caption(
+        "祝福相对价值为祝福单价与灵魂单价之比"
+    "Bless Relative Cost means the ratio between price of Bless and Soul"
+)
+
 
 st.sidebar.header("参数设置 Parameter Settings")
 
