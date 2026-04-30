@@ -299,7 +299,7 @@ item_type = st.sidebar.selectbox(
     [
         "Custom / 自定义",
         "Socket item / 镶宝装备, p = 0.40",
-        "Excellent set / 卓越套装, p = 0.50",
+        "Excellent set / 卓越/套装, p = 0.50",
         "Normal item / 普通装备, p = 0.60",
         "Lucky socket item / 幸运镶宝装备, p = 0.65",
         "Lucky excellent set / 幸运卓越套装, p = 0.75",
