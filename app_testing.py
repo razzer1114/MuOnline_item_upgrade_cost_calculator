@@ -257,139 +257,6 @@ def plot_switching_curve(
 
 
 # ============================================================
-# 3. Streamlit App / Streamlit 应用界面
-# ============================================================
-
-st.set_page_config(
-    page_title="MU Online Upgrade Optimizer",
-    layout="wide"
-)
-
-st.title("奇迹MU装备强化最优策略生成器")
-st.title("MU Online Item Upgrade Optimizer")
-
-st.caption(
-    "简介：基于吸收型马尔可夫链与Bellman最优决策思想的装备强化策略优化模型，用于在不确定成功率与多资源成本条件下求解最优强化路径"
-)
-
-st.caption(
-    "Intro: A Markov chain and Bellman-based optimization framework for item upgrades, designed to identify optimal strategies under stochastic success rates and multi-resource cost conditions"
-)
-
-
-
-
-st.markdown("---")
-st.markdown("#### 📘 使用说明 Guide")
-
-
-st.markdown("""
-**1. 祝福相对价值**  
-表示祝福宝石与灵魂宝石之间的价格比值，即：  
-祝福单价 / 灵魂单价。
-
-**Bless Relative Cost** represents the price ratio between Bless and Soul gems, defined as:  
-price of Bless / price of Soul.
-
-**2. 灵魂成功率**  
-表示使用灵魂宝石进行强化时的成功概率，用于计算强化路径的期望成本。
-
-**Soul Success Rate** refers to the probability of a successful upgrade when using a Soul gem, which directly affects the expected cost.
-
-**3. 曲线**  
-表示在设定的祝福相对价值区间内，对所有最优策略进行采样得到的结果集合，用于分析策略变化趋势。
-
-**Curve** represents the sampled set of optimal strategies across a range of Bless relative costs, used to analyze how strategies change under different economic conditions.
-
-**4. 策略**  
-策略由字符序列组成，其中：  
-S 表示使用灵魂宝石（Soul）  
-B 表示使用祝福宝石（Bless）
-
-**Strategy** is represented as a sequence of characters:  
-S = use Soul gem  
-B = use Bless gem
-""")
-
-st.markdown("---")
-
-st.sidebar.header("参数设置 Parameter Settings")
-
-item_type = st.sidebar.selectbox(
-    "装备类型 Item Type",
-    [
-        "Custom / 自定义",
-        "Socket item / 镶宝装备, p = 0.40",
-        "Excellent set / 卓越或套装, p = 0.50",
-        "Normal item / 白装或卷轴, p = 0.60",
-        "Lucky socket item / 幸运镶宝装备, p = 0.65",
-        "Lucky excellent set / 幸运卓越套装, p = 0.75",
-        "Lucky normal item / 幸运普通装备, p = 0.85"
-    ]
-)
-
-preset_map = {
-    "Socket item / 镶宝装备, p = 0.40": 0.40,
-    "Excellent set / 卓越或套装, p = 0.50": 0.50,
-    "Normal item / 白装或卷轴, p = 0.60": 0.60,
-    "Lucky socket item / 幸运镶宝装备, p = 0.65": 0.65,
-    "Lucky excellent set / 幸运卓越套装, p = 0.75": 0.75,
-    "Lucky normal item / 幸运普通装备, p = 0.85": 0.85
-}
-
-if item_type == "Custom / 自定义":
-    soul_success_rate = st.sidebar.slider(
-        "灵魂成功率 Soul Success Rate",
-        min_value=0.01,
-        max_value=0.99,
-        value=0.50,
-        step=0.01
-    )
-else:
-    soul_success_rate = preset_map[item_type]
-    st.sidebar.info(
-        f"Using preset / 使用预设："
-        f"灵魂成功率 Soul Success Rate = {soul_success_rate}"
-    )
-
-bless_relative_cost = st.sidebar.slider(
-    "祝福相对价值 Bless Relative Cost",
-    min_value=0.50,
-    max_value=15.00,
-    value=5.29,
-    step=0.01
-)
-
-st.sidebar.header("曲线设置 Curve Settings")
-
-bless_cost_min = st.sidebar.number_input(
-    "祝福相对价值最小值 Minimum Bless Relative Cost",
-    min_value=0.1,
-    max_value=50.0,
-    value=0.5,
-    step=0.1
-)
-
-bless_cost_max = st.sidebar.number_input(
-    "祝福相对价值最大值 Maximum Bless Relative Cost",
-    min_value=0.1,
-    max_value=50.0,
-    value=15.0,
-    step=0.1
-)
-
-num_points = st.sidebar.slider(
-    "曲线采样点数 Number of Curve Points",
-    min_value=50,
-    max_value=1000,
-    value=300,
-    step=50
-)
-
-run_button = st.sidebar.button("运行优化 Run Optimization")
-
-
-# ============================================================
 # 4. Main Display / 主界面展示
 # ============================================================
 
@@ -529,6 +396,146 @@ else:
         "Set parameters on the left and click Run Optimization"
     )
     st.markdown("---")
+
+
+
+
+
+
+# ============================================================
+# 3. Streamlit App / Streamlit 应用界面
+# ============================================================
+
+st.set_page_config(
+    page_title="MU Online Upgrade Optimizer",
+    layout="wide"
+)
+
+st.title("奇迹MU装备强化最优策略生成器")
+st.title("MU Online Item Upgrade Optimizer")
+
+st.caption(
+    "简介：基于吸收型马尔可夫链与Bellman最优决策思想的装备强化策略优化模型，用于在不确定成功率与多资源成本条件下求解最优强化路径"
+)
+
+st.caption(
+    "Intro: A Markov chain and Bellman-based optimization framework for item upgrades, designed to identify optimal strategies under stochastic success rates and multi-resource cost conditions"
+)
+
+
+
+
+st.markdown("---")
+st.markdown("#### 📘 使用说明 Guide")
+
+
+st.markdown("""
+**1. 祝福相对价值**  
+表示祝福宝石与灵魂宝石之间的价格比值，即：  
+祝福单价 / 灵魂单价。
+
+**Bless Relative Cost** represents the price ratio between Bless and Soul gems, defined as:  
+price of Bless / price of Soul.
+
+**2. 灵魂成功率**  
+表示使用灵魂宝石进行强化时的成功概率，用于计算强化路径的期望成本。
+
+**Soul Success Rate** refers to the probability of a successful upgrade when using a Soul gem, which directly affects the expected cost.
+
+**3. 曲线**  
+表示在设定的祝福相对价值区间内，对所有最优策略进行采样得到的结果集合，用于分析策略变化趋势。
+
+**Curve** represents the sampled set of optimal strategies across a range of Bless relative costs, used to analyze how strategies change under different economic conditions.
+
+**4. 策略**  
+策略由字符序列组成，其中：  
+S 表示使用灵魂宝石（Soul）  
+B 表示使用祝福宝石（Bless）
+
+**Strategy** is represented as a sequence of characters:  
+S = use Soul gem  
+B = use Bless gem
+""")
+
+st.markdown("---")
+
+st.sidebar.header("参数设置 Parameter Settings")
+
+item_type = st.sidebar.selectbox(
+    "装备类型 Item Type",
+    [
+        "Custom / 自定义",
+        "Socket item / 镶宝装备, p = 0.40",
+        "Excellent set / 卓越或套装, p = 0.50",
+        "Normal item / 白装或卷轴, p = 0.60",
+        "Lucky socket item / 幸运镶宝装备, p = 0.65",
+        "Lucky excellent set / 幸运卓越套装, p = 0.75",
+        "Lucky normal item / 幸运普通装备, p = 0.85"
+    ]
+)
+
+preset_map = {
+    "Socket item / 镶宝装备, p = 0.40": 0.40,
+    "Excellent set / 卓越或套装, p = 0.50": 0.50,
+    "Normal item / 白装或卷轴, p = 0.60": 0.60,
+    "Lucky socket item / 幸运镶宝装备, p = 0.65": 0.65,
+    "Lucky excellent set / 幸运卓越套装, p = 0.75": 0.75,
+    "Lucky normal item / 幸运普通装备, p = 0.85": 0.85
+}
+
+if item_type == "Custom / 自定义":
+    soul_success_rate = st.sidebar.slider(
+        "灵魂成功率 Soul Success Rate",
+        min_value=0.01,
+        max_value=0.99,
+        value=0.50,
+        step=0.01
+    )
+else:
+    soul_success_rate = preset_map[item_type]
+    st.sidebar.info(
+        f"Using preset / 使用预设："
+        f"灵魂成功率 Soul Success Rate = {soul_success_rate}"
+    )
+
+bless_relative_cost = st.sidebar.slider(
+    "祝福相对价值 Bless Relative Cost",
+    min_value=0.50,
+    max_value=15.00,
+    value=5.29,
+    step=0.01
+)
+
+st.sidebar.header("曲线设置 Curve Settings")
+
+bless_cost_min = st.sidebar.number_input(
+    "祝福相对价值最小值 Minimum Bless Relative Cost",
+    min_value=0.1,
+    max_value=50.0,
+    value=0.5,
+    step=0.1
+)
+
+bless_cost_max = st.sidebar.number_input(
+    "祝福相对价值最大值 Maximum Bless Relative Cost",
+    min_value=0.1,
+    max_value=50.0,
+    value=15.0,
+    step=0.1
+)
+
+num_points = st.sidebar.slider(
+    "曲线采样点数 Number of Curve Points",
+    min_value=50,
+    max_value=1000,
+    value=300,
+    step=50
+)
+
+run_button = st.sidebar.button("运行优化 Run Optimization")
+
+
+
 
 st.markdown("### 免责声明 Disclaimer")
 
