@@ -268,26 +268,29 @@ st.set_page_config(
 st.title("奇迹MU装备强化最优策略生成器")
 st.title("MU Online Item Upgrade Optimizer")
 st.caption(
-        "#简介：基于马尔可夫链和Bellman思路的强化策略优化"
+        "## 简介：基于马尔可夫链和Bellman思路的强化策略优化"
    )
 
 st.caption(
-         "#Intro: Markov Chain + Bellman-style Strategy Optimization  "
+         "## Intro: Markov Chain + Bellman-style Strategy Optimization  "
 )
-
 
 st.caption(
         "说明书："
 )
+
 st.caption(
         "1 “祝福相对价值”：祝福单价与灵魂单价之比"
 )
+
 st.caption(
         "2 “灵魂成功率”：灵魂宝石强化装备至+9的成功率"
 )
+
 st.caption(
         "3 “曲线”：自定义祝福相对价值区间中所有最优策略的采样点集合"
 )
+
 
 st.sidebar.header("参数设置 Parameter Settings")
 
@@ -499,6 +502,8 @@ if run_button:
 
 else:
     st.info(
-        "Set parameters on the left and click Run Optimization. / "
-        "请在左侧设置参数，然后点击“运行优化”。"
+        "请在左侧设置参数，然后点击“运行优化”"
+    )
+    st.info(
+        "Set parameters on the left and click Run Optimization"
     )
