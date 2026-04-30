@@ -275,6 +275,55 @@ st.caption(
          "Intro: Markov Chain + Bellman-style Strategy Optimization"
 )
 
+
+
+st.markdown("---")
+st.markdown("#### 📘 使用说明 Guide")
+
+st.markdown("""
+**1. 祝福相对价值（Bless Relative Cost）**  
+表示祝福宝石与灵魂宝石之间的价格比值，即：  
+祝福单价 / 灵魂单价。
+
+**Bless Relative Cost** represents the price ratio between Bless and Soul gems, defined as:  
+price of Bless / price of Soul.
+
+**2. 灵魂成功率（Soul Success Rate）**  
+表示使用灵魂宝石进行强化时的成功概率，用于计算强化路径的期望成本。
+
+**Soul Success Rate** refers to the probability of a successful upgrade when using a Soul gem, which directly affects the expected cost.
+
+**3. 曲线（Strategy Curve）**  
+表示在设定的祝福相对价值区间内，对所有最优策略进行采样得到的结果集合，用于分析策略变化趋势。
+
+**Strategy Curve** represents the sampled set of optimal strategies across a range of Bless relative costs, used to analyze how strategies change under different economic conditions.
+
+**4. 策略（Strategy）**  
+策略由字符序列组成，其中：  
+S 表示使用灵魂宝石（Soul）  
+B 表示使用祝福宝石（Bless）
+
+**Strategy** is represented as a sequence of characters:  
+S = use Soul gem  
+B = use Bless gem
+""")
+
+st.markdown("---")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 st.markdown("---")
 st.markdown("#### 📘 使用说明 Guide")
 
