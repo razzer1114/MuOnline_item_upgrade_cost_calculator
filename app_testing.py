@@ -275,6 +275,15 @@ st.caption(
          "Intro: Markov Chain + Bellman-style Strategy Optimization"
 )
 
+st.caption(
+    "简介：基于吸收型马尔可夫链与Bellman最优决策思想的装备强化策略优化模型，用于在不确定成功率与多资源成本条件下求解最优强化路径"
+)
+
+st.caption(
+    "Intro: A Markov chain and Bellman-based optimization framework for item upgrades, designed to identify optimal strategies under stochastic success rates and multi-resource cost conditions"
+)
+
+
 
 
 st.markdown("---")
