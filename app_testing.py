@@ -299,8 +299,8 @@ item_type = st.sidebar.selectbox(
     [
         "Custom / 自定义",
         "Socket item / 镶宝装备, p = 0.40",
-        "Excellent set / 卓越/套装, p = 0.50",
-        "Normal item / 普通装备, p = 0.60",
+        "Excellent set / 卓越或套装, p = 0.50",
+        "Normal item / 白装或卷轴, p = 0.60",
         "Lucky socket item / 幸运镶宝装备, p = 0.65",
         "Lucky excellent set / 幸运卓越套装, p = 0.75",
         "Lucky normal item / 幸运普通装备, p = 0.85"
@@ -309,8 +309,8 @@ item_type = st.sidebar.selectbox(
 
 preset_map = {
     "Socket item / 镶宝装备, p = 0.40": 0.40,
-    "Excellent set / 卓越/套装, p = 0.50": 0.50,
-    "Normal item / 普通装备, p = 0.60": 0.60,
+    "Excellent set / 卓越或套装, p = 0.50": 0.50,
+    "Normal item / 白装或卷轴, p = 0.60": 0.60,
     "Lucky socket item / 幸运镶宝装备, p = 0.65": 0.65,
     "Lucky excellent set / 幸运卓越套装, p = 0.75": 0.75,
     "Lucky normal item / 幸运普通装备, p = 0.85": 0.85
