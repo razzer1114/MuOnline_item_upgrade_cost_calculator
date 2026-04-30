@@ -268,11 +268,11 @@ st.set_page_config(
 st.title("奇迹MU装备强化最优策略生成器")
 st.title("MU Online Item Upgrade Optimizer")
 st.caption(
-        "## 简介：基于马尔可夫链和Bellman思路的强化策略优化"
+        "简介：基于马尔可夫链和Bellman思路的强化策略优化"
    )
 
 st.caption(
-         "## Intro: Markov Chain + Bellman-style Strategy Optimization  "
+         "Intro: Markov Chain + Bellman-style Strategy Optimization"
 )
 
 st.markdown("---")
