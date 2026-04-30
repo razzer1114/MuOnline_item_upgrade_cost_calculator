@@ -275,6 +275,8 @@ st.caption(
          "## Intro: Markov Chain + Bellman-style Strategy Optimization  "
 )
 
+st.markdown("---")
+
 st.caption(
         "说明书："
 )
