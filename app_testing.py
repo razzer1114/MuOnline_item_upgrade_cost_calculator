@@ -277,9 +277,6 @@ st.caption(
 
 st.markdown("---")
 st.markdown("#### 📘 使用说明 Guide")
-st.caption(
-        "说明书："
-)
 
 st.caption(
         "1 “祝福相对价值”：祝福单价与灵魂单价之比"
