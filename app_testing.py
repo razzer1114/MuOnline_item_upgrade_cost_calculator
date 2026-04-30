@@ -272,17 +272,19 @@ st.caption(
    )
 
 st.caption(
-         "Markov Chain + Bellman-style Strategy Optimization  "
+         "Intro: Markov Chain + Bellman-style Strategy Optimization  "
 )
 
 
 st.caption(
-        "马尔可夫链 + Bellman 思路的强化策略优化"
+        "说明"
     "Markov Chain + Bellman-style Strategy Optimization  "
 )
 st.caption(
-        "祝福相对价值为祝福单价与灵魂单价之比"
-    "Bless Relative Cost means the ratio between price of Bless and Soul"
+        "说明书：
+        1.祝福相对价值为祝福单价与灵魂单价之比
+        2. "
+
 )
 
 
