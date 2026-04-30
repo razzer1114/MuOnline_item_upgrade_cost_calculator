@@ -22,6 +22,10 @@
 
 - [Code: +0 to +9 Upgrade – Multi-Curve 3D Optimal Strategy Visualization (Multiple Typical Success Rates, Soul & Bless Gems)](Multi_p_cure.py)
 
+- [Code: +0 to +9 Upgrade – Bless-Use Strategies boundary Map](Bless_Use_Boundary_Mapping.py)
+
+- [Code: +0 to +9 Upgrade – 3D Mapping of Best Cost vs Success Rate and Relative Cost](Graph_LowestCost_vs_p_and_cob.py)
+
 ---
 
 ## 1. Problem Statement
