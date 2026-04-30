@@ -265,7 +265,17 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("MU Online 装备强化最优策略计算器")
+st.title("奇迹MU装备强化最优策略生成器")
+st.title("MU Online Item Upgrade Optimizer")
+st.caption(
+        "简介：基于马尔可夫链和Bellman思路的强化策略优化"
+   )
+
+st.caption(
+         "Markov Chain + Bellman-style Strategy Optimization  "
+)
+
+
 st.caption(
         "马尔可夫链 + Bellman 思路的强化策略优化"
     "Markov Chain + Bellman-style Strategy Optimization  "
@@ -293,7 +303,7 @@ item_type = st.sidebar.selectbox(
 
 preset_map = {
     "Socket item / 镶宝装备, p = 0.40": 0.40,
-    "Excellent set / 卓越套装, p = 0.50": 0.50,
+    "Excellent set / 卓越/套装, p = 0.50": 0.50,
     "Normal item / 普通装备, p = 0.60": 0.60,
     "Lucky socket item / 幸运镶宝装备, p = 0.65": 0.65,
     "Lucky excellent set / 幸运卓越套装, p = 0.75": 0.75,
