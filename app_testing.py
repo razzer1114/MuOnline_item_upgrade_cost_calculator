@@ -291,6 +291,10 @@ st.caption(
         "3 “曲线”：自定义祝福相对价值区间中所有最优策略的采样点集合"
 )
 
+st.caption(
+        "4 “策略”：S代表"'Soul'"灵魂宝石，B代表"'Bless'"祝福宝石"
+)
+st.markdown("---")
 
 st.sidebar.header("参数设置 Parameter Settings")
 
