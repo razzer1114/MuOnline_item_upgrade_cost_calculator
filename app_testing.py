@@ -278,7 +278,7 @@ st.caption(
 st.markdown("---")
 
 st.caption(
-        "说明书："
+        "#说明书："
 )
 
 st.caption(
