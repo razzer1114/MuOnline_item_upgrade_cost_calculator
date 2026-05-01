@@ -365,7 +365,7 @@ bless_relative_cost = st.sidebar.slider(
     min_value=0.50,
     max_value=15.00,
     value=5.29,
-    step=0.005
+    step=0.001
 )
 
 st.sidebar.header("曲线设置 Curve Settings")
