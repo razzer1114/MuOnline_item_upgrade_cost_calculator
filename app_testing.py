@@ -346,12 +346,13 @@ preset_map = {
 }
 
 if item_type == "Custom / 自定义":
-    soul_success_rate = st.sidebar.slider(
+    soul_success_rate = st.sidebar.number_input(
         "灵魂成功率 Soul Success Rate",
         min_value=0.01,
         max_value=0.99,
         value=0.50,
         step=0.01
+        format="%.4f"
     )
 else:
     soul_success_rate = preset_map[item_type]
@@ -360,12 +361,13 @@ else:
         f"灵魂成功率 Soul Success Rate = {soul_success_rate}"
     )
 
-bless_relative_cost = st.sidebar.slider(
+bless_relative_cost = st.sidebar.number_input(
     "祝福相对价值 Bless Relative Cost",
     min_value=0.50,
     max_value=15.00,
     value=5.29,
-    step=0.001
+    step=0.01
+    format="%.4f"
 )
 
 st.sidebar.header("曲线设置 Curve Settings")
