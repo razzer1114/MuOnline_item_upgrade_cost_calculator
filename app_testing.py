@@ -284,7 +284,8 @@ st.caption(
 )
 
 st.markdown("---")
-st.markdown("#### Developed by Razz")
+st.markdown("#### Developed by 作者： Razz ")
+st.markdown("GitHub: https://github.com/razzer1114/MuOnline_item_upgrade_cost_calculator")
 st.markdown("---")
 
 st.markdown("#### 📘 使用说明 Guide")
