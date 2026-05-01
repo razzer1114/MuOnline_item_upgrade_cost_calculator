@@ -352,7 +352,7 @@ if item_type == "Custom / 自定义":
         max_value=0.99,
         value=0.50,
         step=0.01,
-        format="%.4f"
+        format="%.2f"
     )
 else:
     soul_success_rate = preset_map[item_type]
@@ -366,7 +366,7 @@ bless_relative_cost = st.sidebar.number_input(
     min_value=0.50,
     max_value=15.00,
     value=5.29,
-    step=0.01,
+    step=0.0001,
     format="%.4f"
 )
 
