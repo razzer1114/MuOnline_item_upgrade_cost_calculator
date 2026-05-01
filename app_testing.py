@@ -374,7 +374,7 @@ bless_cost_min = st.sidebar.number_input(
     "祝福相对价值最小值 Minimum Bless Relative Cost",
     min_value=0.1,
     max_value=50.0,
-    value=3,
+    value=2.0,
     step=0.1
 )
 
@@ -382,7 +382,7 @@ bless_cost_max = st.sidebar.number_input(
     "祝福相对价值最大值 Maximum Bless Relative Cost",
     min_value=0.1,
     max_value=50.0,
-    value=8.5,
+    value=15.0,
     step=0.1
 )
 
