@@ -390,7 +390,7 @@ num_points = st.sidebar.slider(
     "曲线采样点数 Number of Curve Points",
     min_value=50,
     max_value=1000,
-    value=300,
+    value=50,
     step=50
 )
 
