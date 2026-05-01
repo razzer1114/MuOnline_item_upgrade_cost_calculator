@@ -284,7 +284,7 @@ st.caption(
 )
 
 st.markdown("---")
-st.markdown("#### By Razz")
+st.markdown("#### Developed by Razz")
 st.markdown("---")
 
 st.markdown("#### 📘 使用说明 Guide")
