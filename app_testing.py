@@ -500,10 +500,10 @@ if run_button:
 
 else:
     st.info(
-        "请在左侧设置参数，然后点击“运行优化”"
+        "请在左侧设置参数，然后点击“运行优化。使用前请阅读《使用说明》”"
     )
     st.info(
-        "Set parameters on the left and click Run Optimization"
+        "Set parameters on the left and click Run Optimization, after reading out the Guide"
     )
     st.markdown("---")
 
