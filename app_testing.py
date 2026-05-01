@@ -351,7 +351,7 @@ if item_type == "Custom / 自定义":
         min_value=0.01,
         max_value=0.99,
         value=0.50,
-        step=0.01
+        step=0.01,
         format="%.4f"
     )
 else:
@@ -366,7 +366,7 @@ bless_relative_cost = st.sidebar.number_input(
     min_value=0.50,
     max_value=15.00,
     value=5.29,
-    step=0.01
+    step=0.01,
     format="%.4f"
 )
 
