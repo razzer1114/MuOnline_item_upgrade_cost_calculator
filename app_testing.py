@@ -505,7 +505,7 @@ else:
     st.info(
         "Set parameters on the left and click Run Optimization, after reading out the Guide"
     )
-    st.markdown("---")
+
 
 
 # ============================================================
@@ -513,7 +513,7 @@ else:
 # ============================================================
 
 
-st.markdown("---")
+
 
 with st.expander("📘 使用说明 Guide", expanded=False):
 
