@@ -512,8 +512,7 @@ else:
 # 5. Guide / 使用说明
 # ============================================================
 
-# Modification: guide section is moved after the result display.
-# 修改：使用说明移动到结果展示区之后。
+
 st.markdown("#### 📘 使用说明 Guide")
 
 st.markdown("""
