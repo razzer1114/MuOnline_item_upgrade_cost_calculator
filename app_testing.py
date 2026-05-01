@@ -283,10 +283,10 @@ st.caption(
     "Intro: A Markov chain and Bellman-based optimization framework for item upgrades, designed to identify optimal strategies under stochastic success rates and multi-resource cost conditions"
 )
 
-
-
-
 st.markdown("---")
+st.markdown("#### By Razz")
+st.markdown("---")
+
 st.markdown("#### 📘 使用说明 Guide")
 
 
