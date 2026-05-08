@@ -679,9 +679,9 @@ else:
 bless_cost_input_mode = st.sidebar.radio(
     "祝福相对价值输入方式 Bless Relative Cost Input Mode",
     [
-        "直接输入相对价值(无单位) Direct input(unitless)",
-        "输入祝福和灵魂单价(￥/颗) Input gem prices ($/gem)",
-        "输入兑换比例(颗) Input exchange ratio(gem)"
+        "相对价值(无单位) Direct input(unitless)",
+        "单价(￥/颗) Gem prices ($/gem)",
+        "兑换比例(颗) Exchange ratio(gem)"
     ]
 )
 
