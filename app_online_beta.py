@@ -334,7 +334,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("奇迹MU装备强化最优策略生成器")
+st.title("奇迹MU装备强化最优策略生成器_Beta")
 st.title("MU Online Item Upgrade Optimizer")
 
 st.caption(
