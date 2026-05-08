@@ -693,7 +693,7 @@ bless_cost_input_mode = st.sidebar.radio(
     "祝福相对价值输入 Bless Relative Cost Input",
     [
         "相对价值 Direct input",
-        "宝石单价 Gem prices ",
+        "宝石单价 Gem prices",
         "兑换比例 Exchange ratio"
     ]
 )
