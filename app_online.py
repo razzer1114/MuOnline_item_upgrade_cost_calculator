@@ -620,7 +620,7 @@ st.markdown("---")
 # ============================================================
 
 st.sidebar.header("基础模型参数 Basic Model Settings")
-st.sidebar.caption("设置目标等级、装备类型与灵魂成功率 / Set target level, item type, and Soul success rate")
+# st.sidebar.caption("设置目标等级、装备类型与灵魂成功率 / Set target level, item type, and Soul success rate")
 
 target_mode = st.sidebar.selectbox(
     "目标等级 Target Level",
@@ -675,7 +675,7 @@ else:
 
 st.sidebar.markdown("---")
 st.sidebar.header("宝石价值参数 Gem Value Settings")
-st.sidebar.caption("设置祝福与灵魂之间的相对价值 / Set the relative value between Bless and Soul gems")
+# st.sidebar.caption("设置祝福与灵魂之间的相对价值 / Set the relative value between Bless and Soul gems")
 
 # ============================================================
 # Bless Relative Cost Input / 祝福相对价值输入
@@ -753,9 +753,7 @@ elif bless_cost_input_mode == "兑换比例(颗) Exchange ratio(gem)":
         f"换算结果 Conversion Result：1 Bless = {bless_relative_cost:.4f} Soul"
     )
 
-st.sidebar.caption(
-    f"当前用于计算的祝福相对价值 / Current Bless Relative Cost: {bless_relative_cost:.4f}"
-)
+#st.sidebar.caption(    f"当前用于计算的祝福相对价值 / Current Bless Relative Cost: {bless_relative_cost:.4f}")
 
 st.sidebar.markdown("---")
 st.sidebar.header("曲线设置 Curve Settings")
