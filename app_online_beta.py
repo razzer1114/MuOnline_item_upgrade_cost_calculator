@@ -335,7 +335,7 @@ st.set_page_config(
 )
 
 st.title("奇迹MU装备强化最优策略生成器_Beta")
-st.title("MU Online Item Upgrade Optimizer")
+st.title("MU Online Item Upgrade Optimizer_Beta")
 
 st.caption(
     "简介：基于吸收型马尔可夫链与Bellman最优决策思想的装备强化策略优化模型，用于在不确定成功率与多资源成本条件下求解最优强化路径"
