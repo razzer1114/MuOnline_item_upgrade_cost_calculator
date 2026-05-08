@@ -679,13 +679,13 @@ else:
 bless_cost_input_mode = st.sidebar.radio(
     "祝福相对价值输入方式 Bless Relative Cost Input Mode",
     [
-        "直接输入相对价值 Direct input",
-        "输入祝福和灵魂单价 Input gem prices",
-        "输入兑换比例 Input exchange ratio"
+        "直接输入相对价值(无单位) Direct input(unitless)",
+        "输入祝福和灵魂单价(￥/颗) Input gem prices ($/gem)",
+        "输入兑换比例(颗) Input exchange ratio(gem)"
     ]
 )
 
-if bless_cost_input_mode == "直接输入相对价值 Direct input":
+if bless_cost_input_mode == "直接输入相对价值(无单位) Direct input(unitless)":
 
     bless_relative_cost = st.sidebar.number_input(
         "祝福相对价值 Bless Relative Cost",
@@ -696,7 +696,7 @@ if bless_cost_input_mode == "直接输入相对价值 Direct input":
         format="%.4f"
     )
 
-elif bless_cost_input_mode == "输入祝福和灵魂单价 Input gem prices":
+elif bless_cost_input_mode == "输入祝福和灵魂单价(￥/颗) Input gem prices ($/gem)":
 
     bless_unit_price = st.sidebar.number_input(
         "祝福单价 Bless Unit Price",
@@ -722,7 +722,7 @@ elif bless_cost_input_mode == "输入祝福和灵魂单价 Input gem prices":
         f"换算结果 Conversion Result：1 Bless = {bless_relative_cost:.4f} Soul"
     )
 
-elif bless_cost_input_mode == "输入兑换比例 Input exchange ratio":
+elif bless_cost_input_mode == "输入兑换比例(颗) Input exchange ratio(gem)":
 
     bless_amount = st.sidebar.number_input(
         "祝福数量 Bless Amount",
