@@ -682,7 +682,7 @@ st.sidebar.header("宝石价值参数 Gem Value Settings")
 # ============================================================
 
 bless_cost_input_mode = st.sidebar.radio(
-    "祝福相对价值 Bless Relative Cost",
+    #"祝福相对价值 Bless Relative Cost",
     [
         "相对价值(无单位) Direct input(unitless)",
         "单价(￥/颗) Gem prices ($/gem)",
