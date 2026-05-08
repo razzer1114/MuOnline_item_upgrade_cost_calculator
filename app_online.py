@@ -701,7 +701,7 @@ bless_cost_input_mode = st.sidebar.radio(
 if bless_cost_input_mode == "相对价值 Direct input":
 
     bless_relative_cost = st.sidebar.number_input(
-        "祝福相对价值(颗/颗) Bless Relative Cost(unitless)",
+        "祝福相对价值(颗/颗) Bless Relative Cost(gem/gem)",
         min_value=0.50,
         max_value=50.00,
         value=5.29,
