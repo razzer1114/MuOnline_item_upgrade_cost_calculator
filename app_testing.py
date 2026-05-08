@@ -353,68 +353,182 @@ with st.expander("🎯 用途和意义 Purpose & Value", expanded=False):
 
     st.markdown("""
     ### 这个工具可以用来做什么？
-
-    本工具并不是简单地给出“强化大概要花多少宝石”，而是用于在不同成功率、不同宝石价格条件下，自动寻找最优的强化策略。它尤其适合经常强化装备、批量强化装备，或希望更理性评估装备价值的玩家。
-    经常有人说打到的“掉落灵魂比祝福多，灵魂点装备不心疼”，但忽略了通过，xxxx
-
-    ### 这个工具可以用来做什么？
-
-    本工具并不是简单地给出“强化大概要花多少宝石”，而是用于在不同成功率、不同宝石价格条件下，自动寻找最优的强化策略。它尤其适合经常强化装备、批量强化装备，或希望更理性评估装备价值的玩家。
     
-    经常有人说：
+    本工具并不是简单地给出“强化大概要花多少宝石”，而是用于在不同成功率、不同宝石价格条件下，自动寻找最优强化策略。它尤其适合经常强化装备、批量强化装备，或希望更理性评估装备价值的玩家。
     
-    “掉落灵魂比祝福多，灵魂点装备不心疼。”
+    ---
     
-    但这种看法往往只关注“单次强化成本”，而忽略了强化失败后产生的大量重复消耗与长期期望成本。灵魂宝石虽然单次价格较低，但失败可能导致装备回退、重复强化，最终累计消耗远高于直觉判断。真正决定强化成本的，并不是“一次点装备花了什么”，而是“达到目标等级平均需要投入多少资源”。
+    很多玩家习惯认为：
+    
+    > “掉落灵魂比祝福多，灵魂点装备不心疼。”
+    
+    但这种看法往往只关注“单次强化成本”，而忽略了强化失败后产生的大量重复消耗与长期期望成本。
+    
+    灵魂宝石虽然单次价格较低，但失败可能导致装备回退、重复强化，最终累计消耗往往远高于直觉判断。真正决定强化成本的，并不是“一次点装备花了什么”，而是：
+    
+    > “达到目标等级平均需要投入多少资源。”
     
     本工具的核心意义之一，就是将这种经验主义、感觉化的强化观，转化为可量化、可计算、可验证的客观模型，帮助玩家基于长期期望成本，而不是短期直觉，科学地制定强化策略。
-
-
-
-
     
-
-    **1. 生成最优强化策略，降低长期强化成本**  
-    玩家可以根据装备类型或自行设定灵魂宝石成功率，计算从 +0 强化到目标等级(+7或+9)，每个阶段应优先使用祝福宝石还是灵魂宝石。对于经常或大量进行强化的玩家，该工具可以在长期强化过程中降低平均宝石消耗。
-
-    **2. 评估 +0 装备与高等级装备之间的理论价值差异**  
-    本工具可以根据市场中祝福宝石与灵魂宝石的相对价格，计算从 +0 强化到 +7 或 +9 的期望成本，从而为装备定价提供参考。例如，一件 +9 装备的理论价值，至少应考虑其基础装备价值和强化过程中所需投入的期望宝石成本。
-
-    但需要注意，高等级装备的实际出售价格通常低于理论成本。出售高阶装备的卖家往往希望尽快换取现金/宝石，因此市场常处于买方更有议价能力的状态。相反，+0 装备往往来自打宝掉落，卖方希望获得相对合理回报，市场状态更接近对等交易。因此，+7 或 +9 与 +0 的差价通常低于其理论强化成本。
-
-    **3. 判断“自己强化”还是“直接购买”更划算**  
-    延续上一点，如果装备市场价明显低于强化期望成本，直接购买可能更合适。
-
-    **4. 分析不同服务器经济环境下的策略变化**  
-    不同区服中祝福、灵魂和其他资源的价格比例可能差异很大。通过调整祝福相对价值，观察**策略切换曲线**，玩家可以观察最优策略在何时变化，判断当前服务器中祝福宝石是否“值得用”，以及在哪些等级更值得使用。
-
-    **5. 为游戏商人的资源配置提供参考**  
-    玩家(商人)可以根据理论模型的客观且明确的结果判断宝石相对价值、装备定价、抛售抄底等是否合理。如果某一类宝石价格偏低，可能意味着其在强化过程中的实际价值被低估；如果价格偏高，则可能需要减少使用或等待市场回落。对于长期玩家、商人型玩家或公会资源管理者，该工具可以辅助制定更合理的资源配置方案。
-
     ---
-
+    
+    ### 1. 生成最优强化策略，降低长期强化成本
+    
+    玩家可以根据装备类型或自行设定灵魂宝石成功率，计算从 +0 强化到目标等级（+7 或 +9）时，每个阶段应优先使用祝福宝石还是灵魂宝石。
+    
+    对于经常或大量进行强化的玩家，该工具可以在长期强化过程中显著降低平均宝石消耗。
+    
+    ---
+    
+    ### 2. 评估 +0 装备与高等级装备之间的理论价值差异
+    
+    本工具可以根据市场中祝福宝石与灵魂宝石的相对价格，计算从 +0 强化到 +7 或 +9 的期望成本，从而为装备定价提供参考。
+    
+    例如，一件 +9 装备的理论价值，至少应考虑：
+    
+    - 基础装备价值
+    - 强化过程中投入的期望宝石成本
+    
+    但需要注意：
+    
+    高等级装备的实际出售价格通常低于理论强化成本。
+    
+    出售高阶装备的卖家往往希望尽快换取现金或宝石，因此市场通常更偏向“买方市场”；而 +0 装备更多来自打宝掉落，卖方通常希望获得合理回报，因此市场状态更接近对等交易。
+    
+    因此：
+    
+    > +7 或 +9 与 +0 之间的实际市场差价，通常低于其理论强化成本。
+    
+    ---
+    
+    ### 3. 判断“自己强化”还是“直接购买”更划算
+    
+    延续上一点：
+    
+    如果市场上的成品装备价格明显低于模型计算得到的强化期望成本，那么直接购买通常会更合适、更稳定。
+    
+    反之，如果高阶装备价格过高、市场缺货，或玩家具备更低的资源获取成本，则自行强化可能更有优势。
+    
+    ---
+    
+    ### 4. 分析不同服务器经济环境下的策略变化
+    
+    不同区服中祝福、灵魂及其他资源的价格比例可能存在很大差异。
+    
+    通过调整祝福相对价值，并观察 **策略切换曲线（Strategy Switching Curve）**，玩家可以分析：
+    
+    - 最优策略在何时发生变化
+    - 当前服务器中祝福宝石是否“值得使用”
+    - 哪些强化阶段更适合使用祝福
+    - 不同经济环境下强化风险如何变化
+    
+    ---
+    
+    ### 5. 为游戏商人的资源配置提供参考
+    
+    玩家（尤其是商人型玩家）可以根据理论模型的客观结果，分析：
+    
+    - 宝石相对价值是否合理
+    - 装备定价是否偏离理论成本
+    - 是否存在抛售、低估、囤货或抄底机会
+    
+    例如：
+    
+    如果某类宝石价格明显低于其实际强化价值，可能意味着市场低估；如果价格过高，则可能需要减少使用或等待市场回落。
+    
+    对于长期玩家、商人、公会资源管理者而言，本工具可以辅助制定更理性的资源配置方案。
+    
+    ---
+    
     ### What can this tool be used for?
-
-    This tool is not simply estimating how many gems are needed for upgrading. Instead, it is designed to automatically identify better resource allocation strategies under different success rates and gem price conditions. It is especially useful for players who frequently upgrade equipment, perform bulk upgrades, or want a more rational framework for evaluating item value.
-
-    **1. Generate optimal upgrade strategies and reduce long-term upgrade cost**  
-    Players can select an equipment type or manually define the Soul Gem success rate. The tool then calculates whether Bless Gems or Soul Gems should be used at each upgrade stage when upgrading from +0 to the target level (+7 or +9). For players who upgrade frequently or in large quantities, this tool can significantly reduce long-term average gem consumption.
-
-    **2. Estimate the theoretical value gap between +0 items and high-level items**  
-    Based on the relative market prices of Bless Gems and Soul Gems, the tool can estimate the expected upgrade cost from +0 to +7 or +9, providing a quantitative reference for item pricing. For example, the theoretical value of a +9 item should include both the base item value and the expected gem cost consumed during the upgrade process.
-
-    However, actual market prices are often lower than theoretical upgrade costs. Sellers of high-level items are usually trying to quickly exchange them for cash or gems, which creates a buyer-favored market. In contrast, +0 items are often obtained through monster drops or farming, where sellers expect a more reasonable return and the market tends to be more balanced. As a result, the price gap between +0 and +7/+9 items is often lower than the theoretical upgrade cost.
-
-    **3. Decide whether upgrading or direct purchase is more economical**  
-    Following the previous point, if the market price of a finished item is significantly lower than the expected upgrade cost, purchasing directly may be the more rational choice.
-
-    **4. Analyze strategy changes under different server economies**  
-    The relative prices of Bless Gems, Soul Gems, and other resources can vary greatly across servers. By adjusting the Bless relative cost and observing the **strategy switching curve**, players can determine when the optimal strategy changes, whether Bless Gems are worth using in the current server economy, and at which upgrade stages they provide the greatest value.
-
-    **5. Provide resource allocation references for in-game traders**  
-    Traders can use the objective and quantitative results generated by the model to evaluate gem pricing, item valuation, market opportunities, liquidation decisions, and buy-low/sell-high strategies. If a gem type appears underpriced relative to its practical upgrade value, it may represent a market opportunity; if overpriced, it may be better to reduce usage or wait for market correction. For long-term players, traders, or guild resource managers, the tool can support more rational resource allocation decisions.
-
-
+    
+    This tool is not simply estimating how many gems are needed for upgrading. Instead, it is designed to automatically identify optimal upgrade strategies under different success rates and gem price conditions. It is especially useful for players who frequently upgrade equipment, perform bulk upgrades, or want a more rational framework for evaluating item value.
+    
+    ---
+    
+    Many players tend to believe:
+    
+    > “Soul Gems drop more often, so using Soul Gems doesn’t feel expensive.”
+    
+    However, this perspective usually focuses only on the *cost of a single attempt* while ignoring the massive repeated consumption caused by failures and long-term expected costs.
+    
+    Although Soul Gems may appear cheap per attempt, failures can cause downgrades and repeated upgrades, leading to a total resource consumption far higher than intuitive expectations.
+    
+    The true upgrade cost is not determined by:
+    
+    > “What was spent on one click?”
+    
+    but rather by:
+    
+    > “How many resources are expected to be consumed, on average, to reach the target level?”
+    
+    One of the core purposes of this project is to transform intuitive, experience-based upgrade decisions into a quantitative, reproducible, and verifiable optimization model, helping players make decisions based on long-term expected cost rather than short-term intuition.
+    
+    ---
+    
+    ### 1. Generate optimal upgrade strategies and reduce long-term upgrade cost
+    
+    Players can select an equipment type or manually define the Soul Gem success rate. The tool then calculates whether Bless Gems or Soul Gems should be used at each upgrade stage when upgrading from +0 to the target level (+7 or +9).
+    
+    For players who frequently upgrade equipment or perform upgrades in bulk, the model can significantly reduce long-term average gem consumption.
+    
+    ---
+    
+    ### 2. Estimate the theoretical value gap between +0 items and high-level items
+    
+    Based on the relative market prices of Bless Gems and Soul Gems, the tool can estimate the expected upgrade cost from +0 to +7 or +9, providing a quantitative reference for item pricing.
+    
+    For example, the theoretical value of a +9 item should include:
+    
+    - the base item value
+    - the expected gem cost consumed during upgrading
+    
+    However, actual market prices are often lower than theoretical upgrade costs.
+    
+    Sellers of high-level items are usually trying to quickly exchange them for cash or gems, creating a buyer-favored market. In contrast, +0 items are often obtained through farming or monster drops, where sellers expect a more balanced return.
+    
+    As a result:
+    
+    > The actual market price difference between +0 and +7/+9 items is often lower than the theoretical upgrade cost.
+    
+    ---
+    
+    ### 3. Decide whether upgrading or direct purchase is more economical
+    
+    Following the previous point:
+    
+    If the market price of a finished item is significantly lower than the expected upgrade cost calculated by the model, purchasing directly is usually the more rational and stable option.
+    
+    On the other hand, if finished items are overpriced, unavailable, or the player has access to lower resource acquisition costs, self-upgrading may become more attractive.
+    
+    ---
+    
+    ### 4. Analyze strategy changes under different server economies
+    
+    The relative prices of Bless Gems, Soul Gems, and other resources can vary greatly across servers.
+    
+    By adjusting the Bless relative cost and observing the **Strategy Switching Curve**, players can analyze:
+    
+    - when the optimal strategy changes
+    - whether Bless Gems are worth using in the current economy
+    - which upgrade stages benefit most from Bless Gems
+    - how upgrade risk changes under different market conditions
+    
+    ---
+    
+    ### 5. Provide resource allocation references for in-game traders
+    
+    Traders and economically-oriented players can use the model’s objective results to analyze:
+    
+    - whether gem prices are reasonable
+    - whether item pricing deviates from theoretical cost
+    - potential opportunities for liquidation, hoarding, undervalued purchases, or market timing
+    
+    For example:
+    
+    If a gem type appears significantly undervalued relative to its practical upgrade value, it may represent a market opportunity; if overpriced, it may be preferable to reduce usage or wait for market correction.
+    
+    For long-term players, traders, and guild resource managers, the tool can support more rational resource allocation decisions.
     """)
 
 st.markdown("---")
