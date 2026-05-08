@@ -498,7 +498,7 @@ if run_button:
         best["strategy"]
     )
     col2.metric(
-        "最小成本 Minimum Cost",
+        "最小成本期望 Minimum Expected Cost",
         f"{best['expected_total_cost']:.4f}"
     )
     col3.metric(
