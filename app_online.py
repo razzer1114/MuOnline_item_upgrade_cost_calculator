@@ -621,9 +621,11 @@ st.markdown("---")
 
 # Run Button 运行按钮
 
-st.sidebar.markdown("---")
+
 st.sidebar.header("执行操作 Run")
 run_button = st.sidebar.button("运行优化 Run Optimization")
+
+st.sidebar.markdown("---")
 
 st.sidebar.header("基础模型参数 Basic Model Settings")
 # st.sidebar.caption("设置目标等级、装备类型与灵魂成功率 / Set target level, item type, and Soul success rate")
