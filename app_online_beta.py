@@ -360,12 +360,12 @@ st.sidebar.header("参数设置 Parameter Settings")
 target_mode = st.sidebar.selectbox(
     "目标等级 Target Level",
     [
-        "+0 → +9 Full Model / 完整模型",
-        "+0 → +7 Sub-model / 子模型"
+        "+0 → +9 ",
+        "+0 → +7 "
     ]
 )
 
-if target_mode == "+0 → +7 Sub-model / 子模型":
+if target_mode == "+0 → +7 ":
     target_level = 7
 else:
     target_level = 9
