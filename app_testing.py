@@ -349,7 +349,7 @@ st.caption(
 # 3.0 Purpose and Value / 用途和意义
 # ============================================================
 
-with st.expander("🎯 用途和意义 Purpose & Value", expanded=False):
+with st.expander("🎯 干嘛的、有啥用 Why This Tool Exists", expanded=False):
 
     st.markdown("""
 ### 这个工具可以用来做什么？
