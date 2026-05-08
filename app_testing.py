@@ -351,7 +351,7 @@ st.caption(
 
 with st.expander("🎯 用途和意义 Purpose & Value", expanded=False):
 
-st.markdown("""
+    st.markdown("""
 ### 这个工具可以用来做什么？
 
 本工具并不是简单地估算“强化大概要花多少宝石”，而是用于在不同成功率、不同宝石价格条件下，自动寻找更优甚至最优的强化策略。
