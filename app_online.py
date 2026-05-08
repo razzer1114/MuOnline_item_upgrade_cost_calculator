@@ -793,9 +793,9 @@ num_points = st.sidebar.slider(
 
 # run 按钮
 
- st.sidebar.markdown("---")
- st.sidebar.header("执行操作 Run")
- run_button = st.sidebar.button("运行优化 Run Optimization")
+st.sidebar.markdown("---")
+st.sidebar.header("执行操作 Run")
+run_button = st.sidebar.button("运行优化 Run Optimization")
 
 
 # ============================================================
