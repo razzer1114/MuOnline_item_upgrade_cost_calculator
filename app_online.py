@@ -692,16 +692,16 @@ st.sidebar.header("宝石价值参数 Gem Value Settings")
 bless_cost_input_mode = st.sidebar.radio(
     "祝福相对价值输入 Bless Relative Cost Input",
     [
-        "相对价值(无单位) Direct input(unitless)",
-        "单价(￥/颗) Gem prices ($/gem)",
-        "兑换比例(颗) Exchange ratio(gem)"
+        "相对价值 Direct input",
+        "宝石单价 Gem prices ",
+        "兑换比例 Exchange ratio"
     ]
 )
 
-if bless_cost_input_mode == "相对价值(无单位) Direct input(unitless)":
+if bless_cost_input_mode == "相对价值 Direct input":
 
     bless_relative_cost = st.sidebar.number_input(
-        "祝福相对价值 Bless Relative Cost",
+        "祝福相对价值(无单位) Bless Relative Cost(unitless)",
         min_value=0.50,
         max_value=50.00,
         value=5.29,
@@ -709,10 +709,10 @@ if bless_cost_input_mode == "相对价值(无单位) Direct input(unitless)":
         format="%.4f"
     )
 
-elif bless_cost_input_mode == "单价(￥/颗) Gem prices ($/gem)":
+elif bless_cost_input_mode == "宝石单价 Gem prices":
 
     bless_unit_price = st.sidebar.number_input(
-        "祝福单价 Bless Unit Price",
+        "祝福单价(￥/颗) Bless Unit Price($/gem)",
         min_value=0.0001,
         max_value=999999.0,
         value=1 / 1.35,
@@ -735,10 +735,10 @@ elif bless_cost_input_mode == "单价(￥/颗) Gem prices ($/gem)":
         f"换算结果 Conversion Result：1 Bless = {bless_relative_cost:.4f} Soul"
     )
 
-elif bless_cost_input_mode == "兑换比例(颗) Exchange ratio(gem)":
+elif bless_cost_input_mode == "兑换比例 Exchange ratio":
 
     bless_amount = st.sidebar.number_input(
-        "祝福数量 Bless Amount",
+        "祝福数量(颗) Bless Amount(gem)",
         min_value=0.0001,
         max_value=999999.0,
         value=1.0,
