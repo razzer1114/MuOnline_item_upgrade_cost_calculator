@@ -348,6 +348,155 @@ st.caption(
 # ============================================================
 # 3.0 Purpose and Value / 用途和意义
 # ============================================================
+with st.expander("🎯 为什么需要这个工具？ Why This Tool Exists", expanded=False):
+
+    tab1, tab2, tab3, tab4 = st.tabs([
+        "核心价值",
+        "常见误区",
+        "应用场景",
+        "English"
+    ])
+
+    with tab1:
+        st.markdown("""
+        ### 这个工具可以用来做什么？
+
+        本工具并不是简单地估算“强化大概要花多少宝石”，而是用于在不同成功率、不同宝石价格条件下，自动寻找更优甚至最优的强化策略。
+
+        它尤其适合：
+
+        - 经常强化装备的玩家
+        - 批量强化装备的玩家
+        - 希望更理性评估装备价值的玩家
+        - 关注市场与资源配置的商人型玩家
+        """)
+
+    with tab2:
+        st.markdown("""
+        ### 常见误区：灵魂掉得多，就不心疼？
+
+        在项目开发过程中，玩家经常会提到一种经验性观点：
+
+        > “掉落灵魂比祝福多，灵魂点装备不心疼。”
+
+        但这种看法往往忽略了几个关键问题：
+
+        - 灵魂与祝福本质上可以通过市场进行互换
+        - 强化失败会带来大量重复消耗与长期累计成本
+        - 单次成本低，不等于达到目标等级的总成本低
+
+        真正重要的问题并不是：
+
+        > “一次强化用了什么宝石？”
+
+        而是：
+
+        > “达到目标等级，平均需要投入多少资源？”
+
+        还有一种常见说法是：
+
+        > “幸运装备全用灵魂点，不幸运点到 +2。”
+
+        这种经验在某些市场环境下可能成立，但并不总是最优。  
+        当祝福与灵魂价格接近，甚至在新区出现价格倒挂时，真正的问题会变成：
+
+        > “到底从哪个等级开始用祝福更划算？”
+
+        本工具的核心意义，就是用可量化、可计算、可验证的模型，把玩家长期积累的经验和直觉转化为客观决策依据。
+        """)
+
+    with tab3:
+        st.markdown("""
+        ### 1. 生成最优强化策略，降低长期强化成本
+
+        玩家可以根据装备类型，或自行设定灵魂宝石成功率，计算从 +0 强化到目标等级（+7 或 +9）时：
+
+        - 每个阶段更适合使用祝福还是灵魂
+        - 不同策略之间的长期成本差异
+        - 当前参数下的最优强化路径
+
+        ---
+
+        ### 2. 评估 +0 装备与高等级装备之间的理论价值差异
+
+        本工具可以根据祝福与灵魂的相对价格，计算从 +0 强化到 +7 或 +9 的期望成本，为装备定价提供理论参考。
+
+        但需要注意：
+
+        > +7 或 +9 与 +0 之间的实际市场差价，通常低于理论强化成本。
+
+        因为高阶装备卖家往往希望快速换取现金或宝石，市场更偏向买方市场；而 +0 装备更多来自打宝掉落，卖方通常希望获得合理回报。
+
+        ---
+
+        ### 3. 判断“自己强化”还是“直接购买”更划算
+
+        如果市场上的成品装备价格明显低于模型计算得到的强化期望成本，那么直接购买通常更稳定、更经济。
+
+        反之，如果高阶装备价格过高、市场缺货，或玩家拥有更低资源获取成本，自行强化可能更有优势。
+
+        ---
+
+        ### 4. 分析不同服务器经济环境下的策略变化
+
+        通过调整祝福相对价值，并观察 **策略切换曲线（Strategy Switching Curve）**，玩家可以分析：
+
+        - 最优策略在何时发生变化
+        - 当前服务器中祝福是否值得使用
+        - 哪些强化阶段更适合使用祝福
+        - 不同经济环境下强化风险如何变化
+
+        ---
+
+        ### 5. 为游戏商人的资源配置提供参考
+
+        对于商人型玩家，本工具还可以用于分析：
+
+        - 宝石相对价值是否合理
+        - 装备价格是否偏离理论成本
+        - 是否存在低估、抛售、囤货或抄底机会
+
+        对于长期玩家、商人、公会资源管理者而言，本工具可以辅助制定更加理性的资源配置方案。
+        """)
+
+    with tab4:
+        st.markdown("""
+        ### What can this tool be used for?
+
+        This tool is not simply designed to estimate how many gems upgrading may cost. Instead, it aims to automatically identify better — or even optimal — upgrade strategies under different success rates and gem price conditions.
+
+        It is especially useful for:
+
+        - players who frequently upgrade equipment
+        - players performing upgrades in bulk
+        - players who want a more rational framework for evaluating item value
+        - traders and economically-oriented players
+
+        ---
+
+        ### Common misconception
+
+        Many players believe:
+
+        > “Soul Gems drop more often, so using Soul Gems doesn’t feel expensive.”
+
+        However, this ignores the fact that Soul Gems and Bless Gems are interchangeable through the market, and that upgrade failures create repeated consumption and long-term cumulative cost.
+
+        The true question is not:
+
+        > “What gem was used in one attempt?”
+
+        but rather:
+
+        > “How many resources are expected to be consumed to reach the target level?”
+
+        This tool transforms player intuition into a quantitative and verifiable decision model.
+        """)
+
+
+
+
+
 
 with st.expander("🎯 用途和意义 Purpose & Value", expanded=False):
 
