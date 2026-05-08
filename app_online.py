@@ -620,7 +620,7 @@ st.markdown("---")
 # ============================================================
 
 # Run Button 运行按钮
-
+st.sidebar.markdown("---")
 
 st.sidebar.header("执行操作 Run")
 run_button = st.sidebar.button("运行优化 Run Optimization")
