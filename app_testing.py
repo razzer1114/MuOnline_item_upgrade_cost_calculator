@@ -371,7 +371,8 @@ with st.expander("🎯 用途和意义 Purpose & Value", expanded=False):
 但这种看法忽略了两个**关键问题**：
 
 - 灵魂与祝福本质上可以通过市场进行互换；
-- 灵魂强化失败后带来大量重复消耗与长期累计成本。
+- 灵魂强化失败后带来大量重复消耗与长期累计成本；
+- 区服市场状态的影响
 
 最终导致累计消耗可能远高于直觉判断，没能用更少的资源得到同样的效果。
 
@@ -480,7 +481,7 @@ with st.expander("🎯 用途和意义 Purpose & Value", expanded=False):
 
 ### What can this tool be used for?
 
-This tool is not simply designed to estimate “how many gems upgrading may cost.” Instead, it aims to automatically identify better — or even optimal — upgrade strategies under different success rates and gem price conditions.
+This tool is not simply designed to estimate “how many gems upgrading may cost.” Instead, it is intended to automatically identify better — or even optimal — upgrade strategies under different success rates and gem price conditions.
 
 It is especially useful for:
 
@@ -495,34 +496,36 @@ During development, one common player perspective repeatedly appeared:
 
 > “Soul Gems drop more often, so using Soul Gems doesn’t feel expensive.”
 
-However, this viewpoint often ignores two important facts:
+However, this perspective often ignores two important facts:
 
 - Soul Gems and Bless Gems are fundamentally interchangeable through the market;
-- upgrade failures create massive repeated consumption and long-term cumulative cost.
+- upgrade failures create large amounts of repeated consumption and long-term cumulative cost.
 
-Although Soul Gems may appear cheap per attempt, failures can cause downgrades and repeated upgrades, leading to a total resource consumption far higher than intuitive expectations.
+On the one hand, although Soul Gems may appear cheaper per attempt, failures can cause downgrades and repeated upgrading, leading to total resource consumption far higher than intuitive expectations.
 
-As a result, the truly important question is not:
+As a result, one important practical question becomes:
 
-> “What gem was used in a single upgrade attempt?”
+> “Should Bless Gems actually be used?”
 
-but rather:
+This tool is designed to provide a quantitative answer.
 
-> “How many resources are expected to be consumed, on average, to reach the target level?”
+On the other hand, under certain market environments — especially on new servers or very old servers — the prices of Bless Gems and Soul Gems may become extremely close, or even inverted.
 
-In addition, under different server economies and market stages:
+In such situations, most players intuitively understand that Bless Gems are “safer” or “more stable,” but still struggle to determine:
 
-- the price ratio between Bless Gems and Soul Gems may become very close;
-- some new servers may even experience price inversion;
-- players may know that Bless Gems are “safer,” but still struggle to determine *when* they are actually worth using.
+> “At which upgrade stages should Bless Gems actually be used?”
 
-Similarly, when both +0 base items and +7 / +9 finished items exist in the market, players often rely purely on intuition or community experience to decide:
+This tool is designed to provide a quantitative answer as well.
+
+Similarly, when both +0 base items and +7 / +9 finished items coexist in the market, players often rely purely on experience, intuition, or community opinion to decide:
 
 > “Is it more economical to upgrade manually or simply buy the finished item?”
 
+This tool is designed to provide a quantitative answer too.
+
 One of the core purposes of this project is therefore:
 
-> to transform long-standing player intuition and experience into a quantitative, reproducible, and verifiable theoretical model that can support practical decision-making.
+> to objectively describe long-standing player intuition and experience through a quantitative theoretical model, and further develop practical decision-support tools based on those models.
 
 ---
 
@@ -534,7 +537,7 @@ Players can select an equipment type or manually define the Soul Gem success rat
 - the long-term cost difference between strategies;
 - the optimal upgrade path under current parameters.
 
-For players who upgrade frequently or in bulk, the tool can significantly reduce long-term average gem consumption.
+For players who frequently upgrade equipment or perform upgrades in bulk, the tool can significantly reduce long-term average gem consumption.
 
 ---
 
@@ -549,11 +552,11 @@ For example, the theoretical value of a +9 item should include:
 
 However, the actual market price of high-level items is often lower than their theoretical upgrade cost.
 
-This is because sellers of high-level items are usually attempting to quickly exchange them for cash or gems, creating a buyer-favored market. In contrast, +0 items are often obtained through farming or monster drops, where sellers typically expect a more balanced return.
+This is because sellers of high-level items are usually attempting to quickly exchange them for cash or gems, creating a buyer-favored market. In contrast, +0 items are more commonly obtained through farming or monster drops, where sellers typically expect a more balanced return.
 
 As a result:
 
-> the actual market price gap between +0 and +7 / +9 items is often lower than the theoretical upgrade cost.
+> the actual market price difference between +0 and +7 / +9 items is often lower than the theoretical upgrade cost.
 
 ---
 
@@ -565,7 +568,7 @@ On the other hand:
 
 - when finished items are overpriced;
 - when the market lacks supply;
-- or when players have lower acquisition cost for resources;
+- or when players have lower acquisition costs for resources;
 
 manual upgrading may become more advantageous.
 
@@ -577,7 +580,7 @@ Different servers may have dramatically different:
 
 - Bless Gem prices;
 - Soul Gem prices;
-- market supply-demand relationships.
+- supply-demand relationships.
 
 By adjusting the Bless relative cost and observing the **Strategy Switching Curve**, players can analyze:
 
