@@ -619,6 +619,12 @@ st.markdown("---")
 # 3.1 Sidebar Parameters / 左侧栏参数
 # ============================================================
 
+# Run Button 运行按钮
+
+st.sidebar.markdown("---")
+st.sidebar.header("执行操作 Run")
+run_button = st.sidebar.button("运行优化 Run Optimization")
+
 st.sidebar.header("基础模型参数 Basic Model Settings")
 # st.sidebar.caption("设置目标等级、装备类型与灵魂成功率 / Set target level, item type, and Soul success rate")
 
@@ -783,9 +789,11 @@ num_points = st.sidebar.slider(
     step=50
 )
 
-st.sidebar.markdown("---")
-st.sidebar.header("执行操作 Run")
-run_button = st.sidebar.button("运行优化 Run Optimization")
+# run 按钮
+
+# st.sidebar.markdown("---")
+# st.sidebar.header("执行操作 Run")
+# run_button = st.sidebar.button("运行优化 Run Optimization")
 
 
 # ============================================================
