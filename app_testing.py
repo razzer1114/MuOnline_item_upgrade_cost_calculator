@@ -354,7 +354,25 @@ with st.expander("🎯 用途和意义 Purpose & Value", expanded=False):
     st.markdown("""
     ### 这个工具可以用来做什么？
 
-    本工具并不是简单地计算“强化大概要花多少宝石”，而是用于在不同成功率、不同宝石价格条件下，自动寻找更优的资源分配策略。它尤其适合经常强化装备、批量强化装备，或希望更理性评估装备价值的玩家。
+    本工具并不是简单地给出“强化大概要花多少宝石”，而是用于在不同成功率、不同宝石价格条件下，自动寻找最优的强化策略。它尤其适合经常强化装备、批量强化装备，或希望更理性评估装备价值的玩家。
+    经常有人说打到的“掉落灵魂比祝福多，灵魂点装备不心疼”，但忽略了通过，xxxx
+
+    ### 这个工具可以用来做什么？
+
+    本工具并不是简单地给出“强化大概要花多少宝石”，而是用于在不同成功率、不同宝石价格条件下，自动寻找最优的强化策略。它尤其适合经常强化装备、批量强化装备，或希望更理性评估装备价值的玩家。
+    
+    经常有人说：
+    
+    “掉落灵魂比祝福多，灵魂点装备不心疼。”
+    
+    但这种看法往往只关注“单次强化成本”，而忽略了强化失败后产生的大量重复消耗与长期期望成本。灵魂宝石虽然单次价格较低，但失败可能导致装备回退、重复强化，最终累计消耗远高于直觉判断。真正决定强化成本的，并不是“一次点装备花了什么”，而是“达到目标等级平均需要投入多少资源”。
+    
+    本工具的核心意义之一，就是将这种经验主义、感觉化的强化观，转化为可量化、可计算、可验证的客观模型，帮助玩家基于长期期望成本，而不是短期直觉，科学地制定强化策略。
+
+
+
+
+    
 
     **1. 生成最优强化策略，降低长期强化成本**  
     玩家可以根据装备类型或自行设定灵魂宝石成功率，计算从 +0 强化到目标等级(+7或+9)，每个阶段应优先使用祝福宝石还是灵魂宝石。对于经常或大量进行强化的玩家，该工具可以在长期强化过程中降低平均宝石消耗。
@@ -377,7 +395,7 @@ with st.expander("🎯 用途和意义 Purpose & Value", expanded=False):
 
     ### What can this tool be used for?
 
-    This tool is not simply a calculator for estimating how many gems are needed for upgrading. Instead, it is designed to automatically identify better resource allocation strategies under different success rates and gem price conditions. It is especially useful for players who frequently upgrade equipment, perform bulk upgrades, or want a more rational framework for evaluating item value.
+    This tool is not simply estimating how many gems are needed for upgrading. Instead, it is designed to automatically identify better resource allocation strategies under different success rates and gem price conditions. It is especially useful for players who frequently upgrade equipment, perform bulk upgrades, or want a more rational framework for evaluating item value.
 
     **1. Generate optimal upgrade strategies and reduce long-term upgrade cost**  
     Players can select an equipment type or manually define the Soul Gem success rate. The tool then calculates whether Bless Gems or Soul Gems should be used at each upgrade stage when upgrading from +0 to the target level (+7 or +9). For players who upgrade frequently or in large quantities, this tool can significantly reduce long-term average gem consumption.
