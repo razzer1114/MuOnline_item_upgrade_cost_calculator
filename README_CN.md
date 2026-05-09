@@ -2,7 +2,7 @@
 
 **基于吸收马尔可夫链的奇迹MU装备强化概率建模**
 
-- [**网站：功能齐全的线上计算器** hosted by Streamlit](https://muonlineitemupgradecostcalculator-e9csnqnnytspt2js69sblw.streamlit.app/)
+- [**网站：功能齐全的线上计算器** hosted by Streamlit](https://muupgradeplanner.streamlit.app/)
 
 - [**代码：线上计算器**](app_testing.py)
 
