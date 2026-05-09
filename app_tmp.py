@@ -351,11 +351,16 @@ st.caption(
 
 
 
-with st.expander("🎯 用途和意义", expanded=False):
+# ============================================================
+# 3.0 Purpose and Value / 用途和意义（中文 + 英文 Tab）
+# ============================================================
+
+with st.expander("🎯 用途和意义 / Purpose & Value", expanded=False):
     
-    tab1, tab2, tab3 = st.tabs(["总述", "常见误区", "核心功能"])
+    # 中文 Tabs
+    tab_cn1, tab_cn2, tab_cn3 = st.tabs(["总述", "常见误区", "核心功能"])
     
-    with tab1:
+    with tab_cn1:
         st.header("总述")
         st.markdown("""
         ### 这个工具可以用来做什么？
@@ -370,7 +375,7 @@ with st.expander("🎯 用途和意义", expanded=False):
         - 关注市场与资源配置的商人型玩家
         """)
     
-    with tab2:
+    with tab_cn2:
         st.header("常见误区")
         st.markdown("""
         **在项目开发过程中，玩家经常会提到一种基于经验性观点：**
@@ -410,7 +415,7 @@ with st.expander("🎯 用途和意义", expanded=False):
         “到底是自己点装备更划算，还是直接买成品更划算？”
         """)
     
-    with tab3:
+    with tab_cn3:
         st.header("核心功能")
         st.markdown("""
         本工具的核心意义之一，就是：
@@ -460,6 +465,54 @@ with st.expander("🎯 用途和意义", expanded=False):
         - 是否存在低估、抛售、囤货或抄底机会。
         
         对于长期玩家、商人、公会资源管理者而言，本工具可以辅助制定更加理性的资源配置方案。
+        """)
+
+    # 英文 Tabs
+    tab_en1, tab_en2, tab_en3 = st.tabs(["Overview", "Common Misconceptions", "Core Features"])
+    
+    with tab_en1:
+        st.header("Overview")
+        st.markdown("""
+        This tool is designed to help players determine the optimal upgrade strategy under different success rates and gem price conditions.  
+        It is especially suitable for:
+        
+        - Players who frequently upgrade equipment
+        - Players upgrading in bulk
+        - Players who want a rational framework for evaluating item value
+        - Traders and economically-oriented players
+        """)
+    
+    with tab_en2:
+        st.header("Common Misconceptions")
+        st.markdown("""
+        A common player misconception is:
+        
+        "Soul Gems drop more often, so using Soul Gems is cheap."
+        
+        However, this ignores key points:
+        
+        - Soul and Bless Gems are interchangeable via the market
+        - Upgrade failures create repeated consumption and long-term cost
+        
+        The important question is not:
+        
+        "What gem was used in a single upgrade?"
+        
+        But:
+        
+        "How many resources are expected to reach the target level?"
+        """)
+    
+    with tab_en3:
+        st.header("Core Features")
+        st.markdown("""
+        Key features of this tool:
+        
+        1. Generate optimal upgrade strategies and reduce long-term cost
+        2. Estimate theoretical value gap between +0 and high-level items
+        3. Decide whether manual upgrade or direct purchase is more economical
+        4. Analyze strategy changes under different server economies
+        5. Provide resource allocation reference for traders
         """)
 
 st.markdown("---")
