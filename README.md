@@ -2,7 +2,7 @@
 ### A Markov Chain and Bellman-Based Approach
 
 ---
-- [**Web Page: Funtional Web Calculator hosted by Streamlit**](https://muonlineitemupgradecostcalculator-e9csnqnnytspt2js69sblw.streamlit.app/)
+- [**Web Page: Funtional Web Calculator hosted by Streamlit**](https://muupgradeplanner.streamlit.app/)
 
 - [**Code: Functional Web Calculator**](app_testing.py)
 
