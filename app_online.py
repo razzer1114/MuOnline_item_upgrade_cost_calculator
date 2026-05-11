@@ -351,12 +351,12 @@ st.caption(
 
 
 
-with st.expander("🎯 用途和意义 Purpose & Value", expanded=False):
+with st.expander("🎯 用途 WHy this tool exists", expanded=False):
 
     st.markdown("""
-    ### 这个工具可以用来做什么？
+    ### 这个工具可以做什么？
     
-    本工具并不是简单地估算“强化大概要花多少宝石”，而是用于在不同成功率、不同宝石价格条件下，自动寻找更优甚至最优的强化策略。
+    本工具并不是简单地估算“强化大概要花多少宝石”，而是用于在不同成功率、不同宝石价格条件下，自动寻找最优的强化策略，即 各等级应该用祝福还是灵魂。
     
     它尤其适合：
     
