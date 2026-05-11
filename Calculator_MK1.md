@@ -322,8 +322,8 @@ For an excellent item **with luck**, assuming:
 
 - Cost per attempt: `1 Soul Gem`
 - Target level: `+9`
-- Success probability: `p = 0.6`
-- Failure probability: `1 - p = 0.4`
+- Success probability: `p = 0.75`
+- Failure probability: `1 - p = 0.25`
 - Failure at lvl 2~6 causes item lvl to drop 1, failure at lvl 1,7,8 returns to lvl 1.
 
 
