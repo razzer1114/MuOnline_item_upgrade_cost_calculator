@@ -11,7 +11,7 @@
 # ============================================================
 #
 # Author:
-# Razzer Lee
+# Razz
 #
 # GitHub Project:
 # https://github.com/razzer1114/MuOnline_item_upgrade_cost_calculator
