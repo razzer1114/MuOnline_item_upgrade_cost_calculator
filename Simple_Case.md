@@ -66,11 +66,11 @@ $$
 
 For state 1, $E(i)$ consists of: 
 
-1 gem to do the attempt no matter what the outcome is;
+- 1 : you need 1 gem to do the attempt no matter what the outcome is;
 
-$E(2)$: when the attempt is successful, the item reaches Level +1 as in State 2, for p=0.5 chance;
+- 0.5 * $E(2)$: when the attempt is successful, the item reaches Level +1 as in State 2, for p=0.5 chance;
 
-$E(1)$ when the attempt is unsuccessful，the item stays at Level +0 as in State 1, for p=0.5 chance:
+- 0.5 * $E(1)$: when the attempt is unsuccessful，the item stays at Level +0 as in State 1, for p=0.5 chance:
 
 $$
 E(1)=1+0.5E(2)+0.5E(1)
