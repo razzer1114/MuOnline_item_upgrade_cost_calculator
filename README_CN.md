@@ -9,7 +9,7 @@
 - [**简单案例：以便快速理解**](Simple_Case_CN.md)
 
 <details>
-<summary><b>📂   展开完整项目资源列表
+<summary><b>📂 展开完整项目资源列表</b></summary>
 
 <br>
 
