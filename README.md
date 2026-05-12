@@ -4,8 +4,7 @@
 
 
 
----
----
+
 <details>
 <summary><b>📂 Expand Full Project Resources</b></summary>
 
@@ -50,6 +49,12 @@
 
 - [**Simple Case: To Get Started**](Simple_Case.md)
 
+
+<details>
+<summary><b>📂 Expand Full Project Resources</b></summary>
+
+<br>
+
 - [**Results: All**](Results_Collection.md)
 
 - [Theory: +0 to +9 Upgrade Markov Model (Soul Gems Only, Any Success Rate)](Calculator_MK1.md)
@@ -73,6 +78,8 @@
 - [Code: +0 to +9 Upgrade – 3D Mapping of Best Cost vs Success Rate and Relative Cost](Graph_LowestCost_vs_p_and_cob.py)
 
 - [Code: Combined Mapping of Bless-Use Strategies boundary Map and 3D Mapping of Best Cost vs Success Rate and Relative Cost](Combined_Mapping.py)
+
+</details>
 
 ---
 
