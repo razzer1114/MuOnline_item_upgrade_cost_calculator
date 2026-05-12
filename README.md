@@ -2,15 +2,15 @@
 ### A Markov Chain and Bellman-Based Approach
 
 ---
-- [**Web Page: Funtional Web Calculator hosted by Streamlit**](https://muupgradeplanner.streamlit.app/)
-
-- [**Code: Functional Web Calculator**](app_online.py)
+- [**Web Page: Functional Web Calculator hosted by Streamlit**](https://muupgradeplanner.streamlit.app/)
 
 - [**Simple Case: To Get Started**](Simple_Case.md)
 
-- [**Code: Calculator Main0**](Main0.py)
+- [**Code: Calculator for +7 and +9**](Main0.py)
 
 - [**Code: Analysis and Curve**](Main.py)
+
+- [**Code: Functional Web Calculator**](app_online.py)
 
 <details>
 <summary><b>📂 Expand Full Project Resources</b></summary>
