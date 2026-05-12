@@ -47,11 +47,7 @@ From +1:
 | 2 | +1 |
 | 3 | +2 |
 
-State 3 is the target state:
 
-$$
-E(3)=0
-$$
 
 
 ## Recursive Equations
@@ -60,6 +56,12 @@ Let:
 
 $$
 E(i)=\text{expected number of Soul Gems required to reach +2 from state } i
+$$
+
+State 3 is the target state, hence:
+
+$$
+E(3)=0
 $$
 
 For state 1:
