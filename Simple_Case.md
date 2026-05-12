@@ -58,7 +58,7 @@ $$
 E(i)=\text{expected number of Soul Gems required to reach +2 from state } i
 $$
 
-State 3 is the target state, hence:
+State 3 (Level +2) is the target State (Level), no more gem is needed, hence the expected gem to reach target level from State 3 is 0, duh:
 
 $$
 E(3)=0
