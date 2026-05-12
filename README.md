@@ -1,6 +1,48 @@
 # Probabilistic Optimization of MU Online Item Upgrades  [中文](README_CN.md)
 ### A Markov Chain and Bellman-Based Approach
 
+
+
+
+---
+---
+<details>
+<summary><b>📂 Expand Full Project Resources</b></summary>
+
+<br>
+
+- [**Results: All**](Results_Collection.md)
+
+- [Theory: +0 to +9 Upgrade Markov Model (Soul Gems Only, Any Success Rate)](Calculator_MK1.md)
+
+- [Theory: +0 to +9 Upgrade Bellman + Markov Model (Soul & Bless Gems, Any Success Rate, Any Strategy, Any Relative Cost)](Calculator_MK2.md)
+
+- [Code: +0 to +9 Upgrade – Enumerate All Strategies, Compute Expected Cost, and Rank Optimal (Soul & Bless Gems, Any Success Rate, Any Strategy, Any Relative Cost)](item_upgrade_to_lvl_9_Bellman_calculator.py)
+
+- [Code: +0 to +9 Upgrade – Expected Cost Calculation (Soul Gems Only, Any Success Rate)](item_upgrade_to_lvl_9_markov_chain_calculator.py)
+
+- [Code: +0 to +7 Upgrade – Expected Cost Calculation (Soul Gems Only, Any Success Rate)](item_upgrade_to_lvl_7_markov_chain_calculator.py)
+
+- [Code: +0 to +6 Upgrade – Expected Cost Calculation (Soul & Bless Gems, Any Success Rate, Any Strategy, Any Relative Cost)](item_upgrade_to_lvl_6_Bellman_calculator.py)
+
+- [Code: +0 to +9 Upgrade – Optimal Strategy Cost Curve with Switching Points (Soul & Bless Gems, Fixed Success Rate, Any Strategy, Any Relative Cost)](strategy_switching_cost_curve.py)
+
+- [Code: +0 to +9 Upgrade – Multi-Curve 3D Optimal Strategy Visualization (Multiple Typical Success Rates, Soul & Bless Gems)](Multi_p_cure.py)
+
+- [Code: +0 to +9 Upgrade – Bless-Use Strategies Boundary Map](Bless_Use_Boundary_Mapping.py)
+
+- [Code: +0 to +9 Upgrade – 3D Mapping of Best Cost vs Success Rate and Relative Cost](Graph_LowestCost_vs_p_and_cob.py)
+
+- [Code: Combined Mapping of Bless-Use Strategies Boundary Map and 3D Mapping of Best Cost vs Success Rate and Relative Cost](Combined_Mapping.py)
+
+</details>
+---
+---
+
+
+
+
+
 ---
 - [**Web Page: Funtional Web Calculator hosted by Streamlit**](https://muupgradeplanner.streamlit.app/)
 
