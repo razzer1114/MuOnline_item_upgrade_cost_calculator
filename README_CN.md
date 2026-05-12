@@ -8,6 +8,11 @@
 
 - [**简单案例：以便快速理解**](Simple_Case_CN.md)
 
+<details>
+<summary><b>📂 展开完整项目资源列表
+
+<br>
+
 - [**干货：计算结果大杂烩**](Results_Collection_CN.md)
 
 - [原理：+0 到 +9 强化 Markov（仅使用灵魂宝石，任意成功率）](Calculator_MK1_CN.md)
@@ -26,7 +31,7 @@
 
 - [代码：+0 到 +9 强化 生成最优策略多曲线3d图 含多个典型成功率（使用灵魂和祝福宝石，指定成功率，任意宝石选择策略，任意宝石相对价格）](Multi_p_cure.py)
 
-
+</details>
 
 
 ---
