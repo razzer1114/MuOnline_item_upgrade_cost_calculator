@@ -24,6 +24,21 @@ $$
 
 - Each upgrade attempt consumes **1 Soul Gem**.
 
+## Transition Rules
+
+From +0:
+
+- Success: +0 → +1
+- Failure: stays at +0
+
+From +1:
+
+- Success: +1 → +2
+- Failure: drops back to +0
+
+
+
+
 ## State Definition
 
 | State | Item Level |
@@ -38,17 +53,6 @@ $$
 E(3)=0
 $$
 
-## Transition Rules
-
-From +0:
-
-- Success: +0 → +1
-- Failure: stays at +0
-
-From +1:
-
-- Success: +1 → +2
-- Failure: drops back to +0
 
 ## Recursive Equations
 
