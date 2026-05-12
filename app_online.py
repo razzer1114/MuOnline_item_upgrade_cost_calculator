@@ -286,7 +286,7 @@ def plot_switching_curve(
         bless_cost_values,
         expected_costs,
         linewidth=2,
-        label="Optimal expected cost / 最优期望成本"
+        label="Optimal expected cost"
     )
 
     for _, row in switch_df.iterrows():
