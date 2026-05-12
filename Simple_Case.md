@@ -64,7 +64,7 @@ $$
 E(3)=0
 $$
 
-For state 1, $E(i)$ consists of: 
+For state 1(Level +0), $E(1)$ consists of: 
 
 - 1 : you need 1 gem to do the attempt no matter what the outcome is;
 
@@ -72,7 +72,7 @@ For state 1, $E(i)$ consists of:
 
 - 0.5 * $E(1)$: when the attempt is unsuccessful，the item stays at Level +0 as in State 1, for p=0.5 chance:
 
-So $E(i)$ is represented as:
+So $E(1)$ is represented as:
 
 $$
 E(1)=1+0.5E(2)+0.5E(1)
@@ -88,7 +88,7 @@ $$
 E(1)=E(2)+2
 $$
 
-For state 2:
+For state 2, similarly:
 
 $$
 E(2)=1+0.5E(3)+0.5E(1)
