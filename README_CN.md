@@ -1,4 +1,4 @@
-# 奇迹MU装备强化最优策略生成器 [English_original](README.md)
+# 奇迹MU装备强化最优策略生成器 [English Version](README.md)
 
 **基于吸收马尔可夫链的奇迹MU装备强化概率建模**
 
@@ -7,6 +7,8 @@
 - [**代码：线上计算器**](app_online.py)
 
 - [**简单案例：以便快速理解**](Simple_Case_CN.md)
+
+- [**代码：分析和制图**](Main.py)
 
 <details>
 <summary><b>📂 展开完整项目资源列表</b></summary>
