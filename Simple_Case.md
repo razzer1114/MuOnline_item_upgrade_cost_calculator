@@ -72,6 +72,8 @@ For state 1, $E(i)$ consists of:
 
 - 0.5 * $E(1)$: when the attempt is unsuccessful，the item stays at Level +0 as in State 1, for p=0.5 chance:
 
+So $E(i)$ is represented as:
+
 $$
 E(1)=1+0.5E(2)+0.5E(1)
 $$
