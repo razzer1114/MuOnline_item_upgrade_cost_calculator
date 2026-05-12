@@ -311,7 +311,7 @@ def plot_switching_curve(
             arrowprops=dict(arrowstyle="->", linewidth=0.8)
         )
 
-    ax.set_xlabel("祝福相对价值 Bless Relative Cost")
+    ax.set_xlabel(" Bless Relative Cost")
     ax.set_ylabel("最小期望总成本 Minimum Expected Total Cost")
     ax.set_title(
         f"策略切换曲线 Strategy Switching Curve "
