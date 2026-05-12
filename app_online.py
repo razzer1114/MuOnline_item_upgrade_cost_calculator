@@ -312,11 +312,11 @@ def plot_switching_curve(
         )
 
     ax.set_xlabel(" Bless Relative Cost")
-    ax.set_ylabel("最小期望总成本 Minimum Expected Total Cost")
+    ax.set_ylabel("Minimum Expected Total Cost")
     ax.set_title(
-        f"策略切换曲线 Strategy Switching Curve "
-        f"(目标 Target = +{target_level}, "
-        f"灵魂成功率 Soul Success Rate = {soul_success_rate})"
+        f"Strategy Switching Curve "
+        f"(Target = +{target_level}, "
+        f"Soul Success Rate = {soul_success_rate})"
     )
     ax.grid(True, alpha=0.3)
     ax.legend()
