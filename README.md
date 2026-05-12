@@ -8,6 +8,7 @@
 
 - [**Simple Case: To Get Started**](Simple_Case.md)
 
+- [**Code: Analysis and Curve**](Main.py)
 
 <details>
 <summary><b>📂 Expand Full Project Resources</b></summary>
