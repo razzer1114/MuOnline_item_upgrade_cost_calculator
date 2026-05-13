@@ -353,13 +353,10 @@ st.caption(
 with st.expander("🎯 用途 WHY this tool exists", expanded=False):
 
     st.markdown("""
-    ### 这个工具可以做什么？
+    ### 这个工具可以做什么？What can this tool be used for?
     
     本工具并不是简单地估算“强化大概要花多少宝石”，而是用于在不同成功率、不同宝石价格条件下，自动寻找最优的强化策略，即各等级应该用祝福还是灵魂。
-        
-     
-    ### What can this tool be used for?
-    
+            
     This tool aims to automatically identify the optimal upgrade strategies under different success rates and gem price conditions.
 
      ---
