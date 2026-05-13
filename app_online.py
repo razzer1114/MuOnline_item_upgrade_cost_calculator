@@ -741,23 +741,50 @@ else:
 item_type = st.sidebar.selectbox(
     "成功率/装备类型 Success Rate/Item Type",
     [
-        "Custom / 自定义",
-        "Socket item / 镶宝装备, p = 0.40",
-        "Excellent set / 卓越或套装, p = 0.50",
-        "Normal item / 白装或卷轴, p = 0.60",
-        "Lucky socket item / 幸运镶宝装备, p = 0.65",
-        "Lucky excellent set / 幸运卓越套装, p = 0.75",
-        "Lucky normal item / 幸运普通装备, p = 0.85"
+        "自定义 / Custom",
+
+        "镶宝装备 / Socket item, p = 0.40",
+        "新镶宝装备 / Socket item (New), p = 0.50",
+
+        "卓越装备 / Excellent item, p = 0.50",
+        "套装 / Set item, p = 0.50",
+
+        "白装 / Normal item, p = 0.60",
+        "卷轴 / Scroll, p = 0.60",
+        "翅膀 / Wing, p = 0.60",
+
+        "幸运镶宝装备 / Lucky socket item, p = 0.65",
+        "新幸运镶宝装备 / Lucky socket item (New), p = 0.75",
+
+        "幸运卓越装备 / Lucky excellent item, p = 0.75",
+        "幸运套装 / Lucky set item, p = 0.75",
+
+        "幸运白装 / Lucky normal item, p = 0.85",
+        "幸运卷轴 / Lucky scroll, p = 0.85",
+        "幸运翅膀 / Lucky wing, p = 0.85"
     ]
 )
 
 preset_map = {
-    "Socket item / 镶宝装备, p = 0.40": 0.40,
-    "Excellent set / 卓越或套装, p = 0.50": 0.50,
-    "Normal item / 白装或卷轴, p = 0.60": 0.60,
-    "Lucky socket item / 幸运镶宝装备, p = 0.65": 0.65,
-    "Lucky excellent set / 幸运卓越套装, p = 0.75": 0.75,
-    "Lucky normal item / 幸运普通装备, p = 0.85": 0.85
+    "镶宝装备 / Socket item, p = 0.40": 0.40,
+    "新镶宝装备 / Socket item (New), p = 0.50": 0.50,
+
+    "卓越装备 / Excellent item, p = 0.50": 0.50,
+    "套装 / Set item, p = 0.50": 0.50,
+
+    "白装 / Normal item, p = 0.60": 0.60,
+    "卷轴 / Scroll, p = 0.60": 0.60,
+    "翅膀 / Wing, p = 0.60": 0.60,
+
+    "幸运镶宝装备 / Lucky socket item, p = 0.65": 0.65,
+    "新幸运镶宝装备 / Lucky socket item (New), p = 0.75": 0.75,
+
+    "幸运卓越装备 / Lucky excellent item, p = 0.75": 0.75,
+    "幸运套装 / Lucky set item, p = 0.75": 0.75,
+
+    "幸运白装 / Lucky normal item, p = 0.85": 0.85,
+    "幸运卷轴 / Lucky scroll, p = 0.85": 0.85,
+    "幸运翅膀 / Lucky wing, p = 0.85": 0.85
 }
 
 if item_type == "Custom / 自定义":
