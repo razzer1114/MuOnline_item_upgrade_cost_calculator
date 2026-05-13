@@ -350,6 +350,183 @@ st.caption(
 # ============================================================
 
 
+with st.expander("🎯 用途 WHY this tool exists", expanded=False):
+
+    st.markdown("""
+    ### 这个工具可以做什么？
+    
+    本工具并不是简单地估算“强化大概要花多少宝石”，而是用于在不同成功率、不同宝石价格条件下，自动寻找最优的强化策略，即各等级应该用祝福还是灵魂。
+    
+    它尤其适合：
+    
+    - 经常强化装备的玩家
+    - 批量强化装备的玩家
+    - 希望更理性评估装备价值的玩家
+    - 关注市场与资源配置的商人型玩家
+    
+    ---
+    
+    ### What can this tool be used for?
+    
+    This tool is not simply designed to estimate “how many gems upgrading may cost.” Instead, it aims to automatically identify better — or even optimal — upgrade strategies under different success rates and gem price conditions.
+    
+    It is especially useful for:
+    
+    - Players who frequently upgrade equipment;
+    - Players performing upgrades in bulk;
+    - Players who want a more rational framework for evaluating item value;
+    - Traders and economically-oriented players.
+    """)
+
+    # ============================================================
+    # 三个 Tab: 常见误区 / 核心功能 / 适用人群
+    # ============================================================
+
+    tab1, tab2, tab3 = st.tabs([
+        "常见误区 / Common Misconceptions",
+        "核心功能 / Core Functions",
+        "适用人群 / Target Users"
+    ])
+
+    with tab1:
+        st.markdown("""
+        ### 常见误区
+        在项目开发过程中，玩家经常会提到一种基于经验性观点：
+        
+        > “掉落灵魂比祝福多，灵魂点装备不心疼。”
+        
+        但这种看法往往忽略了几个关键问题：
+        
+        - 灵魂与祝福本质上可以通过市场进行互换；
+        - 强化失败会带来大量重复消耗与长期累计成本；
+        - 灵魂宝石虽然单次价格较低，但失败可能导致装备回退、重复强化，最终累计消耗往往远高于直觉判断。
+        
+        因此，真正重要的问题并不是：
+        
+        > “一次强化用了什么宝石？”
+        
+        而是：
+        
+        > “达到目标等级，平均需要投入多少资源？”
+        
+        **除此之外，还有一种万金油观点：**
+        
+        > “幸运装备全用灵魂点，不幸运点到+2”
+        
+        然而，在不同服务器、不同市场环境下：
+        
+        - 祝福与灵魂的价格比例可能非常接近；
+        - 某些新区甚至会出现价格倒挂；
+        
+        虽然老玩家都知道极端情况下肯定祝福更划算，但没办法确定“分水岭”：“常规”和“极端”之间，到底什么时候该用祝福？
+        
+        **类似地，当市场上同时存在 +0 与 +7 / +9 成品装备时：**
+        
+        玩家通常只能依赖经验、感觉或口口相传来判断：
+        
+        > “到底是自己点装备更划算，还是直接买成品更划算？”
+        
+        **而本工具的核心意义之一，就是：**
+        
+        > 用可量化、可计算、可验证的理论模型，去客观描述大家长期积累的“经验”与“直觉”，并进一步形成辅助决策工具。
+        
+        ---
+        
+        ### Common Misconceptions
+        During development, one common player perspective repeatedly appeared:
+        
+        > “Soul Gems drop more often, so using Soul Gems doesn’t feel expensive.”
+        
+        However, this viewpoint often ignores two important facts:
+        
+        - Soul Gems and Bless Gems are fundamentally interchangeable through the market;
+        - Upgrade failures create massive repeated consumption and long-term cumulative cost;
+        - Although Soul Gems may appear cheap per attempt, failures can cause downgrades and repeated upgrades, leading to a total resource consumption far higher than intuitive expectations.
+        
+        As a result, the truly important question is not:
+        
+        > “What gem was used in a single upgrade attempt?”
+        
+        but rather:
+        
+        > “How many resources are expected to be consumed, on average, to reach the target level?”
+        
+        In addition, under different server economies and market stages:
+        
+        - The price ratio between Bless Gems and Soul Gems may become very close;
+        - Some new servers may even experience price inversion;
+        - Players may know that Bless Gems are “safer,” but still struggle to determine *when* they are actually worth using.
+        
+        Similarly, when both +0 base items and +7 / +9 finished items exist in the market, players often rely purely on intuition or community experience to decide:
+        
+        > “Is it more economical to upgrade manually or simply buy the finished item?”
+        
+        One of the core purposes of this project is therefore:
+        
+        > To transform long-standing player intuition and experience into a quantitative, reproducible, and verifiable theoretical model that can support practical decision-making.
+        """)
+
+    with tab2:
+        st.markdown("""
+        ### 核心功能
+        本工具可以：
+        
+        1. 生成最优强化策略，降低长期强化成本；
+        2. 评估 +0 装备与高等级装备之间的理论价值差异；
+        3. 判断“自己强化”还是“直接购买”更划算；
+        4. 分析不同服务器经济环境下的策略变化；
+        5. 为游戏商人的资源配置提供参考。
+        
+        - 包括生成各阶段最优宝石使用方案、比较不同策略长期成本、可导出数据 CSV；
+        - 可分析市场不同区服下策略切换曲线；
+        - 支持自定义灵魂成功率和祝福相对价值。
+        
+        ---
+        
+        ### Core Functions
+        The tool allows users to:
+        
+        1. Generate optimal upgrade strategies to reduce long-term upgrade cost;
+        2. Estimate the theoretical value gap between +0 items and high-level items;
+        3. Decide whether manual upgrading or direct purchase is more economical;
+        4. Analyze strategy changes under different server economies;
+        5. Provide resource allocation references for in-game traders.
+        
+        - Includes generating optimal gem usage per stage, comparing long-term costs of different strategies, CSV export;
+        - Analyzes strategy switching curves under different server economies;
+        - Supports custom Soul success rates and Bless relative cost.
+        """)
+
+    with tab3:
+        st.markdown("""
+        ### 适用人群
+        本工具尤其适合：
+        
+        - 经常强化装备的玩家；
+        - 批量强化装备的玩家；
+        - 希望更理性评估装备价值的玩家；
+        - 关注市场与资源配置的商人型玩家。
+        
+        ---
+        
+        ### Target Users
+        It is especially useful for:
+        
+        - Players who frequently upgrade equipment;
+        - Players performing upgrades in bulk;
+        - Players who want a more rational framework for evaluating item value;
+        - Traders and economically-oriented players.
+        """)
+
+
+
+
+
+
+
+
+
+
 
 with st.expander("🎯 用途 WHY this tool exists", expanded=False):
 
