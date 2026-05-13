@@ -870,7 +870,7 @@ elif bless_cost_input_mode == "兑换比例 Exchange ratio":
     bless_relative_cost = soul_amount / bless_amount
 
     st.sidebar.info(
-        f"换算结果 Conversion Result：1 Bless = {bless_relative_cost:.2f} Soul"
+        f"换算结果 Conversion：1 Bless = {bless_relative_cost:.4f} Soul"
     )
 
 #st.sidebar.caption(    f"当前用于计算的祝福相对价值 / Current Bless Relative Cost: {bless_relative_cost:.4f}")
