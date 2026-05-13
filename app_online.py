@@ -787,7 +787,7 @@ preset_map = {
     "幸运翅膀 / Lucky wing, p = 0.85": 0.85
 }
 
-if item_type == "Custom / 自定义":
+if item_type == "自定义 / Custom":
     soul_success_rate = st.sidebar.number_input(
         "灵魂成功率 Soul Success Rate",
         min_value=0.01,
@@ -799,7 +799,7 @@ if item_type == "Custom / 自定义":
 else:
     soul_success_rate = preset_map[item_type]
     st.sidebar.info(
-        f"Using preset / 使用预设："
+        f"使用预设 / Using preset："
         f"灵魂成功率 Soul Success Rate = {soul_success_rate}"
     )
 
