@@ -743,10 +743,10 @@ item_type = st.sidebar.selectbox(
     [
         "自定义 / Custom",
 
-        "镶宝装备 / Socket item, p = 0.40",
-        "新镶宝装备 / Socket item (New), p = 0.50",
+        "镶宝 / Socket item, p = 0.40",
+        "新版镶宝 / Socket item (New), p = 0.50",
 
-        "卓越装备 / Excellent item, p = 0.50",
+        "卓越 / Excellent item, p = 0.50",
         "套装 / Set item, p = 0.50",
 
         "白装 / Normal item, p = 0.60",
@@ -754,7 +754,7 @@ item_type = st.sidebar.selectbox(
         "翅膀 / Wing, p = 0.60",
 
         "幸运镶宝 / Lucky socket item, p = 0.65",
-        "新幸运镶宝 / Lucky socket item (New), p = 0.75",
+        "新版幸运镶宝 / Lucky socket item (New), p = 0.75",
 
         "幸运卓越 / Lucky excellent item, p = 0.75",
         "幸运套装 / Lucky set item, p = 0.75",
@@ -765,10 +765,10 @@ item_type = st.sidebar.selectbox(
 )
 
 preset_map = {
-    "镶宝装备 / Socket item, p = 0.40": 0.40,
-    "新镶宝装备 / Socket item (New), p = 0.50": 0.50,
+    "镶宝 / Socket item, p = 0.40": 0.40,
+    "新版镶宝 / Socket item (New), p = 0.50": 0.50,
 
-    "卓越装备 / Excellent item, p = 0.50": 0.50,
+    "卓越 / Excellent item, p = 0.50": 0.50,
     "套装 / Set item, p = 0.50": 0.50,
 
     "白装 / Normal item, p = 0.60": 0.60,
@@ -776,7 +776,7 @@ preset_map = {
     "翅膀 / Wing, p = 0.60": 0.60,
 
     "幸运镶宝 / Lucky socket item, p = 0.65": 0.65,
-    "新幸运镶宝 / Lucky socket item (New), p = 0.75": 0.75,
+    "新版幸运镶宝 / Lucky socket item (New), p = 0.75": 0.75,
 
     "幸运卓越 / Lucky excellent item, p = 0.75": 0.75,
     "幸运套装 / Lucky set item, p = 0.75": 0.75,
