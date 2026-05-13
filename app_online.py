@@ -858,39 +858,27 @@ elif bless_cost_input_mode == "宝石单价 Gem prices":
 elif bless_cost_input_mode == "兑换比例 Exchange ratio":
 
     bless_amount = st.sidebar.number_input(
-        "祝福数量(颗) Bless Amount(gem)",
-        min_value=0.0001,
-        max_value=999999.0,
-        value=1.0,
-        step=0.0001,
+        "祝福数量(颗) Bless Amount (gem)",
+        min_value=1,
+        max_value=999999,
+        value=1,
+        step=1,
         format="%.0f"
     )
 
-#    soul_amount = st.sidebar.number_input(
-#        "等于多少灵魂 Equivalent Soul Amount",
-#        min_value=0.0001,
-#        max_value=999999.0,
-#        value=5.29,
-#        step=0.0001,
-#        format="%.0f"
-
-        soul_amount = st.sidebar.number_input(
+    soul_amount = st.sidebar.number_input(
         "等于多少灵魂 Equivalent Soul Amount",
         min_value=1,
         max_value=999999,
         value=5,
         step=1,
         format="%.0f"
-
-
-
-        
     )
 
     bless_relative_cost = soul_amount / bless_amount
 
     st.sidebar.info(
-        f"换算结果 Conversion Result：1 Bless = {bless_relative_cost:.4f} Soul"
+        f"换算结果 Conversion Result：1 Bless = {bless_relative_cost:.2f} Soul"
     )
 
 #st.sidebar.caption(    f"当前用于计算的祝福相对价值 / Current Bless Relative Cost: {bless_relative_cost:.4f}")
