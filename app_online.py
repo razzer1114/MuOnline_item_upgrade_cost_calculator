@@ -739,7 +739,7 @@ else:
     target_level = 9
 
 item_type = st.sidebar.selectbox(
-    "装备类型 Item Type",
+    "成功率/装备类型 Success Rate/Item Type",
     [
         "Custom / 自定义",
         "Socket item / 镶宝装备, p = 0.40",
