@@ -695,14 +695,6 @@ with st.expander("📊 可视化结果示例 Visualization Gallery", expanded=Fa
             use_container_width=True
         )
 
-
-
-
-
-
-
-
-
 st.markdown("---")
 st.markdown("#### Developed by 作者： Razz ")
 st.markdown("GitHub: https://github.com/razzer1114/MuOnline_item_upgrade_cost_calculator")
@@ -863,7 +855,7 @@ elif bless_cost_input_mode == "兑换比例 Exchange ratio":
         max_value=999999,
         value=1,
         step=1,
-        format="%.0f"
+
     )
 
     soul_amount = st.sidebar.number_input(
@@ -872,7 +864,7 @@ elif bless_cost_input_mode == "兑换比例 Exchange ratio":
         max_value=999999,
         value=5,
         step=1,
-        format="%.0f"
+
     )
 
     bless_relative_cost = soul_amount / bless_amount
