@@ -623,6 +623,83 @@ st.markdown("GitHub: https://github.com/razzer1114/MuOnline_item_upgrade_cost_ca
 st.markdown("---")
 
 
+
+# ============================================================
+# 3.0.1 Visualization Gallery / 仓库图表示例
+# ============================================================
+
+with st.expander("📊 图表示例 Visualization Gallery", expanded=False):
+
+    st.markdown("""
+    本项目除当前交互式计算结果外，还提供了多种用于理解强化策略变化规律的图表。
+    
+    In addition to the interactive results in this app, the GitHub repository also provides several visualization maps for understanding cost surfaces and strategy boundaries.
+    """)
+
+    fig_tab1, fig_tab2, fig_tab3 = st.tabs([
+        "Optimal Cost Surface",
+        "Strategy Phase Boundary",
+        "Multi-Curve Comparison"
+    ])
+
+    github_raw_base = (
+        "https://raw.githubusercontent.com/"
+        "razzer1114/MuOnline_item_upgrade_cost_calculator/main/"
+    )
+
+    with fig_tab1:
+        st.subheader("Optimal Cost Surface")
+        st.caption("最佳期望成本曲面图：展示不同灵魂成功率与祝福相对价值下的最低期望强化成本。")
+        st.caption("Shows the minimum expected upgrade cost under different Soul success rates and Bless relative costs.")
+
+        st.image(
+            github_raw_base + "bestcost_3d_mapping.png",
+            caption="bestcost_3d_mapping.png",
+            use_container_width=True
+        )
+
+    with fig_tab2:
+        st.subheader("Strategy Phase Boundary")
+        st.caption("策略相变边界图：展示在不同参数条件下，是否需要使用祝福宝石，以及策略发生变化的区域。")
+        st.caption("Shows whether Bless Gems are needed under different parameter settings and where strategy regions change.")
+
+        st.image(
+            github_raw_base + "bless_need_boundary_map.png",
+            caption="bless_need_boundary_map.png",
+            use_container_width=True
+        )
+
+    with fig_tab3:
+        st.subheader("Multi-Curve Comparison")
+        st.caption("多曲线对比图：用于比较不同灵魂成功率下，祝福相对价值变化对最优期望成本的影响。")
+        st.caption("Compares how the optimal expected cost changes with Bless relative cost under different Soul success rates.")
+
+        st.image(
+            github_raw_base + "multi_p_soul_3d_cost_curves.png",
+            caption="multi_p_soul_3d_cost_curves.png",
+            use_container_width=True
+        )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ============================================================
 # 3.1 Sidebar Parameters / 左侧栏参数
 # ============================================================
