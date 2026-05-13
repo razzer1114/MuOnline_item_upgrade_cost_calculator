@@ -546,6 +546,7 @@ with st.expander("🎯 用途 WHY this tool exists", expanded=False):
         如果某类宝石价格明显低于其实际强化价值，可能意味着市场低估；如果价格过高，则可能需要减少使用或等待市场回落。
         
         对于长期玩家、商人、公会资源管理者而言，本工具可以辅助制定更加理性的资源配置方案。
+        
         ---
         
         ### Core Functions
