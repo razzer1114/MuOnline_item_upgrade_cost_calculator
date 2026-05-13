@@ -13,7 +13,7 @@
 - [**Code: Functional Web Calculator**](app_online.py)
 
 <details>
-<summary><b>📂 Expand Full Project Resources</b></summary>
+<summary><b>📂 Expand Full Project Resources including Mechanism Walkthrough</b></summary>
 
 <br>
 
