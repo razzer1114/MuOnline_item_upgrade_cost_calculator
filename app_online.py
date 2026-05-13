@@ -863,7 +863,7 @@ elif bless_cost_input_mode == "兑换比例 Exchange ratio":
         max_value=999999.0,
         value=1.0,
         step=0.0001,
-        format="%.4f"
+        format="%.0f"
     )
 
     soul_amount = st.sidebar.number_input(
@@ -872,7 +872,7 @@ elif bless_cost_input_mode == "兑换比例 Exchange ratio":
         max_value=999999.0,
         value=5.29,
         step=0.0001,
-        format="%.4f"
+        format="%.0f"
     )
 
     bless_relative_cost = soul_amount / bless_amount
