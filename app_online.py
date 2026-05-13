@@ -617,24 +617,13 @@ with st.expander("🎯 用途 WHy this tool exists", expanded=False):
     For long-term players, traders, and guild resource managers, the tool can support more rational resource allocation decisions.
     """)
 
-st.markdown("---")
-st.markdown("#### Developed by 作者： Razz ")
-st.markdown("GitHub: https://github.com/razzer1114/MuOnline_item_upgrade_cost_calculator")
-st.markdown("---")
 
+    # ============================================================
+    # Visualization Gallery / 仓库图表示例
+    # ============================================================
 
-
-# ============================================================
-# 3.0.1 Visualization Gallery / 仓库图表示例
-# ============================================================
-
-with st.expander("📊 图表示例 Visualization Gallery", expanded=False):
-
-    st.markdown("""
-    本项目除当前交互式计算结果外，还提供了多种用于理解强化策略变化规律的图表。
-    
-    In addition to the interactive results in this app, the GitHub repository also provides several visualization maps for understanding cost surfaces and strategy boundaries.
-    """)
+    st.markdown("---")
+    st.subheader("📊 Visualization Gallery / 可视化结果示例")
 
     fig_tab1, fig_tab2, fig_tab3 = st.tabs([
         "Optimal Cost Surface",
@@ -648,9 +637,16 @@ with st.expander("📊 图表示例 Visualization Gallery", expanded=False):
     )
 
     with fig_tab1:
-        st.subheader("Optimal Cost Surface")
-        st.caption("最佳期望成本曲面图：展示不同灵魂成功率与祝福相对价值下的最低期望强化成本。")
-        st.caption("Shows the minimum expected upgrade cost under different Soul success rates and Bless relative costs.")
+
+        st.markdown("""
+        **Optimal Cost Surface**
+        
+        展示不同灵魂成功率与祝福相对价值下，
+        最低期望强化成本的整体分布曲面。
+        
+        Shows the global minimum expected upgrade cost surface
+        under different Soul success rates and Bless relative costs.
+        """)
 
         st.image(
             github_raw_base + "bestcost_3d_mapping.png",
@@ -659,9 +655,16 @@ with st.expander("📊 图表示例 Visualization Gallery", expanded=False):
         )
 
     with fig_tab2:
-        st.subheader("Strategy Phase Boundary")
-        st.caption("策略相变边界图：展示在不同参数条件下，是否需要使用祝福宝石，以及策略发生变化的区域。")
-        st.caption("Shows whether Bless Gems are needed under different parameter settings and where strategy regions change.")
+
+        st.markdown("""
+        **Strategy Phase Boundary**
+        
+        展示不同参数条件下，
+        最优策略是否开始需要使用祝福宝石。
+        
+        Shows the phase boundary indicating when
+        Bless Gems become necessary in the optimal strategy.
+        """)
 
         st.image(
             github_raw_base + "bless_need_boundary_map.png",
@@ -670,9 +673,16 @@ with st.expander("📊 图表示例 Visualization Gallery", expanded=False):
         )
 
     with fig_tab3:
-        st.subheader("Multi-Curve Comparison")
-        st.caption("多曲线对比图：用于比较不同灵魂成功率下，祝福相对价值变化对最优期望成本的影响。")
-        st.caption("Compares how the optimal expected cost changes with Bless relative cost under different Soul success rates.")
+
+        st.markdown("""
+        **Multi-Curve Comparison**
+        
+        对比不同灵魂成功率下，
+        最优期望成本随祝福相对价值变化的趋势。
+        
+        Compares optimal expected cost curves
+        under multiple Soul success rates.
+        """)
 
         st.image(
             github_raw_base + "multi_p_soul_3d_cost_curves.png",
@@ -693,10 +703,10 @@ with st.expander("📊 图表示例 Visualization Gallery", expanded=False):
 
 
 
-
-
-
-
+st.markdown("---")
+st.markdown("#### Developed by 作者： Razz ")
+st.markdown("GitHub: https://github.com/razzer1114/MuOnline_item_upgrade_cost_calculator")
+st.markdown("---")
 
 
 
