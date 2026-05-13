@@ -564,81 +564,81 @@ with st.expander("🎯 用途 WHY this tool exists", expanded=False):
         
         - Detailed functions:
         
-            ### 1. Generate optimal upgrade strategies and reduce long-term upgrade cost
-            
-            Players can select an equipment type or manually define the Soul Gem success rate to calculate:
-            
-            - whether Bless Gems or Soul Gems should be used at each stage;
-            - the long-term cost difference between strategies;
-            - the optimal upgrade path under current parameters.
-            
-            For players who upgrade frequently or in bulk, the tool can significantly reduce long-term average gem consumption.
-            
-            ---
-            
-            ### 2. Estimate the theoretical value gap between +0 items and high-level items
-            
-            Using the relative market prices of Bless Gems and Soul Gems, the model can estimate the expected cost of upgrading from +0 to +7 or +9, providing a theoretical reference for item valuation.
-            
-            For example, the theoretical value of a +9 item should include:
-            
-            - the base item value;
-            - the expected resource cost consumed during upgrading.
-            
-            However, the actual market price of high-level items is often lower than their theoretical upgrade cost.
-            
-            This is because sellers of high-level items are usually attempting to quickly exchange them for cash or gems, creating a buyer-favored market. In contrast, +0 items are often obtained through farming or monster drops, where sellers typically expect a more balanced return.
-            
-            As a result:
-            
-            > the actual market price gap between +0 and +7 / +9 items is often lower than the theoretical upgrade cost.
-            
-            ---
-            
-            ### 3. Decide whether manual upgrading or direct purchase is more economical
-            
-            If the market price of a finished item is significantly lower than the expected upgrade cost calculated by the model, purchasing directly is usually the more stable and economical option.
-            
-            On the other hand:
-            
-            - when finished items are overpriced;
-            - when the market lacks supply;
-            - or when players have lower acquisition cost for resources;
-            
-            manual upgrading may become more advantageous.
-            
-            ---
-            
-            ### 4. Analyze strategy changes under different server economies
-            
-            Different servers may have dramatically different:
-            
-            - Bless Gem prices;
-            - Soul Gem prices;
-            - market supply-demand relationships.
-            
-            By adjusting the Bless relative cost and observing the **Strategy Switching Curve**, players can analyze:
-            
-            - when the optimal strategy changes;
-            - whether Bless Gems are worth using in the current server economy;
-            - which upgrade stages benefit most from Bless Gems;
-            - how upgrade risk changes under different market conditions.
-            
-            ---
-            
-            ### 5. Provide resource allocation references for in-game traders
-            
-            For trader-oriented players, the model can also help analyze:
-            
-            - whether gem prices are reasonable;
-            - whether item prices deviate from theoretical cost;
-            - potential opportunities for undervalued purchases, liquidation, hoarding, or market timing.
-            
-            For example:
-            
-            if a gem type appears significantly undervalued relative to its practical upgrade value, it may indicate a market opportunity; if overpriced, it may be preferable to reduce usage or wait for market correction.
-            
-            For long-term players, traders, and guild resource managers, the tool can support more rational resource allocation decisions.
+        ### 1. Generate optimal upgrade strategies and reduce long-term upgrade cost
+        
+        Players can select an equipment type or manually define the Soul Gem success rate to calculate:
+        
+        - whether Bless Gems or Soul Gems should be used at each stage;
+        - the long-term cost difference between strategies;
+        - the optimal upgrade path under current parameters.
+        
+        For players who upgrade frequently or in bulk, the tool can significantly reduce long-term average gem consumption.
+        
+        ---
+        
+        ### 2. Estimate the theoretical value gap between +0 items and high-level items
+        
+        Using the relative market prices of Bless Gems and Soul Gems, the model can estimate the expected cost of upgrading from +0 to +7 or +9, providing a theoretical reference for item valuation.
+        
+        For example, the theoretical value of a +9 item should include:
+        
+        - the base item value;
+        - the expected resource cost consumed during upgrading.
+        
+        However, the actual market price of high-level items is often lower than their theoretical upgrade cost.
+        
+        This is because sellers of high-level items are usually attempting to quickly exchange them for cash or gems, creating a buyer-favored market. In contrast, +0 items are often obtained through farming or monster drops, where sellers typically expect a more balanced return.
+        
+        As a result:
+        
+        > the actual market price gap between +0 and +7 / +9 items is often lower than the theoretical upgrade cost.
+        
+        ---
+        
+        ### 3. Decide whether manual upgrading or direct purchase is more economical
+        
+        If the market price of a finished item is significantly lower than the expected upgrade cost calculated by the model, purchasing directly is usually the more stable and economical option.
+        
+        On the other hand:
+        
+        - when finished items are overpriced;
+        - when the market lacks supply;
+        - or when players have lower acquisition cost for resources;
+        
+        manual upgrading may become more advantageous.
+        
+        ---
+        
+        ### 4. Analyze strategy changes under different server economies
+        
+        Different servers may have dramatically different:
+        
+        - Bless Gem prices;
+        - Soul Gem prices;
+        - market supply-demand relationships.
+        
+        By adjusting the Bless relative cost and observing the **Strategy Switching Curve**, players can analyze:
+        
+        - when the optimal strategy changes;
+        - whether Bless Gems are worth using in the current server economy;
+        - which upgrade stages benefit most from Bless Gems;
+        - how upgrade risk changes under different market conditions.
+        
+        ---
+        
+        ### 5. Provide resource allocation references for in-game traders
+        
+        For trader-oriented players, the model can also help analyze:
+        
+        - whether gem prices are reasonable;
+        - whether item prices deviate from theoretical cost;
+        - potential opportunities for undervalued purchases, liquidation, hoarding, or market timing.
+        
+        For example:
+        
+        if a gem type appears significantly undervalued relative to its practical upgrade value, it may indicate a market opportunity; if overpriced, it may be preferable to reduce usage or wait for market correction.
+        
+        For long-term players, traders, and guild resource managers, the tool can support more rational resource allocation decisions.
         """)
 
     with tab3:
