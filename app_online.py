@@ -353,14 +353,13 @@ st.caption(
 with st.expander("🎯 用途 WHY this tool exists", expanded=False):
 
     st.markdown("""
-    ### 这个工具可以做什么？What can this tool be used for?
+    ### 这个工具可以做什么？
     
     本工具并不是简单地估算“强化大概要花多少宝石”，而是用于在不同成功率、不同宝石价格条件下，自动寻找最优的强化策略，即各等级应该用祝福还是灵魂。
-            
+    
     This tool aims to automatically identify the optimal upgrade strategies under different success rates and gem price conditions.
-
-     ---
-       
+    
+    ---
     """)
 
     # ============================================================
@@ -468,6 +467,55 @@ with st.expander("🎯 用途 WHY this tool exists", expanded=False):
         
         ---
         
+        ### Detailed Functions / 功能细节
+        1. 生成最优强化策略，降低长期强化成本：
+        
+            玩家可以根据装备类型，或自行设定灵魂宝石成功率，计算从 +0 强化到目标等级（+7 或 +9）时：
+            
+            - 每个阶段更适合使用祝福还是灵魂；
+            - 不同策略之间的长期成本差异；
+            - 当前参数下的最优强化路径；
+            
+            对于经常或大量进行强化的玩家，该工具可以显著降低长期平均宝石消耗。
+        
+        2. 评估 +0 装备与高等级装备之间的理论价值差异：
+        
+            本工具可以根据市场中祝福宝石与灵魂宝石的相对价格，计算从 +0 强化到 +7 或 +9 的期望成本，从而为装备定价提供理论参考。
+            
+            例如，一件 +9 装备的理论价值，至少应考虑：
+            
+            - 基础装备价值；
+            - 强化过程中投入的期望资源成本。
+            
+            高等级装备的实际出售价格通常低于其理论强化成本，因为出售高阶装备的玩家希望快速换取现金或宝石。
+            
+            市场更偏向买方或对等交易环境，实际差价通常低于理论强化成本。
+        
+        3. 判断“自己强化”还是“直接购买”更划算：
+        
+            如果市场上的成品装备价格明显低于模型计算得到的强化期望成本，那么直接购买通常会更加稳定且经济。
+            
+            当高阶装备价格过高、市场缺货或玩家拥有更低资源获取成本时，自行强化可能更有优势。
+        
+        4. 分析不同服务器经济环境下的策略变化：
+        
+            不同区服中，祝福价格、灵魂价格、市场供需关系可能存在很大差异。
+            
+            通过调整祝福相对价值，并观察策略切换曲线（Strategy Switching Curve），玩家可以分析：
+            
+            - 最优策略在何时发生变化；
+            - 当前服务器中祝福是否值得使用；
+            - 哪些强化阶段更适合使用祝福；
+            - 不同经济环境下强化风险如何变化。
+        
+        5. 为游戏商人的资源配置提供参考：
+        
+            分析宝石相对价值是否合理、装备价格是否偏离理论成本，以及潜在低估、抛售、囤货或抄底机会。
+            
+            对于长期玩家、商人、公会资源管理者，本工具可以辅助制定更加理性的资源配置方案。
+        
+        ---
+        
         ### Core Functions
         The tool allows users to:
         
@@ -480,6 +528,23 @@ with st.expander("🎯 用途 WHY this tool exists", expanded=False):
         - Includes generating optimal gem usage per stage, comparing long-term costs of different strategies, CSV export;
         - Analyzes strategy switching curves under different server economies;
         - Supports custom Soul success rates and Bless relative cost.
+        
+        - Detailed functions:
+        
+        1. Generate optimal upgrade strategies:
+            - Decide Bless or Soul usage per stage, compare strategy costs, optimal upgrade paths, significant reduction of long-term gem consumption.
+        2. Estimate theoretical item value:
+            - Calculate expected cost from +0 to +7/+9 based on Bless/Soul relative prices.
+            - Includes base item value and resource cost during upgrading.
+            - Accounts for actual market price deviations.
+        3. Decide manual vs purchase:
+            - Compare model-based expected upgrade cost with market prices.
+            - Determine when manual upgrade is advantageous.
+        4. Analyze strategy changes per server:
+            - Evaluate impact of Bless/Soul prices and supply-demand variations.
+            - Observe Strategy Switching Curve for optimal timing.
+        5. Provide resource allocation guidance:
+            - Identify undervalued/overpriced gems, trading, hoarding, or market timing opportunities.
         """)
 
     with tab3:
