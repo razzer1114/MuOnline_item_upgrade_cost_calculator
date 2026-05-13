@@ -618,12 +618,20 @@ with st.expander("🎯 用途 WHy this tool exists", expanded=False):
     """)
 
 
-    # ============================================================
-    # Visualization Gallery / 仓库图表示例
-    # ============================================================
+# ============================================================
+# Visualization Gallery / 图表示例
+# ============================================================
 
-st.markdown("---")
-    st.subheader("📊 Visualization Gallery / 可视化结果示例")
+with st.expander("📊 可视化结果示例 Visualization Gallery", expanded=False):
+
+    st.markdown("""
+    本项目除当前交互式计算结果外，
+    还提供了多种用于分析强化策略变化规律的可视化图表。
+
+    In addition to the interactive optimizer,
+    the project also provides several visualization maps
+    for analyzing upgrade strategy behaviors.
+    """)
 
     fig_tab1, fig_tab2, fig_tab3 = st.tabs([
         "Optimal Cost Surface",
@@ -633,67 +641,59 @@ st.markdown("---")
 
     github_raw_base = (
         "https://raw.githubusercontent.com/"
-        "razzer1114/MuOnline_item_upgrade_cost_calculator/main/"
+        "razzer1114/MuOnline_item_upgrade_cost_calculator/master/"
     )
 
     with fig_tab1:
 
         st.markdown("""
-        **Optimal Cost Surface**
-        
+        ### Optimal Cost Surface
+
         展示不同灵魂成功率与祝福相对价值下，
         最低期望强化成本的整体分布曲面。
-        
+
         Shows the global minimum expected upgrade cost surface
         under different Soul success rates and Bless relative costs.
         """)
 
         st.image(
             github_raw_base + "bestcost_3d_mapping.png",
-            caption="bestcost_3d_mapping.png",
             use_container_width=True
         )
 
     with fig_tab2:
 
         st.markdown("""
-        **Strategy Phase Boundary**
-        
+        ### Strategy Phase Boundary
+
         展示不同参数条件下，
-        最优策略是否开始需要使用祝福宝石。
-        
-        Shows the phase boundary indicating when
-        Bless Gems become necessary in the optimal strategy.
+        最优策略何时开始需要使用祝福宝石。
+
+        Shows when Bless Gems become necessary
+        in the optimal strategy.
         """)
 
         st.image(
             github_raw_base + "bless_need_boundary_map.png",
-            caption="bless_need_boundary_map.png",
             use_container_width=True
         )
 
     with fig_tab3:
 
         st.markdown("""
-        **Multi-Curve Comparison**
-        
+        ### Multi-Curve Comparison
+
         对比不同灵魂成功率下，
-        最优期望成本随祝福相对价值变化的趋势。
-        
-        Compares optimal expected cost curves
+        最优成本曲线随祝福相对价值变化的趋势。
+
+        Compares optimal cost curves
         under multiple Soul success rates.
         """)
 
         st.image(
             github_raw_base + "multi_p_soul_3d_cost_curves.png",
-            caption="multi_p_soul_3d_cost_curves.png",
             use_container_width=True
         )
-
-
-
-
-
 
 
 
