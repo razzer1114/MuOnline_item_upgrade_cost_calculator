@@ -361,7 +361,7 @@ with st.expander("🎯 用途 WHY this tool exists", expanded=False):
     
     ### What can this tool be used for?
     
-    This tool is not simply designed to estimate “how many gems upgrading may cost.” Instead, it aims to automatically identify  optimal upgrade strategies under different success rates and gem price conditions.
+    This tool aims to automatically identify the optimal upgrade strategies under different success rates and gem price conditions.
        
     """)
 
