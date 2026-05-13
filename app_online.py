@@ -467,53 +467,85 @@ with st.expander("🎯 用途 WHY this tool exists", expanded=False):
         
         ---
         
-        ### Detailed Functions / 功能细节
-        1. 生成最优强化策略，降低长期强化成本：
+        ### 1. 生成最优强化策略，降低长期强化成本
         
-            玩家可以根据装备类型，或自行设定灵魂宝石成功率，计算从 +0 强化到目标等级（+7 或 +9）时：
-            
-            - 每个阶段更适合使用祝福还是灵魂；
-            - 不同策略之间的长期成本差异；
-            - 当前参数下的最优强化路径；
-            
-            对于经常或大量进行强化的玩家，该工具可以显著降低长期平均宝石消耗。
+        玩家可以根据装备类型，或自行设定灵魂宝石成功率，计算从 +0 强化到目标等级（+7 或 +9）时：
         
-        2. 评估 +0 装备与高等级装备之间的理论价值差异：
+        - 每个阶段更适合使用祝福还是灵魂；
+        - 不同策略之间的长期成本差异；
+        - 当前参数下的最优强化路径。
         
-            本工具可以根据市场中祝福宝石与灵魂宝石的相对价格，计算从 +0 强化到 +7 或 +9 的期望成本，从而为装备定价提供理论参考。
-            
-            例如，一件 +9 装备的理论价值，至少应考虑：
-            
-            - 基础装备价值；
-            - 强化过程中投入的期望资源成本。
-            
-            高等级装备的实际出售价格通常低于其理论强化成本，因为出售高阶装备的玩家希望快速换取现金或宝石。
-            
-            市场更偏向买方或对等交易环境，实际差价通常低于理论强化成本。
+        对于经常或大量进行强化的玩家，该工具可以显著降低长期平均宝石消耗。
         
-        3. 判断“自己强化”还是“直接购买”更划算：
+        ---
         
-            如果市场上的成品装备价格明显低于模型计算得到的强化期望成本，那么直接购买通常会更加稳定且经济。
-            
-            当高阶装备价格过高、市场缺货或玩家拥有更低资源获取成本时，自行强化可能更有优势。
+        ### 2. 评估 +0 装备与高等级装备之间的理论价值差异
         
-        4. 分析不同服务器经济环境下的策略变化：
+        本工具可以根据市场中祝福宝石与灵魂宝石的相对价格，计算从 +0 强化到 +7 或 +9 的期望成本，从而为装备定价提供理论参考。
         
-            不同区服中，祝福价格、灵魂价格、市场供需关系可能存在很大差异。
-            
-            通过调整祝福相对价值，并观察策略切换曲线（Strategy Switching Curve），玩家可以分析：
-            
-            - 最优策略在何时发生变化；
-            - 当前服务器中祝福是否值得使用；
-            - 哪些强化阶段更适合使用祝福；
-            - 不同经济环境下强化风险如何变化。
+        例如，一件 +9 装备的理论价值，至少应考虑：
         
-        5. 为游戏商人的资源配置提供参考：
+        - 基础装备价值；
+        - 强化过程中投入的期望资源成本。
         
-            分析宝石相对价值是否合理、装备价格是否偏离理论成本，以及潜在低估、抛售、囤货或抄底机会。
-            
-            对于长期玩家、商人、公会资源管理者，本工具可以辅助制定更加理性的资源配置方案。
+        但需要注意：
         
+        高等级装备的实际出售价格通常低于其理论强化成本。
+        
+        因为出售高阶装备的玩家，往往希望快速换取现金或宝石，因此市场更偏向“买方市场”；而 +0 装备更多来自打宝掉落，卖方通常希望获得合理回报，因此市场状态更接近对等交易。
+        
+        因此：
+        
+        > +7 或 +9 与 +0 之间的实际市场差价，通常低于理论强化成本。
+        
+        ---
+        
+        ### 3. 判断“自己强化”还是“直接购买”更划算
+        
+        如果市场上的成品装备价格明显低于模型计算得到的强化期望成本，那么直接购买通常会更加稳定且经济。
+        
+        反之：
+        
+        - 当高阶装备价格过高；
+        - 市场缺货；
+        - 或玩家拥有更低资源获取成本时；
+        
+        自行强化可能更有优势。
+        
+        ---
+        
+        ### 4. 分析不同服务器经济环境下的策略变化
+        
+        不同区服中：
+        
+        - 祝福价格；
+        - 灵魂价格；
+        - 市场供需关系；
+        
+        可能存在非常大的差异。
+        
+        通过调整祝福相对价值，并观察 **策略切换曲线（Strategy Switching Curve）**，玩家可以分析：
+        
+        - 最优策略在何时发生变化；
+        - 当前服务器中祝福是否“值得使用”；
+        - 哪些强化阶段更适合使用祝福；
+        - 不同经济环境下强化风险如何变化。
+        
+        ---
+        
+        ### 5. 为游戏商人的资源配置提供参考
+        
+        对于商人型玩家，本工具还可以用于分析：
+        
+        - 宝石相对价值是否合理；
+        - 装备价格是否偏离理论成本；
+        - 是否存在低估、抛售、囤货或抄底机会。
+        
+        例如：
+        
+        如果某类宝石价格明显低于其实际强化价值，可能意味着市场低估；如果价格过高，则可能需要减少使用或等待市场回落。
+        
+        对于长期玩家、商人、公会资源管理者而言，本工具可以辅助制定更加理性的资源配置方案。
         ---
         
         ### Core Functions
@@ -531,20 +563,81 @@ with st.expander("🎯 用途 WHY this tool exists", expanded=False):
         
         - Detailed functions:
         
-        1. Generate optimal upgrade strategies:
-            - Decide Bless or Soul usage per stage, compare strategy costs, optimal upgrade paths, significant reduction of long-term gem consumption.
-        2. Estimate theoretical item value:
-            - Calculate expected cost from +0 to +7/+9 based on Bless/Soul relative prices.
-            - Includes base item value and resource cost during upgrading.
-            - Accounts for actual market price deviations.
-        3. Decide manual vs purchase:
-            - Compare model-based expected upgrade cost with market prices.
-            - Determine when manual upgrade is advantageous.
-        4. Analyze strategy changes per server:
-            - Evaluate impact of Bless/Soul prices and supply-demand variations.
-            - Observe Strategy Switching Curve for optimal timing.
-        5. Provide resource allocation guidance:
-            - Identify undervalued/overpriced gems, trading, hoarding, or market timing opportunities.
+            ### 1. Generate optimal upgrade strategies and reduce long-term upgrade cost
+            
+            Players can select an equipment type or manually define the Soul Gem success rate to calculate:
+            
+            - whether Bless Gems or Soul Gems should be used at each stage;
+            - the long-term cost difference between strategies;
+            - the optimal upgrade path under current parameters.
+            
+            For players who upgrade frequently or in bulk, the tool can significantly reduce long-term average gem consumption.
+            
+            ---
+            
+            ### 2. Estimate the theoretical value gap between +0 items and high-level items
+            
+            Using the relative market prices of Bless Gems and Soul Gems, the model can estimate the expected cost of upgrading from +0 to +7 or +9, providing a theoretical reference for item valuation.
+            
+            For example, the theoretical value of a +9 item should include:
+            
+            - the base item value;
+            - the expected resource cost consumed during upgrading.
+            
+            However, the actual market price of high-level items is often lower than their theoretical upgrade cost.
+            
+            This is because sellers of high-level items are usually attempting to quickly exchange them for cash or gems, creating a buyer-favored market. In contrast, +0 items are often obtained through farming or monster drops, where sellers typically expect a more balanced return.
+            
+            As a result:
+            
+            > the actual market price gap between +0 and +7 / +9 items is often lower than the theoretical upgrade cost.
+            
+            ---
+            
+            ### 3. Decide whether manual upgrading or direct purchase is more economical
+            
+            If the market price of a finished item is significantly lower than the expected upgrade cost calculated by the model, purchasing directly is usually the more stable and economical option.
+            
+            On the other hand:
+            
+            - when finished items are overpriced;
+            - when the market lacks supply;
+            - or when players have lower acquisition cost for resources;
+            
+            manual upgrading may become more advantageous.
+            
+            ---
+            
+            ### 4. Analyze strategy changes under different server economies
+            
+            Different servers may have dramatically different:
+            
+            - Bless Gem prices;
+            - Soul Gem prices;
+            - market supply-demand relationships.
+            
+            By adjusting the Bless relative cost and observing the **Strategy Switching Curve**, players can analyze:
+            
+            - when the optimal strategy changes;
+            - whether Bless Gems are worth using in the current server economy;
+            - which upgrade stages benefit most from Bless Gems;
+            - how upgrade risk changes under different market conditions.
+            
+            ---
+            
+            ### 5. Provide resource allocation references for in-game traders
+            
+            For trader-oriented players, the model can also help analyze:
+            
+            - whether gem prices are reasonable;
+            - whether item prices deviate from theoretical cost;
+            - potential opportunities for undervalued purchases, liquidation, hoarding, or market timing.
+            
+            For example:
+            
+            if a gem type appears significantly undervalued relative to its practical upgrade value, it may indicate a market opportunity; if overpriced, it may be preferable to reduce usage or wait for market correction.
+            
+            For long-term players, traders, and guild resource managers, the tool can support more rational resource allocation decisions.
         """)
 
     with tab3:
