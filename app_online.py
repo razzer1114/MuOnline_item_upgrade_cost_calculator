@@ -622,7 +622,7 @@ with st.expander("🎯 用途 WHy this tool exists", expanded=False):
     # Visualization Gallery / 仓库图表示例
     # ============================================================
 
-    st.markdown("---")
+st.markdown("---")
     st.subheader("📊 Visualization Gallery / 可视化结果示例")
 
     fig_tab1, fig_tab2, fig_tab3 = st.tabs([
