@@ -853,7 +853,7 @@ elif bless_cost_input_mode == "兑换比例 Exchange ratio":
         "祝福数量(颗) Bless Amount (gem)",
         min_value=1,
         max_value=999999,
-        value=1,
+        value=9,
         step=1,
 
     )
@@ -862,7 +862,7 @@ elif bless_cost_input_mode == "兑换比例 Exchange ratio":
         "等于多少灵魂 Equivalent Soul Amount",
         min_value=1,
         max_value=999999,
-        value=5,
+        value=50,
         step=1,
 
     )
