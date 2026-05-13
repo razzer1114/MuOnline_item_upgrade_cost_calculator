@@ -351,7 +351,7 @@ st.caption(
 
 
 
-with st.expander("🎯 用途 WHy this tool exists", expanded=False):
+with st.expander("🎯 用途 WHY this tool exists", expanded=False):
 
     st.markdown("""
     ### 这个工具可以做什么？
