@@ -23,27 +23,27 @@
 
 - [Theory: +0 to +9 Upgrade Bellman + Markov Model (Soul & Bless Gems, Any Success Rate, Any Strategy, Any Relative Cost)](Calculator_MK2.md)
 
-- [Code: +0 to +9 Upgrade – Enumerate All Strategies, Compute Expected Cost, and Rank Optimal (Soul & Bless Gems, Any Success Rate, Any Strategy, Any Relative Cost)](item_upgrade_to_lvl_9_Bellman_calculator.py)
+- [Code: +0 to +15 – Expected Cost Calculation and Optimal Strategy](item_upgrade_to_lvl_15_Bellman_calculator.py)
 
-- [Code: +0 to +9 Upgrade – Expected Cost Calculation (Soul Gems Only, Any Success Rate)](item_upgrade_to_lvl_9_markov_chain_calculator.py)
+- [Code: +0 to +9 – Expected Cost Calculation and Optimal Strategy](item_upgrade_to_lvl_9_Bellman_calculator.py)
 
-- [Code: +0 to +7 Upgrade – Expected Cost Calculation (Soul Gems Only, Any Success Rate)](item_upgrade_to_lvl_7_markov_chain_calculator.py)
+- [Code: +0 to +7 – Expected Cost Calculation and Optimal Strategy](item_upgrade_to_lvl_7_Bellman_calculator.py)
 
-- [Code: +0 to +7 Upgrade – Expected Cost Calculation (Soul & Bless Gems, Any Success Rate, Any Strategy, Any Relative Cost)](item_upgrade_to_lvl_7_Bellman_calculator.py)
+- [Code: +0 to +6 – Expected Cost Calculation and Optimal Strategy](item_upgrade_to_lvl_6_Bellman_calculator.py)
 
-- [Code: +0 to +6 Upgrade – Expected Cost Calculation (Soul & Bless Gems, Any Success Rate, Any Strategy, Any Relative Cost)](item_upgrade_to_lvl_6_Bellman_calculator.py)
+- [Code: +0 to +9 – Expected Cost Calculation (Soul Only)](item_upgrade_to_lvl_9_markov_chain_calculator.py)
 
-- [Code: +0 to +15 Upgrade – Expected Cost Calculation (Soul Gems Only, Any Success Rate)](item_upgrade_to_lvl_15_Bellman_calculator.py)
+- [Code: +0 to +7 – Expected Cost Calculation (Soul Only)](item_upgrade_to_lvl_7_markov_chain_calculator.py)
 
-- [Code: +0 to +9 Upgrade – Optimal Strategy Cost Curve with Switching Points (Soul & Bless Gems, Fixed Success Rate, Any Strategy, Any Relative Cost)](strategy_switching_cost_curve.py)
+- [Code: +0 to +9 – Analysis: Optimal Strategy Cost Curve with Switching Points](strategy_switching_cost_curve.py)
 
-- [Code: +0 to +9 Upgrade – Multi-Curve 3D Optimal Strategy Visualization (Multiple Typical Success Rates, Soul & Bless Gems)](Multi_p_cure.py)
+- [Code: +0 to +9 – Analysis: Multi-Curve 3D Optimal Strategy Visualization (Multiple Typical Success Rates)](Multi_p_cure.py)
 
-- [Code: +0 to +9 Upgrade – Bless-Use Strategies boundary Map](Bless_Use_Boundary_Mapping.py)
+- [Code: +0 to +9 – Analysis: Bless-Use Strategies boundary Map](Bless_Use_Boundary_Mapping.py)
 
-- [Code: +0 to +9 Upgrade – 3D Mapping of Best Cost vs Success Rate and Relative Cost](Graph_LowestCost_vs_p_and_cob.py)
+- [Code: +0 to +9 – Analysis: 3D Mapping of Best Cost vs Success Rate and Relative Cost](Graph_LowestCost_vs_p_and_cob.py)
 
-- [Code: Combined Mapping of Bless-Use Strategies boundary Map and 3D Mapping of Best Cost vs Success Rate and Relative Cost](Combined_Mapping.py)
+- [Code: +0 to +9 – Analysis: Combined Mapping of Bless-Use Strategies boundary Map and 3D Mapping of Best Cost vs Success Rate and Relative Cost](Combined_Mapping.py)
 
 </details>
 
