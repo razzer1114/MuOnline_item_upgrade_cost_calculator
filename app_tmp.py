@@ -13,88 +13,103 @@ import streamlit as st
 # 1. Core Model / 核心模型
 # ============================================================
 
-cost_soul = 1  # Cost of Soul gem / 灵魂宝石成本
+cost_soul = 1
 
 
 def fail_state(i):
-    """
-    Failure rollback rule.
-    灵魂宝石强化失败后的回退规则。
-    """
     if i == 0:
         return 0
     elif 1 <= i <= 6:
         return i - 1
-    elif i in [7, 8]:
+    elif 7 <= i <= 8:
+        return 0
+    elif 9 <= i <= 14:
         return 0
     else:
         raise ValueError("Invalid state / 无效状态")
 
 
-def get_model_config(target_level):
-    """
-    Get model configuration according to target level.
-    根据目标等级获取模型配置。
+level_upgrade_info = {
+    9:  [1, 1, 1, 0.60, 0.50, 0.40],
+    10: [2, 2, 1, 0.60, 0.50, 0.40],
+    11: [3, 3, 1, 0.55, 0.45, 0.35],
+    12: [4, 4, 1, 0.55, 0.45, 0.35],
+    13: [5, 5, 1, 0.50, 0.40, 0.30],
+    14: [6, 6, 1, 0.50, 0.40, 0.30],
+}
 
-    target_level = 7: calculate +0 to +7
-    target_level = 9: calculate +0 to +9
-    """
+
+def get_model_config(target_level):
     transient_states = list(range(target_level))
     absorbing_state = target_level
 
-    # +0→+6 are the only free decision stages.
-    # +0→+6 是可自由选择祝福/灵魂的阶段。
-    decision_count = 6
-
-    # Total upgrade stages = target_level
-    # Example:
-    # +0→+7 has 7 stages: 0,1,2,3,4,5,6
-    # +0→+9 has 9 stages: 0,1,2,3,4,5,6,7,8
+    decision_count = min(6, target_level)
     total_stage_count = target_level
-
     forced_soul_count = total_stage_count - decision_count
+    high_stage_count = max(0, target_level - 9)
 
     return {
         "transient_states": transient_states,
         "absorbing_state": absorbing_state,
         "decision_count": decision_count,
         "total_stage_count": total_stage_count,
-        "forced_soul_count": forced_soul_count
+        "forced_soul_count": forced_soul_count,
+        "high_stage_count": high_stage_count
     }
 
 
+def get_high_level_success_rate(i, high_item_type_index, use_luck, luck_success_bonus):
+    base_success = level_upgrade_info[i][high_item_type_index]
+
+    if use_luck:
+        return min(base_success + luck_success_bonus, 1.0)
+
+    return base_success
+
+
 def generate_strategies(target_level):
-    """
-    Generate all 64 strategies.
-    生成全部 64 种策略。
-
-    +0 to +6: choose Bless or Soul.
-    +0 到 +6：可选择祝福或灵魂。
-
-    After +6: fixed as Soul.
-    +6 之后：固定使用灵魂。
-    """
     config = get_model_config(target_level)
     decision_count = config["decision_count"]
     forced_soul_count = config["forced_soul_count"]
+    high_stage_count = config["high_stage_count"]
 
     strategies = []
 
     for choices in itertools.product(["B", "S"], repeat=decision_count):
         strategy = list(choices) + ["S"] * forced_soul_count
-        strategies.append(strategy)
+
+        if high_stage_count > 0:
+            for protect_flags in itertools.product([False, True], repeat=high_stage_count):
+                for luck_flags in itertools.product([False, True], repeat=high_stage_count):
+                    strategies.append({
+                        "strategy": strategy,
+                        "protect_flags": list(protect_flags),
+                        "luck_flags": list(luck_flags)
+                    })
+        else:
+            strategies.append({
+                "strategy": strategy,
+                "protect_flags": [],
+                "luck_flags": []
+            })
 
     return strategies
 
 
-def build_transition_matrix(strategy, soul_success_rate, target_level):
-    """
-    Build transient transition matrix Q.
-    构建暂态转移矩阵 Q。
-    """
+def build_transition_matrix(
+    strategy_info,
+    soul_success_rate,
+    target_level,
+    high_item_type_index,
+    luck_success_bonus
+):
     config = get_model_config(target_level)
     transient_states = config["transient_states"]
     absorbing_state = config["absorbing_state"]
+
+    strategy = strategy_info["strategy"]
+    protect_flags = strategy_info["protect_flags"]
+    luck_flags = strategy_info["luck_flags"]
 
     q_soul = 1 - soul_success_rate
     Q = np.zeros((target_level, target_level))
@@ -103,24 +118,42 @@ def build_transition_matrix(strategy, soul_success_rate, target_level):
         action = strategy[i]
 
         if action == "B":
-            # Bless gem: deterministic success.
-            # 祝福宝石：必定成功。
             next_state = i + 1
 
             if next_state < absorbing_state:
                 Q[i, next_state] = 1.0
 
         elif action == "S":
-            # Soul gem: probabilistic success/failure.
-            # 灵魂宝石：概率成功/失败。
-            success_state = i + 1
-            failure_state = fail_state(i)
+            if i <= 8:
+                success_state = i + 1
+                failure_state = fail_state(i)
 
-            if success_state < absorbing_state:
-                Q[i, success_state] += soul_success_rate
+                if success_state < absorbing_state:
+                    Q[i, success_state] += soul_success_rate
 
-            if failure_state < absorbing_state:
-                Q[i, failure_state] += q_soul
+                if failure_state < absorbing_state:
+                    Q[i, failure_state] += q_soul
+
+            else:
+                high_index = i - 9
+                use_protect = protect_flags[high_index]
+                use_luck = luck_flags[high_index]
+
+                success_rate = get_high_level_success_rate(
+                    i,
+                    high_item_type_index,
+                    use_luck,
+                    luck_success_bonus
+                )
+
+                success_state = i + 1
+                failure_state = fail_state(i)
+
+                if success_state < absorbing_state:
+                    Q[i, success_state] += success_rate
+
+                if failure_state < absorbing_state:
+                    Q[i, failure_state] += 1 - success_rate
 
         else:
             raise ValueError("Unknown action / 未知动作")
@@ -128,58 +161,191 @@ def build_transition_matrix(strategy, soul_success_rate, target_level):
     return Q
 
 
-def evaluate_strategy(strategy, soul_success_rate, bless_relative_cost, target_level):
-    """
-    Evaluate one strategy.
-    评估单个策略。
-
-    Returns expected Bless consumption, expected Soul consumption,
-    and expected total cost converted into Soul units.
-    返回期望祝福消耗、期望灵魂消耗，以及折算为灵魂单位的期望总成本。
-    """
+def build_cost_vectors(
+    strategy_info,
+    soul_success_rate,
+    bless_relative_cost,
+    target_level,
+    high_item_type_index,
+    item_0_cost,
+    chaos_cost,
+    talisman_protect_cost,
+    talisman_luck_cost,
+    luck_success_bonus
+):
     config = get_model_config(target_level)
     transient_states = config["transient_states"]
 
-    Q = build_transition_matrix(strategy, soul_success_rate, target_level)
-    N = np.linalg.inv(np.eye(target_level) - Q)
+    strategy = strategy_info["strategy"]
+    protect_flags = strategy_info["protect_flags"]
+    luck_flags = strategy_info["luck_flags"]
 
-    bless_cost_vector = np.zeros(target_level)
-    soul_cost_vector = np.zeros(target_level)
-    total_cost_vector = np.zeros(target_level)
+    bless_vec = np.zeros(target_level)
+    soul_vec = np.zeros(target_level)
+    chaos_vec = np.zeros(target_level)
+    protect_vec = np.zeros(target_level)
+    luck_vec = np.zeros(target_level)
+    item_0_loss_count_vec = np.zeros(target_level)
+    item_0_loss_cost_vec = np.zeros(target_level)
+    total_vec = np.zeros(target_level)
 
     for i in transient_states:
-        if strategy[i] == "B":
-            bless_cost_vector[i] = 1
-            total_cost_vector[i] = bless_relative_cost
-        else:
-            soul_cost_vector[i] = 1
-            total_cost_vector[i] = cost_soul
+        action = strategy[i]
 
-    expected_bless = (N @ bless_cost_vector)[0]
-    expected_soul = (N @ soul_cost_vector)[0]
-    expected_total = (N @ total_cost_vector)[0]
+        if i <= 8:
+            if action == "B":
+                bless_vec[i] = 1
+                total_vec[i] = bless_relative_cost
+            else:
+                soul_vec[i] = 1
+                total_vec[i] = cost_soul
+
+        else:
+            high_index = i - 9
+            use_protect = protect_flags[high_index]
+            use_luck = luck_flags[high_index]
+
+            B, S, chaos = level_upgrade_info[i][:3]
+
+            success_rate = get_high_level_success_rate(
+                i,
+                high_item_type_index,
+                use_luck,
+                luck_success_bonus
+            )
+            failure_rate = 1 - success_rate
+
+            bless_vec[i] = B
+            soul_vec[i] = S
+            chaos_vec[i] = chaos
+
+            if use_protect:
+                protect_vec[i] = 1
+
+            if use_luck:
+                luck_vec[i] = 1
+
+            if not use_protect:
+                item_0_loss_count_vec[i] = failure_rate
+                item_0_loss_cost_vec[i] = failure_rate * item_0_cost
+
+            total_vec[i] = (
+                B * bless_relative_cost
+                + S * cost_soul
+                + chaos * chaos_cost
+                + protect_vec[i] * talisman_protect_cost
+                + luck_vec[i] * talisman_luck_cost
+                + item_0_loss_cost_vec[i]
+            )
+
+    return (
+        bless_vec,
+        soul_vec,
+        chaos_vec,
+        protect_vec,
+        luck_vec,
+        item_0_loss_count_vec,
+        item_0_loss_cost_vec,
+        total_vec
+    )
+
+
+def evaluate_strategy(
+    strategy_info,
+    soul_success_rate,
+    bless_relative_cost,
+    target_level,
+    high_item_type_index,
+    item_0_cost,
+    chaos_cost,
+    talisman_protect_cost,
+    talisman_luck_cost,
+    luck_success_bonus
+):
+    Q = build_transition_matrix(
+        strategy_info,
+        soul_success_rate,
+        target_level,
+        high_item_type_index,
+        luck_success_bonus
+    )
+
+    N = np.linalg.inv(np.eye(target_level) - Q)
+
+    (
+        bless_vec,
+        soul_vec,
+        chaos_vec,
+        protect_vec,
+        luck_vec,
+        item_0_loss_count_vec,
+        item_0_loss_cost_vec,
+        total_vec
+    ) = build_cost_vectors(
+        strategy_info,
+        soul_success_rate,
+        bless_relative_cost,
+        target_level,
+        high_item_type_index,
+        item_0_cost,
+        chaos_cost,
+        talisman_protect_cost,
+        talisman_luck_cost,
+        luck_success_bonus
+    )
+
+    expected_bless = (N @ bless_vec)[0]
+    expected_soul = (N @ soul_vec)[0]
+    expected_chaos = (N @ chaos_vec)[0]
+    expected_protect = (N @ protect_vec)[0]
+    expected_luck = (N @ luck_vec)[0]
+    expected_item_0_loss_count = (N @ item_0_loss_count_vec)[0]
+    expected_item_0_loss_cost = (N @ item_0_loss_cost_vec)[0]
+    expected_total = (N @ total_vec)[0]
+
+    protect_str = "".join(["1" if x else "0" for x in strategy_info["protect_flags"]])
+    luck_str = "".join(["1" if x else "0" for x in strategy_info["luck_flags"]])
 
     return {
-        "strategy": "".join(strategy),
+        "strategy": "".join(strategy_info["strategy"]),
+        "protect_flags": protect_str,
+        "luck_flags": luck_str,
         "expected_bless": expected_bless,
         "expected_soul": expected_soul,
+        "expected_chaos": expected_chaos,
+        "expected_protect": expected_protect,
+        "expected_luck": expected_luck,
+        "expected_item_0_loss_count": expected_item_0_loss_count,
+        "expected_item_0_loss_cost": expected_item_0_loss_cost,
         "expected_total_cost": expected_total
     }
 
 
-def find_optimal_strategy(soul_success_rate, bless_relative_cost, target_level):
-    """
-    Enumerate all strategies and rank them by expected total cost.
-    枚举全部策略，并按期望总成本升序排序。
-    """
+def find_optimal_strategy(
+    soul_success_rate,
+    bless_relative_cost,
+    target_level,
+    high_item_type_index,
+    item_0_cost,
+    chaos_cost,
+    talisman_protect_cost,
+    talisman_luck_cost,
+    luck_success_bonus
+):
     results = []
 
-    for strategy in generate_strategies(target_level):
+    for strategy_info in generate_strategies(target_level):
         result = evaluate_strategy(
-            strategy,
+            strategy_info,
             soul_success_rate,
             bless_relative_cost,
-            target_level
+            target_level,
+            high_item_type_index,
+            item_0_cost,
+            chaos_cost,
+            talisman_protect_cost,
+            talisman_luck_cost,
+            luck_success_bonus
         )
         results.append(result)
 
@@ -190,143 +356,37 @@ def find_optimal_strategy(soul_success_rate, bless_relative_cost, target_level):
     return df
 
 
-def generate_switching_curve(
-    soul_success_rate,
-    bless_cost_min,
-    bless_cost_max,
-    num_points,
-    target_level
-):
-    """
-    Generate optimal cost curve under fixed Soul success rate.
-    在固定灵魂成功率下，生成最优期望成本曲线。
-    """
-    bless_cost_values = np.linspace(
-        bless_cost_min,
-        bless_cost_max,
-        num_points
-    )
-
-    expected_costs = []
-    best_strategies = []
-
-    for bless_relative_cost in bless_cost_values:
-        result_df = find_optimal_strategy(
-            soul_success_rate,
-            bless_relative_cost,
-            target_level
-        )
-        best = result_df.iloc[0]
-
-        expected_costs.append(best["expected_total_cost"])
-        best_strategies.append(best["strategy"])
-
-    return bless_cost_values, np.array(expected_costs), best_strategies
-
-
-def find_switching_points(
-    bless_cost_values,
-    expected_costs,
-    best_strategies
-):
-    """
-    Detect points where the optimal strategy changes.
-    检测最优策略发生切换的位置。
-    """
-    switch_points = []
-
-    for i in range(1, len(best_strategies)):
-        if best_strategies[i] != best_strategies[i - 1]:
-            switch_points.append({
-                "index": i,
-                "bless_relative_cost": bless_cost_values[i],
-                "expected_total_cost": expected_costs[i],
-                "from_strategy": best_strategies[i - 1],
-                "to_strategy": best_strategies[i]
-            })
-
-    return pd.DataFrame(switch_points)
-
-
-def strategy_to_stage_table(strategy):
-    """
-    Convert strategy string into a stage-action table.
-    将策略字符串转换为“强化阶段—宝石选择”表。
-    """
+def strategy_to_stage_table(strategy, protect_flags="", luck_flags=""):
     rows = []
 
     for i, action in enumerate(strategy):
-        rows.append({
+        row = {
             "upgrade_stage / 强化阶段": f"+{i} → +{i + 1}",
             "action / 宝石选择": "Bless / 祝福" if action == "B" else "Soul / 灵魂",
             "symbol / 策略符号": action
-        })
+        }
+
+        if i >= 9:
+            high_index = i - 9
+            row["protect / 保护符"] = (
+                "Yes / 使用" if high_index < len(protect_flags) and protect_flags[high_index] == "1"
+                else "No / 不使用"
+            )
+            row["luck / 幸运符"] = (
+                "Yes / 使用" if high_index < len(luck_flags) and luck_flags[high_index] == "1"
+                else "No / 不使用"
+            )
+        else:
+            row["protect / 保护符"] = "-"
+            row["luck / 幸运符"] = "-"
+
+        rows.append(row)
 
     return pd.DataFrame(rows)
 
 
 # ============================================================
-# 2. Plot Functions / 绘图函数
-# ============================================================
-
-def plot_switching_curve(
-    bless_cost_values,
-    expected_costs,
-    switch_df,
-    soul_success_rate,
-    target_level
-):
-    """
-    Plot optimal expected cost curve and strategy switching points.
-    绘制最优期望成本曲线与策略切换点。
-    """
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    ax.plot(
-        bless_cost_values,
-        expected_costs,
-        linewidth=2,
-        label="Optimal expected cost / 最优期望成本"
-    )
-
-    for _, row in switch_df.iterrows():
-        x = row["bless_relative_cost"]
-        y = row["expected_total_cost"]
-
-        ax.axvline(x=x, linestyle="--", linewidth=1, alpha=0.7)
-        ax.scatter(x, y, s=60)
-
-        label_text = (
-            f'{row["from_strategy"]}\n'
-            f'→ {row["to_strategy"]}\n'
-            f'cost={x:.2f}'
-        )
-
-        ax.annotate(
-            label_text,
-            xy=(x, y),
-            xytext=(30, 35),
-            textcoords="offset points",
-            fontsize=8,
-            arrowprops=dict(arrowstyle="->", linewidth=0.8)
-        )
-
-    ax.set_xlabel("祝福相对价值 Bless Relative Cost")
-    ax.set_ylabel("最小期望总成本 Minimum Expected Total Cost")
-    ax.set_title(
-        f"策略切换曲线 Strategy Switching Curve "
-        f"(目标 Target = +{target_level}, "
-        f"灵魂成功率 Soul Success Rate = {soul_success_rate})"
-    )
-    ax.grid(True, alpha=0.3)
-    ax.legend()
-
-    fig.tight_layout()
-    return fig
-
-
-# ============================================================
-# 3. Streamlit App / Streamlit 应用界面
+# 2. Streamlit App / Streamlit 应用界面
 # ============================================================
 
 st.set_page_config(
@@ -338,182 +398,12 @@ st.title("奇迹MU装备强化最优策略生成器")
 st.title("MU Online Item Upgrade Optimizer")
 
 st.caption(
-    "简介：基于吸收型马尔可夫链与Bellman最优决策思想的装备强化策略优化模型，用于在不确定成功率与多资源成本条件下求解最优强化路径"
+    "简介：基于吸收型马尔可夫链与Bellman最优决策思想的装备强化策略优化模型"
 )
 
 st.caption(
-    "Intro: A Markov chain and Bellman-based optimization framework for item upgrades, designed to identify optimal strategies under stochastic success rates and multi-resource cost conditions"
+    "Intro: A Markov chain and Bellman-based optimization framework for item upgrades"
 )
-
-# ============================================================
-# 3.0 Purpose and Value / 用途和意义
-# ============================================================
-
-
-
-# ============================================================
-# 3.0 Purpose and Value / 用途和意义（中文 + 英文 Tab）
-# ============================================================
-
-with st.expander("🎯 用途和意义 / Purpose & Value", expanded=False):
-    
-    # 中文 Tabs
-    tab_cn1, tab_cn2, tab_cn3 = st.tabs(["总述", "常见误区", "核心功能"])
-    
-    with tab_cn1:
-        st.header("总述")
-        st.markdown("""
-        ### 这个工具可以用来做什么？
-        
-        本工具并不是简单地估算“强化大概要花多少宝石”，而是用于在不同成功率、不同宝石价格条件下，自动寻找更优甚至最优的强化策略。
-        
-        它尤其适合：
-        
-        - 经常强化装备的玩家
-        - 批量强化装备的玩家
-        - 希望更理性评估装备价值的玩家
-        - 关注市场与资源配置的商人型玩家
-        """)
-    
-    with tab_cn2:
-        st.header("常见误区")
-        st.markdown("""
-        **在项目开发过程中，玩家经常会提到一种基于经验性观点：**
-        
-        “掉落灵魂比祝福多，灵魂点装备不心疼。”
-        
-        但这种看法往往忽略了几个关键问题：
-        
-        - 灵魂与祝福本质上可以通过市场进行互换；
-        - 强化失败会带来大量重复消耗与长期累计成本。
-        
-        灵魂宝石虽然单次价格较低，但失败可能导致装备回退、重复强化，最终累计消耗往往远高于直觉判断。
-        
-        因此，真正重要的问题并不是：
-        
-        “一次强化用了什么宝石？”
-        
-        而是：
-        
-        “达到目标等级，平均需要投入多少资源？”
-        
-        **除此之外，还有一种万金油观点：**
-        
-        “幸运装备全用灵魂点，不幸运点到+2”
-        
-        然而，在不同服务器、不同市场环境下：
-        
-        - 祝福与灵魂的价格比例可能非常接近；
-        - 某些新区甚至会出现价格倒挂；
-        
-        老玩家虽然都知道极端情况下肯定祝福更好用，“常规”和“极端”之间，到底什么时候该用祝福？
-        
-        类似地，当市场上同时存在 +0 与 +7 / +9 成品装备时：
-        
-        玩家通常只能依赖经验、感觉或口口相传来判断：
-        
-        “到底是自己点装备更划算，还是直接买成品更划算？”
-        """)
-    
-    with tab_cn3:
-        st.header("核心功能")
-        st.markdown("""
-        本工具的核心意义之一，就是：
-        
-        用可量化、可计算、可验证的理论模型，去客观描述大家长期积累的“经验”与“直觉”，并进一步形成辅助决策工具。
-        
-        核心功能包括：
-        
-        1. 生成最优强化策略，降低长期强化成本
-        
-        玩家可以根据装备类型，或自行设定灵魂宝石成功率，计算从 +0 强化到目标等级（+7 或 +9）时：
-        
-        - 每个阶段更适合使用祝福还是灵魂；
-        - 不同策略之间的长期成本差异；
-        - 当前参数下的最优强化路径。
-        
-        2. 评估 +0 装备与高等级装备之间的理论价值差异
-        
-        本工具可以根据市场中祝福宝石与灵魂宝石的相对价格，计算从 +0 强化到 +7 或 +9 的期望成本，从而为装备定价提供理论参考。
-        
-        例如，一件 +9 装备的理论价值，至少应考虑：
-        
-        - 基础装备价值；
-        - 强化过程中投入的期望资源成本。
-        
-        3. 判断“自己强化”还是“直接购买”更划算
-        
-        如果市场上的成品装备价格明显低于模型计算得到的强化期望成本，那么直接购买通常会更加稳定且经济。
-        
-        反之，当高阶装备价格过高、市场缺货或玩家拥有更低资源获取成本时，自行强化可能更有优势。
-        
-        4. 分析不同服务器经济环境下的策略变化
-        
-        通过调整祝福相对价值，并观察策略切换曲线，玩家可以分析：
-        
-        - 最优策略在何时发生变化；
-        - 当前服务器中祝福是否“值得使用”；
-        - 哪些强化阶段更适合使用祝福；
-        - 不同经济环境下强化风险如何变化。
-        
-        5. 为游戏商人的资源配置提供参考
-        
-        对于商人型玩家，本工具还可以用于分析：
-        
-        - 宝石相对价值是否合理；
-        - 装备价格是否偏离理论成本；
-        - 是否存在低估、抛售、囤货或抄底机会。
-        
-        对于长期玩家、商人、公会资源管理者而言，本工具可以辅助制定更加理性的资源配置方案。
-        """)
-
-    # 英文 Tabs
-    tab_en1, tab_en2, tab_en3 = st.tabs(["Overview", "Common Misconceptions", "Core Features"])
-    
-    with tab_en1:
-        st.header("Overview")
-        st.markdown("""
-        This tool is designed to help players determine the optimal upgrade strategy under different success rates and gem price conditions.  
-        It is especially suitable for:
-        
-        - Players who frequently upgrade equipment
-        - Players upgrading in bulk
-        - Players who want a rational framework for evaluating item value
-        - Traders and economically-oriented players
-        """)
-    
-    with tab_en2:
-        st.header("Common Misconceptions")
-        st.markdown("""
-        A common player misconception is:
-        
-        "Soul Gems drop more often, so using Soul Gems is cheap."
-        
-        However, this ignores key points:
-        
-        - Soul and Bless Gems are interchangeable via the market
-        - Upgrade failures create repeated consumption and long-term cost
-        
-        The important question is not:
-        
-        "What gem was used in a single upgrade?"
-        
-        But:
-        
-        "How many resources are expected to reach the target level?"
-        """)
-    
-    with tab_en3:
-        st.header("Core Features")
-        st.markdown("""
-        Key features of this tool:
-        
-        1. Generate optimal upgrade strategies and reduce long-term cost
-        2. Estimate theoretical value gap between +0 and high-level items
-        3. Decide whether manual upgrade or direct purchase is more economical
-        4. Analyze strategy changes under different server economies
-        5. Provide resource allocation reference for traders
-        """)
 
 st.markdown("---")
 st.markdown("#### Developed by 作者： Razz ")
@@ -522,35 +412,26 @@ st.markdown("---")
 
 
 # ============================================================
-# 3.1 Sidebar Parameters / 左侧栏参数
+# 3. Sidebar Parameters / 左侧栏参数
 # ============================================================
 
-# Run Button 运行按钮
 st.sidebar.markdown("---")
-
 st.sidebar.header("执行操作 Run")
 run_button = st.sidebar.button("运行优化 Run Optimization")
-
 st.sidebar.markdown("---")
 
 st.sidebar.header("基础模型参数 Basic Model Settings")
-# st.sidebar.caption("设置目标等级、装备类型与灵魂成功率 / Set target level, item type, and Soul success rate")
 
 target_mode = st.sidebar.selectbox(
     "目标等级 Target Level",
-    [
-        "+0 → +9 ",
-        "+0 → +7 "
-    ]
+    [f"+0 → +{i}" for i in range(1, 16)],
+    index=8
 )
 
-if target_mode == "+0 → +7 ":
-    target_level = 7
-else:
-    target_level = 9
+target_level = int(target_mode.split("+")[-1])
 
 item_type = st.sidebar.selectbox(
-    "装备类型 Item Type",
+    "灵魂成功率预设 Soul Success Rate Preset",
     [
         "Custom / 自定义",
         "Socket item / 镶宝装备, p = 0.40",
@@ -583,17 +464,72 @@ if item_type == "Custom / 自定义":
 else:
     soul_success_rate = preset_map[item_type]
     st.sidebar.info(
-        f"Using preset / 使用预设："
-        f"灵魂成功率 Soul Success Rate = {soul_success_rate}"
+        f"Using preset / 使用预设：Soul Success Rate = {soul_success_rate}"
     )
 
 st.sidebar.markdown("---")
-st.sidebar.header("宝石价值参数 Gem Value Settings")
-# st.sidebar.caption("设置祝福与灵魂之间的相对价值 / Set the relative value between Bless and Soul gems")
+st.sidebar.header("高阶合成参数 High-level Combination Settings")
 
-# ============================================================
-# Bless Relative Cost Input / 祝福相对价值输入
-# ============================================================
+high_item_type = st.sidebar.selectbox(
+    "高阶装备类型 High-level Item Type",
+    [
+        "Normal item / 普通装备",
+        "Excellent or set item / 卓越或套装",
+        "Socket item / 镶宝装备"
+    ]
+)
+
+high_item_type_index_map = {
+    "Normal item / 普通装备": 3,
+    "Excellent or set item / 卓越或套装": 4,
+    "Socket item / 镶宝装备": 5
+}
+
+high_item_type_index = high_item_type_index_map[high_item_type]
+
+item_0_cost = st.sidebar.number_input(
+    "+0装备价值 Item +0 Cost",
+    min_value=0.0,
+    max_value=999999.0,
+    value=10.0,
+    step=0.1
+)
+
+chaos_cost = st.sidebar.number_input(
+    "玛雅之石价值 Chaos Cost",
+    min_value=0.0,
+    max_value=999999.0,
+    value=5.0,
+    step=0.1
+)
+
+talisman_protect_cost = st.sidebar.number_input(
+    "保护符价值 Protection Talisman Cost",
+    min_value=0.0,
+    max_value=999999.0,
+    value=3.0,
+    step=0.1
+)
+
+talisman_luck_cost = st.sidebar.number_input(
+    "幸运符价值 Luck Talisman Cost",
+    min_value=0.0,
+    max_value=999999.0,
+    value=2.0,
+    step=0.1
+)
+
+luck_success_bonus = st.sidebar.number_input(
+    "幸运符成功率加成 Luck Success Bonus",
+    min_value=0.0,
+    max_value=1.0,
+    value=0.25,
+    step=0.01,
+    format="%.2f"
+)
+
+st.sidebar.markdown("---")
+st.sidebar.header("宝石价值参数 Gem Value Settings")
 
 bless_cost_input_mode = st.sidebar.radio(
     "祝福相对价值输入 Bless Relative Cost Input",
@@ -605,9 +541,8 @@ bless_cost_input_mode = st.sidebar.radio(
 )
 
 if bless_cost_input_mode == "相对价值 Direct input":
-
     bless_relative_cost = st.sidebar.number_input(
-        "祝福相对价值(颗/颗) Bless Relative Cost(gem/gem)",
+        "祝福相对价值 Bless Relative Cost",
         min_value=0.50,
         max_value=50.00,
         value=5.29,
@@ -616,9 +551,8 @@ if bless_cost_input_mode == "相对价值 Direct input":
     )
 
 elif bless_cost_input_mode == "宝石单价 Gem prices":
-
     bless_unit_price = st.sidebar.number_input(
-        "祝福单价(￥/颗) Bless Unit Price($/gem)",
+        "祝福单价 Bless Unit Price",
         min_value=0.0001,
         max_value=999999.0,
         value=1 / 1.35,
@@ -638,13 +572,12 @@ elif bless_cost_input_mode == "宝石单价 Gem prices":
     bless_relative_cost = bless_unit_price / soul_unit_price
 
     st.sidebar.info(
-        f"换算结果 Conversion Result：1 Bless = {bless_relative_cost:.4f} Soul"
+        f"Conversion Result：1 Bless = {bless_relative_cost:.4f} Soul"
     )
 
-elif bless_cost_input_mode == "兑换比例 Exchange ratio":
-
+else:
     bless_amount = st.sidebar.number_input(
-        "祝福数量(颗) Bless Amount(gem)",
+        "祝福数量 Bless Amount",
         min_value=0.0001,
         max_value=999999.0,
         value=1.0,
@@ -664,44 +597,8 @@ elif bless_cost_input_mode == "兑换比例 Exchange ratio":
     bless_relative_cost = soul_amount / bless_amount
 
     st.sidebar.info(
-        f"换算结果 Conversion Result：1 Bless = {bless_relative_cost:.4f} Soul"
+        f"Conversion Result：1 Bless = {bless_relative_cost:.4f} Soul"
     )
-
-#st.sidebar.caption(    f"当前用于计算的祝福相对价值 / Current Bless Relative Cost: {bless_relative_cost:.4f}")
-
-st.sidebar.markdown("---")
-st.sidebar.header("曲线设置 Curve Settings")
-st.sidebar.caption("设置策略切换曲线的扫描范围 / Set the scan range for the strategy switching curve")
-
-bless_cost_min = st.sidebar.number_input(
-    "祝福相对价值最小值 Minimum Bless Relative Cost",
-    min_value=0.1,
-    max_value=50.0,
-    value=2.0,
-    step=0.1
-)
-
-bless_cost_max = st.sidebar.number_input(
-    "祝福相对价值最大值 Maximum Bless Relative Cost",
-    min_value=0.1,
-    max_value=50.0,
-    value=15.0,
-    step=0.1
-)
-
-num_points = st.sidebar.slider(
-    "曲线采样点数 Number of Curve Points",
-    min_value=50,
-    max_value=1000,
-    value=50,
-    step=50
-)
-
-# run 按钮
-
-# st.sidebar.markdown("---")
-# st.sidebar.header("执行操作 Run")
-# run_button = st.sidebar.button("运行优化 Run Optimization")
 
 
 # ============================================================
@@ -713,18 +610,16 @@ if run_button:
     result_df = find_optimal_strategy(
         soul_success_rate,
         bless_relative_cost,
-        target_level
+        target_level,
+        high_item_type_index,
+        item_0_cost,
+        chaos_cost,
+        talisman_protect_cost,
+        talisman_luck_cost,
+        luck_success_bonus
     )
+
     best = result_df.iloc[0]
-
-    soul_only_strategy = list("S" * target_level)
-
-    soul_only_result = evaluate_strategy(
-        soul_only_strategy,
-        soul_success_rate,
-        bless_relative_cost,
-        target_level
-    )
 
     st.subheader("当前模型参数 Current Model Settings")
 
@@ -744,12 +639,12 @@ if run_button:
     )
     setting_col4.metric(
         "策略数量 Strategy Count",
-        "64"
+        f"{len(result_df)}"
     )
 
     st.markdown("---")
 
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3 = st.columns(3)
 
     col1.metric(
         "最优策略 Best Strategy",
@@ -760,12 +655,8 @@ if run_button:
         f"{best['expected_total_cost']:.4f}"
     )
     col3.metric(
-        "全灵魂成本 Soul-only Cost",
-        f"{soul_only_result['expected_total_cost']:.4f}"
-    )
-    col4.metric(
-        "节省成本 Cost Reduction",
-        f"{soul_only_result['expected_total_cost'] - best['expected_total_cost']:.4f}"
+        "排名 Rank",
+        int(best["rank"])
     )
 
     st.subheader("最优策略 Optimal Strategy")
@@ -774,21 +665,27 @@ if run_button:
         "rank / 排名": best["rank"],
         "target_level / 目标等级": f"+0 → +{target_level}",
         "strategy / 策略": best["strategy"],
-        "expected_bless / 期望祝福消耗": best["expected_bless"],
-        "expected_soul / 期望灵魂消耗": best["expected_soul"],
-        "expected_total_cost / 期望总成本": best["expected_total_cost"],
-        "soul_only_expected_total_cost / 全灵魂期望总成本": soul_only_result["expected_total_cost"],
-        "cost_reduction_vs_soul_only / 相对全灵魂节省成本": (
-            soul_only_result["expected_total_cost"]
-            - best["expected_total_cost"]
-        )
+        "protect_flags / 保护符": best["protect_flags"],
+        "luck_flags / 幸运符": best["luck_flags"],
+        "expected_bless / 期望祝福": best["expected_bless"],
+        "expected_soul / 期望灵魂": best["expected_soul"],
+        "expected_chaos / 期望玛雅": best["expected_chaos"],
+        "expected_protect / 期望保护符": best["expected_protect"],
+        "expected_luck / 期望幸运符": best["expected_luck"],
+        "expected_item_0_loss_count / 期望损失装备数量": best["expected_item_0_loss_count"],
+        "expected_item_0_loss_cost / 期望损失装备价值": best["expected_item_0_loss_cost"],
+        "expected_total_cost / 期望总成本": best["expected_total_cost"]
     }])
 
     st.dataframe(best_df, use_container_width=True)
 
     st.subheader("最优策略展开 Optimal Strategy by Upgrade Stage")
 
-    best_stage_df = strategy_to_stage_table(best["strategy"])
+    best_stage_df = strategy_to_stage_table(
+        best["strategy"],
+        best["protect_flags"],
+        best["luck_flags"]
+    )
     st.dataframe(best_stage_df, use_container_width=True)
 
     st.subheader("成本最低的前10种策略 Top 10 Strategies")
@@ -803,80 +700,16 @@ if run_button:
     st.download_button(
         label="下载策略结果 CSV Download Strategy Results CSV",
         data=csv_result,
-        file_name=f"strategy_results_64_plus0_to_plus{target_level}.csv",
+        file_name=f"strategy_results_plus0_to_plus{target_level}.csv",
         mime="text/csv"
     )
-
-    st.subheader("策略切换曲线 Strategy Switching Curve")
-
-    bless_cost_values, expected_costs, best_strategies = generate_switching_curve(
-        soul_success_rate=soul_success_rate,
-        bless_cost_min=bless_cost_min,
-        bless_cost_max=bless_cost_max,
-        num_points=num_points,
-        target_level=target_level
-    )
-
-    switch_df = find_switching_points(
-        bless_cost_values,
-        expected_costs,
-        best_strategies
-    )
-
-    fig = plot_switching_curve(
-        bless_cost_values,
-        expected_costs,
-        switch_df,
-        soul_success_rate,
-        target_level
-    )
-
-    st.pyplot(fig)
-
-    curve_df = pd.DataFrame({
-        "bless_relative_cost / 祝福相对价值": bless_cost_values,
-        "expected_total_cost / 期望总成本": expected_costs,
-        "best_strategy / 最优策略": best_strategies
-    })
-
-    st.download_button(
-        label="下载曲线数据 CSV Download Curve Data CSV",
-        data=curve_df.to_csv(index=False, encoding="utf-8-sig"),
-        file_name=f"strategy_switching_curve_plus0_to_plus{target_level}.csv",
-        mime="text/csv"
-    )
-
-    st.subheader("策略切换点 Strategy Switching Points")
-
-    if switch_df.empty:
-        st.info(
-            "No strategy switching point found in the selected range. / "
-            "当前范围内未发现策略切换点。"
-        )
-    else:
-        switch_df_display = switch_df.rename(columns={
-            "index": "index / 序号",
-            "bless_relative_cost": "bless_relative_cost / 祝福相对价值",
-            "expected_total_cost": "expected_total_cost / 期望总成本",
-            "from_strategy": "from_strategy / 原策略",
-            "to_strategy": "to_strategy / 新策略"
-        })
-
-        st.dataframe(switch_df_display, use_container_width=True)
-
-        st.download_button(
-            label="下载策略切换点 CSV Download Switching Points CSV",
-            data=switch_df_display.to_csv(index=False, encoding="utf-8-sig"),
-            file_name=f"strategy_switching_points_plus0_to_plus{target_level}.csv",
-            mime="text/csv"
-        )
 
 else:
     st.info(
-        "请在左侧设置参数，然后点击“运行优化”。使用前请阅读《使用说明》。"
+        "请在左侧设置参数，然后点击“运行优化”。"
     )
     st.info(
-        "Set parameters on the left and click Run Optimization after reading the Guide."
+        "Set parameters on the left and click Run Optimization."
     )
 
 
@@ -888,24 +721,24 @@ with st.expander("📘 使用说明 Guide", expanded=False):
 
     st.markdown("""
     **1. 目标等级 Target Level**  
-    当前支持两种计算模式：  
-    - `+0 → +7`：只计算从 +0 到 +7 的子模型，其中 +6→+7 固定使用灵魂。  
-    - `+0 → +9`：完整模型，其中 +6→+7、+7→+8、+8→+9 固定使用灵魂。  
+    当前支持从 `+0 → +1` 到 `+0 → +15` 的全部目标等级。  
 
-    **2. 祝福相对价值 Bless Relative Cost**  
-    表示祝福宝石与灵魂宝石之间的价格比值，即：  
-    祝福单价 / 灵魂单价。
+    **2. +0 → +6 阶段**  
+    系统枚举 Bless / Soul 的所有组合。  
 
-    **3. 灵魂成功率 Soul Success Rate**  
-    表示使用灵魂宝石进行强化时的成功概率，用于计算强化路径的期望成本。
+    **3. +6 → +9 阶段**  
+    固定使用 Soul。  
 
-    **4. 曲线 Curve**  
-    表示在设定的祝福相对价值区间内，对所有最优策略进行采样得到的结果集合，用于分析策略变化趋势。
+    **4. +9 → +15 阶段**  
+    系统枚举是否使用保护符和幸运符，并计算玛雅、符咒、装备损失等成本。  
 
     **5. 策略 Strategy**  
-    策略由字符序列组成，其中：  
-    S 表示使用灵魂宝石（Soul）  
-    B 表示使用祝福宝石（Bless）
+    S 表示 Soul / 灵魂。  
+    B 表示 Bless / 祝福。  
+
+    **6. protect_flags / luck_flags**  
+    仅对应 +9 以上的高阶强化阶段。  
+    1 表示使用，0 表示不使用。
     """)
 
 
@@ -918,8 +751,12 @@ st.markdown("### 免责声明 Disclaimer")
 
 st.info(
 """
-本项目基于用户输入的成功率与宝石相对价值进行计算，输出结果仅在所设定参数条件下成立。游戏内实际强化概率可能与官方公示存在偏差，且不同区服不同时刻的市场情况存在波动，因此计算结果不代表任何固定或真实环境下的唯一最优解。为提高适用性与可验证性，本工具支持自定义成功率与宝石相对价值，用户可根据自身服务器环境或经验数据进行调整与复现。项目提供的是一种计算方法与决策参考，而非对游戏实际机制的判定或保证。
+本项目基于用户输入的成功率与宝石相对价值进行计算，输出结果仅在所设定参数条件下成立。
+游戏内实际强化概率可能与官方公示存在偏差，且不同区服不同时刻的市场情况存在波动，
+因此计算结果不代表任何固定或真实环境下的唯一最优解。
 
-This project performs calculations based on user-defined success rates and relative gem values. The results are valid only under the specified parameter settings. Actual in-game upgrade probabilities may deviate from officially stated values, and market conditions may vary across servers and over time. Therefore, the computed results do not represent a unique optimal solution for any fixed or real-world environment. To improve applicability and reproducibility, this tool allows users to customize success rates and relative gem values according to their own server conditions or empirical observations. This project provides a computational framework and decision reference, rather than a definitive statement or guarantee of actual game mechanics.
+This project performs calculations based on user-defined success rates and relative gem values.
+The results are valid only under the specified parameter settings.
+Actual in-game upgrade probabilities and market conditions may vary.
 """
 )
