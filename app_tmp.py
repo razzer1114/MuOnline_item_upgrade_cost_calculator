@@ -519,14 +519,10 @@ talisman_luck_cost = st.sidebar.number_input(
     step=0.1
 )
 
-luck_success_bonus = st.sidebar.number_input(
-    "幸运符成功率加成 Luck Success Bonus",
-    min_value=0.0,
-    max_value=1.0,
-    value=0.25,
-    step=0.01,
-    format="%.2f"
-)
+# 幸运符固定增加25%成功率
+# Luck talisman always provides +25% success rate
+luck_success_bonus = 0.25
+
 
 st.sidebar.markdown("---")
 st.sidebar.header("宝石价值参数 Gem Value Settings")
