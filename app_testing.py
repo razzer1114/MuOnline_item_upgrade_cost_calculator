@@ -1159,7 +1159,7 @@ if run_button:
         f"{best['expected_item_0_loss_cost']:.4f}"
     )
 
-    if target_level <= 99:
+    if target_level <= 9:
         all_soul_strategy_info = {
             "strategy": ["S"] * target_level,
             "protect_flags": [],
