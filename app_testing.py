@@ -15,7 +15,8 @@ import streamlit as st
 
 cost_soul = 1  # Cost of Soul gem / 灵魂宝石成本
 
-luck_success_bonus = 0.25  # Luck talisman fixed bonus / 幸运符固定增加25%成功率
+luck_attribute_success_bonus_default = 0.25  # Default Luck attribute success bonus / 装备幸运属性默认增加25%成功率
+luck_talisman_success_bonus_default = 0.10  # Default Luck talisman success bonus / 幸运符默认增加10%成功率
 
 
 def fail_state(i):
@@ -75,7 +76,9 @@ def get_high_level_success_rate(
     i,
     high_item_type_index,
     use_luck_talisman,
-    has_luck_attribute=False
+    has_luck_attribute=False,
+    luck_attribute_success_bonus=luck_attribute_success_bonus_default,
+    luck_talisman_success_bonus=luck_talisman_success_bonus_default
 ):
     """
     Get success rate for high-level combination stage.
@@ -84,18 +87,24 @@ def get_high_level_success_rate(
     has_luck_attribute: whether the item has Luck attribute.
     has_luck_attribute：装备是否带幸运属性。
 
+    luck_attribute_success_bonus: success bonus from item Luck attribute.
+    luck_attribute_success_bonus：装备自带幸运属性提供的成功率加成。
+
     use_luck_talisman: whether to use Luck Talisman in high-level combination.
     use_luck_talisman：高阶合成阶段是否使用幸运符。
+
+    luck_talisman_success_bonus: success bonus from Luck Talisman.
+    luck_talisman_success_bonus：幸运符提供的成功率加成。
     """
     base_success = level_upgrade_info[i][high_item_type_index]
 
     success_rate = base_success
 
     if has_luck_attribute:
-        success_rate += luck_success_bonus
+        success_rate += luck_attribute_success_bonus
 
     if use_luck_talisman:
-        success_rate += luck_success_bonus
+        success_rate += luck_talisman_success_bonus
 
     return min(success_rate, 1.0)
 
@@ -147,7 +156,9 @@ def build_transition_matrix(
     soul_success_rate,
     target_level,
     high_item_type_index,
-    has_luck_attribute=False
+    has_luck_attribute=False,
+    luck_attribute_success_bonus=luck_attribute_success_bonus_default,
+    luck_talisman_success_bonus=luck_talisman_success_bonus_default
 ):
     """
     Build transient transition matrix Q.
@@ -192,7 +203,9 @@ def build_transition_matrix(
                     i,
                     high_item_type_index,
                     use_luck,
-                    has_luck_attribute
+                    has_luck_attribute,
+                    luck_attribute_success_bonus,
+                    luck_talisman_success_bonus
                 )
 
                 success_state = i + 1
@@ -220,7 +233,9 @@ def build_cost_vectors(
     chaos_cost,
     talisman_protect_cost,
     talisman_luck_cost,
-    has_luck_attribute=False
+    has_luck_attribute=False,
+    luck_attribute_success_bonus=luck_attribute_success_bonus_default,
+    luck_talisman_success_bonus=luck_talisman_success_bonus_default
 ):
     """
     Build resource cost vectors.
@@ -264,7 +279,9 @@ def build_cost_vectors(
                 i,
                 high_item_type_index,
                 use_luck,
-                has_luck_attribute
+                has_luck_attribute,
+                luck_attribute_success_bonus,
+                luck_talisman_success_bonus
             )
             failure_rate = 1 - success_rate
 
@@ -313,7 +330,9 @@ def evaluate_strategy(
     chaos_cost,
     talisman_protect_cost,
     talisman_luck_cost,
-    has_luck_attribute=False
+    has_luck_attribute=False,
+    luck_attribute_success_bonus=luck_attribute_success_bonus_default,
+    luck_talisman_success_bonus=luck_talisman_success_bonus_default
 ):
     """
     Evaluate one strategy.
@@ -324,7 +343,9 @@ def evaluate_strategy(
         soul_success_rate,
         target_level,
         high_item_type_index,
-        has_luck_attribute
+        has_luck_attribute,
+        luck_attribute_success_bonus,
+        luck_talisman_success_bonus
     )
 
     N = np.linalg.inv(np.eye(target_level) - Q)
@@ -348,7 +369,9 @@ def evaluate_strategy(
         chaos_cost,
         talisman_protect_cost,
         talisman_luck_cost,
-        has_luck_attribute
+        has_luck_attribute,
+        luck_attribute_success_bonus,
+        luck_talisman_success_bonus
     )
 
     expected_bless = (N @ bless_vec)[0]
@@ -387,7 +410,9 @@ def find_optimal_strategy(
     chaos_cost,
     talisman_protect_cost,
     talisman_luck_cost,
-    has_luck_attribute=False
+    has_luck_attribute=False,
+    luck_attribute_success_bonus=luck_attribute_success_bonus_default,
+    luck_talisman_success_bonus=luck_talisman_success_bonus_default
 ):
     """
     Enumerate all strategies and rank them by expected total cost.
@@ -406,7 +431,9 @@ def find_optimal_strategy(
             chaos_cost,
             talisman_protect_cost,
             talisman_luck_cost,
-            has_luck_attribute
+            has_luck_attribute,
+            luck_attribute_success_bonus,
+            luck_talisman_success_bonus
         )
         results.append(result)
 
@@ -428,7 +455,9 @@ def generate_switching_curve(
     chaos_cost,
     talisman_protect_cost,
     talisman_luck_cost,
-    has_luck_attribute=False
+    has_luck_attribute=False,
+    luck_attribute_success_bonus=luck_attribute_success_bonus_default,
+    luck_talisman_success_bonus=luck_talisman_success_bonus_default
 ):
     """
     Generate optimal cost curve under fixed Soul success rate.
@@ -453,7 +482,9 @@ def generate_switching_curve(
             chaos_cost,
             talisman_protect_cost,
             talisman_luck_cost,
-            has_luck_attribute
+            has_luck_attribute,
+            luck_attribute_success_bonus,
+            luck_talisman_success_bonus
         )
         best = result_df.iloc[0]
 
@@ -849,8 +880,17 @@ high_item_type_index_map = {
 }
 
 has_luck_attribute = st.sidebar.checkbox(
-    "装备是否带幸运属性 Has Luck Attribute (+25%)",
+    "装备是否带幸运属性 Has Luck Attribute",
     value=False
+)
+
+luck_attribute_success_bonus = st.sidebar.number_input(
+    "幸运属性成功率加成 Luck Attribute Success Bonus",
+    min_value=0.00,
+    max_value=1.00,
+    value=luck_attribute_success_bonus_default,
+    step=0.01,
+    format="%.2f"
 )
 
 if item_type == "自定义 / Custom":
@@ -870,7 +910,7 @@ else:
     )
 
 soul_success_rate = min(
-    base_soul_success_rate + (luck_success_bonus if has_luck_attribute else 0.0),
+    base_soul_success_rate + (luck_attribute_success_bonus if has_luck_attribute else 0.0),
     1.0
 )
 
@@ -882,7 +922,7 @@ st.sidebar.info(
 
 if has_luck_attribute:
     st.sidebar.caption(
-        "已计入装备幸运属性：基础成功率 +25%。该加成同时作用于 +0~+9 灵魂强化及 +9 以上合成阶段。"
+        f"已计入装备幸运属性：基础成功率 +{luck_attribute_success_bonus:.0%}。该加成同时作用于 +0~+9 灵魂强化及 +9 以上合成阶段。"
     )
 else:
     st.sidebar.caption(
@@ -926,12 +966,21 @@ if target_level >= 10:
         step=0.1
     )
 
-    st.sidebar.caption(
-        "高阶合成装备类型由基础模型参数中的装备类型自动决定；幸运属性由基础模型参数统一控制。"
+    luck_talisman_success_bonus = st.sidebar.number_input(
+        "幸运符成功率加成 Luck Talisman Success Bonus",
+        min_value=0.00,
+        max_value=1.00,
+        value=luck_talisman_success_bonus_default,
+        step=0.01,
+        format="%.2f"
     )
 
     st.sidebar.caption(
-        "幸运符固定增加25%成功率 / Luck talisman fixed bonus: +25%"
+        "高阶合成装备类型由基础模型参数中的装备类型自动决定；装备幸运属性由基础模型参数控制，幸运符加成由高阶合成参数控制。"
+    )
+
+    st.sidebar.caption(
+        f"幸运符成功率加成 / Luck talisman success bonus: +{luck_talisman_success_bonus:.0%}"
     )
 else:
     # Default values for low target levels.
@@ -940,6 +989,7 @@ else:
     chaos_cost = 5.0
     talisman_protect_cost = 3.0
     talisman_luck_cost = 2.0
+    luck_talisman_success_bonus = luck_talisman_success_bonus_default
 
 
 st.sidebar.markdown("---")
@@ -1060,7 +1110,9 @@ if run_button:
         chaos_cost,
         talisman_protect_cost,
         talisman_luck_cost,
-        has_luck_attribute
+        has_luck_attribute,
+        luck_attribute_success_bonus,
+        luck_talisman_success_bonus
     )
 
     best = result_df.iloc[0]
@@ -1166,7 +1218,9 @@ if run_button:
             chaos_cost=chaos_cost,
             talisman_protect_cost=talisman_protect_cost,
             talisman_luck_cost=talisman_luck_cost,
-            has_luck_attribute=has_luck_attribute
+            has_luck_attribute=has_luck_attribute,
+            luck_attribute_success_bonus=luck_attribute_success_bonus,
+            luck_talisman_success_bonus=luck_talisman_success_bonus
         )
 
         switch_df = find_switching_points(
@@ -1255,7 +1309,7 @@ with st.expander("📘 使用说明 Guide", expanded=False):
 
     **3. 灵魂成功率 Soul Success Rate**  
     表示使用灵魂宝石进行强化时的成功概率，用于计算强化路径的期望成本。  
-    若装备带有幸运属性，则基础灵魂成功率增加 25%，并同时作用于 +9 以上合成阶段。
+    若装备带有幸运属性，则基础灵魂成功率按“幸运属性成功率加成”增加；该加成默认 25%，并同时作用于 +9 以上合成阶段。
 
     **4. +9以上高阶合成 High-level Combination Above +9**  
     当目标等级超过 +9 时，模型会自动纳入：  
@@ -1266,7 +1320,7 @@ with st.expander("📘 使用说明 Guide", expanded=False):
     高阶合成阶段的装备类型由基础模型参数中的装备类型自动决定，不再单独重复选择。
 
     **5. 幸运属性与幸运符 Luck Attribute and Luck Talisman**  
-    装备幸运属性固定增加 25% 成功率；高阶合成阶段中，幸运符也固定增加 25% 成功率。  
+    装备幸运属性与幸运符分别设置成功率加成：装备幸运属性默认增加 25%，在基础模型参数中设置；幸运符默认增加 10%，仅在 +9 以上高阶合成参数中设置。  
 
     **6. 策略 Strategy**  
     策略由字符序列组成，其中：  
