@@ -4,7 +4,7 @@
 
 - [**网站：稳定版-功能齐全的线上最优强化策略生成器** hosted by Streamlit](https://muupgradeplanner.streamlit.app/)
 
-- [**网站：测试版-最新功能(+0,+1,+2,...,+15最优策略、期望成本、暴力枚举全策略详细数据输出)**](https://muonlinebeta.streamlit.app/)
+- [**网站：尝鲜版-最新功能(+0,+1,+2,...,+15最优策略、期望成本、暴力枚举全策略详细数据输出)**](https://muonlinebeta.streamlit.app/)
 
 - [**简单案例：以便快速理解**](Simple_Case_CN.md)
 
