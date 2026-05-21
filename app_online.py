@@ -776,22 +776,6 @@ with st.expander("📘 使用说明 Guide", expanded=False):
 
 st.markdown("---")
 st.markdown("#### Developed by 作者： Razz ")
-# ============================================================
-# Visit Counter / 访问统计
-# ============================================================
-
-st.sidebar.markdown("---")
-st.sidebar.markdown("### 📊 Visits / 访问量")
-
-st.sidebar.markdown(
-    """
-    <a href="https://www.hitwebcounter.com/" target="_blank">
-        <img src="https://www.hitwebcounter.com/counter/counter.php?page=21499591&style=0030&nbdigits=5&type=page"
-        style="border:0;" />
-    </a>
-    """,
-    unsafe_allow_html=True
-)
 st.markdown("GitHub: https://github.com/razzer1114/MuOnline_item_upgrade_cost_calculator")
 st.markdown("---")
 
@@ -1223,4 +1207,20 @@ st.info(
 
 This project performs calculations based on user-defined success rates and relative gem values. The results are valid only under the specified parameter settings. Actual in-game upgrade probabilities may deviate from officially stated values, and market conditions may vary across servers and over time. Therefore, the computed results do not represent a unique optimal solution for any fixed or real-world environment. To improve applicability and reproducibility, this tool allows users to customize success rates and relative gem values according to their own server conditions or empirical observations. This project provides a computational framework and decision reference, rather than a definitive statement or guarantee of actual game mechanics.
 """
+)
+# ============================================================
+# Visit Counter / 访问统计
+# ============================================================
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 📊 Visits / 访问量")
+
+st.sidebar.markdown(
+    """
+    <a href="https://www.hitwebcounter.com/" target="_blank">
+        <img src="https://www.hitwebcounter.com/counter/counter.php?page=21499591&style=0030&nbdigits=5&type=page"
+        style="border:0;" />
+    </a>
+    """,
+    unsafe_allow_html=True
 )
