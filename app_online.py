@@ -777,6 +777,24 @@ with st.expander("📘 使用说明 Guide", expanded=False):
 st.markdown("---")
 st.markdown("#### Developed by 作者： Razz ")
 st.markdown("GitHub: https://github.com/razzer1114/MuOnline_item_upgrade_cost_calculator")
+
+# ============================================================
+# Visit Counter / 访问统计
+# ============================================================
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 📊 Visits / 访问量")
+
+st.sidebar.markdown(
+    """
+    <a href="https://www.hitwebcounter.com/" target="_blank">
+        <img src="https://www.hitwebcounter.com/counter/counter.php?page=21499591&style=0030&nbdigits=5&type=page"
+        style="border:0;" />
+    </a>
+    """,
+    unsafe_allow_html=True
+)
+
 st.markdown("---")
 
 
