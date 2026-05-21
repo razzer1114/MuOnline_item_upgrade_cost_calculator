@@ -1,4 +1,4 @@
-# 奇迹MU装备强化最优策略生成器 [English Version](README.md)
+# 奇迹MU装备强化最优策略生成器 [English Version](README.md)  [**测试版**](https://muonlinebeta.streamlit.app/)
 
 **基于吸收马尔可夫链的奇迹MU装备强化概率建模**
 
