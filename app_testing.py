@@ -851,7 +851,7 @@ else:
     )
 
 
-if target_level >= 9:
+if target_level >= 10:
     st.sidebar.markdown("---")
     st.sidebar.header("高阶合成参数 High-level Combination Settings")
 
