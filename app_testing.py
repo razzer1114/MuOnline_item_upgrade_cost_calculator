@@ -15,7 +15,7 @@ import streamlit as st
 
 cost_soul = 1  # Cost of Soul gem / 灵魂宝石成本
 
-luck_success_bonus = 0.1  # Luck talisman fixed bonus / 幸运符固定增加25%成功率
+luck_success_bonus = 0.25  # Luck talisman fixed bonus / 幸运符固定增加25%成功率
 
 
 def fail_state(i):
@@ -822,12 +822,9 @@ item_type = st.sidebar.selectbox(
         "镶宝 / Socket item, base p = 0.40",
         "新版镶宝 / Socket item (New), base p = 0.50",
 
-        "卓越 / Excellent item, base p = 0.50",
-        "套装 / Set item, base p = 0.50",
+        "卓越或套装 / Excellent or set item, base p = 0.50",
 
-        "白装 / Normal item, base p = 0.60",
-        "卷轴 / Scroll, base p = 0.60",
-        "翅膀 / Wing, base p = 0.60"
+        "白装、卷轴或翅膀 / Normal item, scroll or wing, base p = 0.60"
     ]
 )
 
@@ -835,12 +832,9 @@ preset_map = {
     "镶宝 / Socket item, base p = 0.40": 0.40,
     "新版镶宝 / Socket item (New), base p = 0.50": 0.50,
 
-    "卓越 / Excellent item, base p = 0.50": 0.50,
-    "套装 / Set item, base p = 0.50": 0.50,
+    "卓越或套装 / Excellent or set item, base p = 0.50": 0.50,
 
-    "白装 / Normal item, base p = 0.60": 0.60,
-    "卷轴 / Scroll, base p = 0.60": 0.60,
-    "翅膀 / Wing, base p = 0.60": 0.60
+    "白装、卷轴或翅膀 / Normal item, scroll or wing, base p = 0.60": 0.60
 }
 
 high_item_type_index_map = {
@@ -849,12 +843,9 @@ high_item_type_index_map = {
     "镶宝 / Socket item, base p = 0.40": 5,
     "新版镶宝 / Socket item (New), base p = 0.50": 5,
 
-    "卓越 / Excellent item, base p = 0.50": 4,
-    "套装 / Set item, base p = 0.50": 4,
+    "卓越或套装 / Excellent or set item, base p = 0.50": 4,
 
-    "白装 / Normal item, base p = 0.60": 3,
-    "卷轴 / Scroll, base p = 0.60": 3,
-    "翅膀 / Wing, base p = 0.60": 3
+    "白装、卷轴或翅膀 / Normal item, scroll or wing, base p = 0.60": 3
 }
 
 has_luck_attribute = st.sidebar.checkbox(
