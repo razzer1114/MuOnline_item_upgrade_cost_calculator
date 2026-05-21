@@ -4,6 +4,8 @@
 ---
 - [**Web Page: Functional Web Calculator hosted by Streamlit**](https://muupgradeplanner.streamlit.app/)
 
+- [**Web Page: Beta Version(most recently developed functions**](https://muonlinebeta.streamlit.app/)
+
 - [**Simple Case: To Get Started**](Simple_Case.md)
 
 - [**Code: Calculator for +7 and +9**](Main0.py)
