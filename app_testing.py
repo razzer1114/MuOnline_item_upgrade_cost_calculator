@@ -1159,49 +1159,50 @@ if run_button:
         f"{best['expected_item_0_loss_cost']:.4f}"
     )
 
-    if target_level <= 9:
-        all_soul_strategy_info = {
-            "strategy": ["S"] * target_level,
-            "protect_flags": [],
-            "luck_flags": []
-        }
+    all_soul_high_stage_count = max(0, target_level - 9)
 
-        all_soul_result = evaluate_strategy(
-            all_soul_strategy_info,
-            soul_success_rate,
-            bless_relative_cost,
-            target_level,
-            high_item_type_index,
-            item_0_cost,
-            chaos_cost,
-            talisman_protect_cost,
-            talisman_luck_cost,
-            has_luck_attribute,
-            luck_attribute_success_bonus,
-            luck_talisman_success_bonus
-        )
+    all_soul_strategy_info = {
+        "strategy": ["S"] * target_level,
+        "protect_flags": [False] * all_soul_high_stage_count,
+        "luck_flags": [False] * all_soul_high_stage_count
+    }
 
-        all_soul_saving = (
-            all_soul_result["expected_total_cost"]
-            - best["expected_total_cost"]
-        )
+    all_soul_result = evaluate_strategy(
+        all_soul_strategy_info,
+        soul_success_rate,
+        bless_relative_cost,
+        target_level,
+        high_item_type_index,
+        item_0_cost,
+        chaos_cost,
+        talisman_protect_cost,
+        talisman_luck_cost,
+        has_luck_attribute,
+        luck_attribute_success_bonus,
+        luck_talisman_success_bonus
+    )
 
-        st.markdown("---")
+    all_soul_saving = (
+        all_soul_result["expected_total_cost"]
+        - best["expected_total_cost"]
+    )
 
-        compare_col1, compare_col2, compare_col3 = st.columns(3)
+    st.markdown("---")
 
-        compare_col1.metric(
-            "全灵魂策略对照 All-Soul Strategy",
-            all_soul_result["strategy"]
-        )
-        compare_col2.metric(
-            "全灵魂策略成本期望 All-Soul Expected Cost",
-            f"{all_soul_result['expected_total_cost']:.4f}"
-        )
-        compare_col3.metric(
-            "最优策略相比全灵魂策略的结余 Savings vs All-Soul",
-            f"{all_soul_saving:.4f}"
-        )
+    compare_col1, compare_col2, compare_col3 = st.columns(3)
+
+    compare_col1.metric(
+        "全灵魂策略对照 All-Soul Strategy",
+        all_soul_result["strategy"]
+    )
+    compare_col2.metric(
+        "全灵魂策略成本期望 All-Soul Expected Cost",
+        f"{all_soul_result['expected_total_cost']:.4f}"
+    )
+    compare_col3.metric(
+        "最优策略相比全灵魂策略的结余 Savings vs All-Soul",
+        f"{all_soul_saving:.4f}"
+    )
 
     st.subheader("最优策略 Optimal Strategy")
 
