@@ -1147,7 +1147,7 @@ if run_button:
         best["strategy"]
     )
     col2.metric(
-        "最小成本期望 Minimum Expected Cost",
+        "最优策略成本期望 Optimal Strategy Expected Cost",
         f"{best['expected_total_cost']:.4f}"
     )
     col3.metric(
@@ -1158,6 +1158,50 @@ if run_button:
         "期望损失价值 Expected Loss Cost",
         f"{best['expected_item_0_loss_cost']:.4f}"
     )
+
+    if target_level <= 9:
+        all_soul_strategy_info = {
+            "strategy": ["S"] * target_level,
+            "protect_flags": [],
+            "luck_flags": []
+        }
+
+        all_soul_result = evaluate_strategy(
+            all_soul_strategy_info,
+            soul_success_rate,
+            bless_relative_cost,
+            target_level,
+            high_item_type_index,
+            item_0_cost,
+            chaos_cost,
+            talisman_protect_cost,
+            talisman_luck_cost,
+            has_luck_attribute,
+            luck_attribute_success_bonus,
+            luck_talisman_success_bonus
+        )
+
+        all_soul_saving = (
+            all_soul_result["expected_total_cost"]
+            - best["expected_total_cost"]
+        )
+
+        st.markdown("---")
+
+        compare_col1, compare_col2, compare_col3 = st.columns(3)
+
+        compare_col1.metric(
+            "全灵魂策略对照 All-Soul Strategy",
+            all_soul_result["strategy"]
+        )
+        compare_col2.metric(
+            "全灵魂策略成本期望 All-Soul Expected Cost",
+            f"{all_soul_result['expected_total_cost']:.4f}"
+        )
+        compare_col3.metric(
+            "最优策略相比全灵魂策略的结余 Savings vs All-Soul",
+            f"{all_soul_saving:.4f}"
+        )
 
     st.subheader("最优策略 Optimal Strategy")
 
