@@ -2,7 +2,7 @@
 
 **基于吸收马尔可夫链的奇迹MU装备强化概率建模**
 
-- [**网站：稳定版-功能齐全的线上计算器** hosted by Streamlit](https://muupgradeplanner.streamlit.app/)
+- [**网站：稳定版-功能齐全的线上最优强化策略生成器** hosted by Streamlit](https://muupgradeplanner.streamlit.app/)
 
 - [**网站：测试版-最新功能：+0,+1,+2,...,+15最优策略、期望成本、暴力枚举全策略详细数据输出**](https://muonlinebeta.streamlit.app/)
 
