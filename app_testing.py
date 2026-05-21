@@ -1134,7 +1134,7 @@ if run_button:
         f"{bless_relative_cost:.4f}"
     )
     setting_col4.metric(
-        "策略数量 Strategy Count",
+        "枚举策略数量 Enumerated Strategy Count",
         f"{len(result_df)}"
     )
 
