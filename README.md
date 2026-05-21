@@ -1,4 +1,4 @@
-# Probabilistic Optimization of MU Online Item Upgrades  [中文](README_CN.md)
+# Probabilistic Optimization of MU Online Item Upgrades  [中文](README_CN.md) [**Beta Version (in development)**](https://muonlinebeta.streamlit.app/)
 ### A Markov Chain and Bellman-Based Approach
 
 ---
