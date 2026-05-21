@@ -1126,7 +1126,7 @@ if run_button:
         f"+0 → +{target_level}"
     )
     setting_col2.metric(
-        "实际灵魂成功率 Effective Soul Success Rate",
+        "+0~+9 灵魂成功率 Soul Success Rate",
         f"{soul_success_rate:.2f}"
     )
     setting_col3.metric(
