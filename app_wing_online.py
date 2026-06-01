@@ -320,7 +320,7 @@ st.sidebar.header("基础换算比例 Basic Exchange Rates")
 st.sidebar.markdown("#### 金币 / Gold")
 
 gold_mode = st.sidebar.radio(
-    #"金币价值设置方式 Gold Value Setting",
+    "金币价值设置方式 Gold Value Setting",
     [
         "金币与灵魂换算：X金币 = Y灵魂",
         "金币与祝福换算：X金币 = Y祝福"
