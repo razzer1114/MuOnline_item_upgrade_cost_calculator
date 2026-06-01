@@ -650,6 +650,20 @@ if magic_stone_bonus > 0:
 else:
     max_magic_stone_count = 0
 
+st.sidebar.info(
+    f"""
+自动计算结果：
+
+基础成功率：{base_success_rate_pct:.2f}%
+
+每颗魔晶石加成：{magic_stone_bonus_pct:.2f}%
+
+成功率上限：{max_success_rate_pct:.2f}%
+
+最大需要枚举：
+{max_magic_stone_count} 颗低级魔晶石
+"""
+)
 
 # ============================================================
 # 5. Main Display / 主界面展示
