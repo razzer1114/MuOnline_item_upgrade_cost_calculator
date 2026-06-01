@@ -304,8 +304,7 @@ with st.expander("🎯 用途和说明 Purpose & Notes", expanded=False):
     因此至少需要金币或祝福中的一个直接与灵魂建立换算关系。
 
     ---
-    ### English Version
-    
+       
     This tool evaluates the expected synthesis cost of
     Level 1 Wings in MU Online.
     
