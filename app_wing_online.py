@@ -518,11 +518,11 @@ magic_stone_value, magic_stone_original_text = material_value_ratio_input(
 
 
 # ============================================================
-# 4.3 System Gold Fees / 系统金币费用
+# 4.3 Synthesis System Gold Fees / 合成系统金币费用
 # ============================================================
 
 st.sidebar.markdown("---")
-st.sidebar.header("系统金币费用 System Gold Fees")
+st.sidebar.header("合成系统金币费用 Synthesis System Gold Fees")
 
 relic_synthesis_gold = st.sidebar.number_input(
     "圣物合成费用（金币） Relic Synthesis Fee (Gold)",
