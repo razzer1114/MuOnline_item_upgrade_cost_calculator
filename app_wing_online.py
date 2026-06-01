@@ -555,12 +555,16 @@ wing_conversion_gold_value = gold_to_soul(
     gold_per_soul
 )
 
-st.sidebar.caption(
-    f"圣物合成费用折算：{relic_synthesis_gold_value:.6f} 灵魂"
-)
+st.sidebar.info(
+    f"""
+圣物合成费用折算：
+{relic_synthesis_gold:,.0f} 金币
+≈ {relic_synthesis_gold_value:.6f} 灵魂
 
-st.sidebar.caption(
-    f"圣物转化费用折算：{wing_conversion_gold_value:.6f} 灵魂"
+圣物转化费用折算：
+{wing_conversion_gold:,.0f} 金币
+≈ {wing_conversion_gold_value:.6f} 灵魂
+"""
 )
 
 
