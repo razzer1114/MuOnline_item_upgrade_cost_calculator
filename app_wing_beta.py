@@ -685,9 +685,11 @@ st.sidebar.markdown("### 📊 Visits / 访问量")
 
 st.sidebar.markdown(
     """
-    <a href="https://www.hitwebcounter.com/" target="_blank">
-        <img src="https://www.hitwebcounter.com/counter/counter.php?page=21499592&style=0030&nbdigits=5&type=page"
-        style="border:0;" />
+    <a href="https://www.hitwebcounter.com/" target="_blank" rel="noopener">
+        <img src="https://www.hitwebcounter.com/counter/counter.php?page=21501229&style=0032&nbdigits=5&type=page"
+             alt="Visit Counter"
+             decoding="async"
+             style="border:0;max-width:100%;height:auto;">
     </a>
     """,
     unsafe_allow_html=True
