@@ -1029,13 +1029,34 @@ st.markdown("### 免责声明 Disclaimer")
 
 st.info(
     """
-    本项目基于用户输入的成功率、金币换算比例与宝石相对价值进行计算，
-    输出结果仅在所设定参数条件下成立。游戏内实际合成概率、市场价格、
-    宝石价值和金币价值可能因区服、时间和交易环境而发生变化，
-    因此计算结果不代表任何固定或真实环境下的唯一最优解。
+【中文】
 
-    本工具提供的是一种期望成本计算方法与决策参考，
-    而非对游戏实际机制、官方概率或市场价格的判定或保证。
+本项目基于用户输入的成功率、金币换算比例与宝石相对价值进行计算，
+输出结果仅在所设定参数条件下成立。
+
+游戏内实际合成概率、市场价格、宝石价值和金币价值可能因区服、
+时间和交易环境而发生变化，因此计算结果不代表任何固定或真实环境下的唯一最优解。
+
+本工具提供的是一种期望成本计算方法与决策参考，
+而非对游戏实际机制、官方概率或市场价格的判定或保证。
+
+--------------------------------------------------
+
+【English】
+
+This project calculates expected synthesis cost based on
+user-defined success rates, exchange ratios and market values.
+
+Results are only valid under the specified assumptions.
+
+Actual in-game probabilities, market prices and exchange rates
+may vary across servers and over time.
+
+The calculator provides a decision-support framework and
+expected-cost model only.
+
+It does not guarantee actual game mechanics,
+official probabilities or real market values.
     """
 )
 
