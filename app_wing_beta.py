@@ -1,6 +1,6 @@
 # app.py
 # ============================================================
-# MU Online 1st Wing Synthesis Expected Cost Calculator
+# MU Online Level 1 Wing Synthesis Expected Cost Calculator
 # 奇迹MU 一代翅膀合成期望成本计算器
 # ============================================================
 
@@ -216,12 +216,12 @@ def format_percentage(x):
 # ============================================================
 
 st.set_page_config(
-    page_title="MU Online 1st Wing Synthesis Calculator",
+    page_title="MU Online Level 1 Wing Synthesis Calculator",
     layout="wide"
 )
 
 st.title("奇迹MU 一代翅膀合成期望成本计算器 尝鲜版")
-st.title("MU Online 1st Wing Synthesis Expected Cost Calculator Beta")
+st.title("MU Online Level 1 Wing Synthesis Expected Cost Calculator Beta")
 
 st.caption(
     "基于一代翅膀圣物合成与圣物转化规则，计算不同低级魔晶石数量下的合成期望成本，并自动给出当前参数下的最优方案。"
@@ -361,7 +361,7 @@ life_success_rate = st.sidebar.number_input(
 )
 
 st.sidebar.markdown("---")
-st.sidebar.header("一代翅膀转化 1st Wing Conversion")
+st.sidebar.header("一代翅膀转化 Lvl 1 Wing Conversion")
 
 base_success_rate = st.sidebar.number_input(
     "基础成功率 Base Success Rate",
@@ -538,7 +538,7 @@ if run_button:
             "cost_soul / 成本_灵魂": relic_synthesis_gold_value
         },
         {
-            "item / 项目": "一代翅膀圣物总成本 1st Wing Relic Cost",
+            "item / 项目": "一代翅膀圣物总成本 Lvl 1 Wing Relic Cost",
             "cost_soul / 成本_灵魂": summary["relic_cost"]
         },
         {
