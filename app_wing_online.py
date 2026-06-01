@@ -264,6 +264,7 @@ st.set_page_config(
 st.title("奇迹MU 一代翅膀合成期望成本计算器")
 st.title("MU Online Level 1 Wing Synthesis Expected Cost Calculator")
 
+
 st.caption(
     "基于一代翅膀圣物合成与圣物转化规则，计算不同低级魔晶石数量下的合成期望成本，并自动给出当前参数下的最优方案。"
 )
@@ -319,7 +320,7 @@ st.sidebar.header("基础换算比例 Basic Exchange Rates")
 st.sidebar.markdown("#### 金币 / Gold")
 
 gold_mode = st.sidebar.radio(
-    "金币价值设置方式 Gold Value Setting",
+    #"金币价值设置方式 Gold Value Setting",
     [
         "金币与灵魂换算：X金币 = Y灵魂",
         "金币与祝福换算：X金币 = Y祝福"
