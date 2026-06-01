@@ -461,11 +461,17 @@ if bless_direct_to_soul and not gold_direct_to_soul:
 
 soul_value = 1.0
 
-st.sidebar.caption(f"折算结果：1 灵魂 = {gold_per_soul:,.0f} 金币")
-st.sidebar.caption(f"折算结果：1 祝福 = {bless_value:.6f} 灵魂")
-
 st.sidebar.info(
-    f"当前基础换算：1 灵魂 = {gold_per_soul:,.0f} 金币；1 祝福 = {bless_value:.4f} 灵魂"
+    f"""
+当前基础换算
+
+1 灵魂
+≈ {gold_per_soul:,.0f} 金币
+
+1 祝福
+≈ {bless_value:.4f} 灵魂
+≈ {bless_value * gold_per_soul:,.0f} 金币
+"""
 )
 
 
