@@ -596,44 +596,58 @@ life_success_rate = st.sidebar.number_input(
 st.sidebar.markdown("---")
 st.sidebar.header("一代翅膀转化 Level 1 Wing Conversion")
 
-base_success_rate = st.sidebar.number_input(
-    "基础成功率 Base Success Rate",
-    min_value=0.01,
-    max_value=1.00,
-    value=0.20,
-    step=0.01,
-    format="%.2f",
-    key="base_success_rate"
-)
-
-max_success_rate = st.sidebar.number_input(
-    "成功率上限 Max Success Rate",
-    min_value=0.01,
-    max_value=1.00,
-    value=1.00,
-    step=0.01,
-    format="%.2f",
-    key="max_success_rate"
-)
-
-magic_stone_bonus = st.sidebar.number_input(
-    "每颗低级魔晶石成功率加成 Magic Stone Bonus",
+base_success_rate_pct = st.sidebar.number_input(
+    "基础成功率 Base Success Rate (%)",
     min_value=0.00,
-    max_value=1.00,
-    value=0.05,
+    max_value=100.00,
+    value=20.00,
     step=0.01,
     format="%.2f",
-    key="magic_stone_bonus"
+    key="base_success_rate_pct"
 )
 
-max_magic_stone_count = st.sidebar.number_input(
-    "最大低级魔晶石数量 Max Low Magic Stone Count",
-    min_value=0,
-    max_value=100,
-    value=16,
-    step=1,
-    key="max_magic_stone_count"
+base_success_rate = base_success_rate_pct / 100
+
+max_success_rate_pct = st.sidebar.number_input(
+    "成功率上限 Max Success Rate (%)",
+    min_value=0.00,
+    max_value=100.00,
+    value=100.00,
+    step=0.01,
+    format="%.2f",
+    key="max_success_rate_pct"
 )
+
+max_success_rate = max_success_rate_pct / 100
+
+magic_stone_bonus_pct = st.sidebar.number_input(
+    "每颗低级魔晶石成功率加成 Magic Stone Bonus (%)",
+    min_value=0.00,
+    max_value=100.00,
+    value=5.00,
+    step=0.01,
+    format="%.2f",
+    key="magic_stone_bonus_pct"
+)
+
+magic_stone_bonus = magic_stone_bonus_pct / 100
+
+import math
+
+if magic_stone_bonus > 0:
+
+    max_magic_stone_count = math.ceil(
+        (max_success_rate - base_success_rate)
+        / magic_stone_bonus
+    )
+
+    max_magic_stone_count = max(
+        0,
+        max_magic_stone_count
+    )
+
+else:
+    max_magic_stone_count = 0
 
 
 # ============================================================
