@@ -112,7 +112,12 @@ def material_value_ratio_input(
         value_soul = bless_to_soul(bless_equivalent, bless_value) / item_count
         original_text = f"{item_count:g} {label_cn} = {bless_equivalent:g} 祝福"
 
-    st.sidebar.caption(f"折算结果：1 {label_cn} = {value_soul:.6f} 灵魂")
+    st.sidebar.info(
+        f"""
+    1 {label_cn}
+    ≈ {value_soul:.6f} 灵魂
+    """
+    )
 
     return value_soul, original_text
 
