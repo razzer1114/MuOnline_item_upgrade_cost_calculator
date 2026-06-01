@@ -267,7 +267,7 @@ st.set_page_config(
 )
 
 st.title("奇迹MU 一代翅膀合成期望成本计算器")
-st.title("MU Online Level 1 Wing Synthesis Expected Cost Calculator")
+st.title("MU Online Level one Wing Synthesis Expected Cost Calculator")
 
 
 st.caption(
