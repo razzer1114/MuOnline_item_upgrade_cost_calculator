@@ -957,311 +957,313 @@ else:
     st.info("请在左侧设置参数，然后点击“运行计算”。")
     st.info("Set parameters on the left and click Run Calculation.")
 
-
-# ============================================================
-# 6. Guide / 使用说明
-# ============================================================
-
 # ============================================================
 # 6. Guide / 使用说明
 # ============================================================
 
 with st.expander("📘 使用说明 User Guide", expanded=False):
-    st.markdown("""
-    # 使用说明 User Guide
 
-    ## 中文版
+    guide_tab_cn, guide_tab_en = st.tabs([
+        "中文版",
+        "English Version"
+    ])
 
-    ### 1. 工具用途
+    with guide_tab_cn:
+        st.markdown("""
+        # 使用说明
 
-    本工具用于计算《奇迹MU》中一代翅膀从材料准备到最终转化成功的期望成本，并自动寻找当前参数条件下的最优魔晶石使用方案。
+        ## 1. 工具用途
 
-    所有成本最终统一折算为“灵魂宝石价值”进行计算，以便比较不同材料、不同服务器经济环境下的真实成本。
+        本工具用于计算《奇迹MU》中一代翅膀从材料准备到最终转化成功的期望成本，并自动寻找当前参数条件下的最优魔晶石使用方案。
 
-    ---
+        所有成本最终统一折算为“灵魂宝石价值”进行计算，以便比较不同材料、不同服务器经济环境下的真实成本。
 
-    ### 2. 基础换算比例
+        ---
 
-    本工具采用“灵魂”作为统一价值单位。
+        ## 2. 基础换算比例
 
-    您需要首先设置市场基准价格：
+        本工具采用“灵魂”作为统一价值单位。
 
-    - 金币与灵魂之间的换算关系；
-    - 祝福与灵魂之间的换算关系；
-    - 或通过祝福与金币的关系间接建立换算。
+        您需要首先设置市场基准价格：
 
-    例如：
+        - 金币与灵魂之间的换算关系；
+        - 祝福与灵魂之间的换算关系；
+        - 或通过祝福与金币的关系间接建立换算。
 
-    - 10,000,000金币 = 1灵魂
-    - 1祝福 = 3灵魂
+        例如：
 
-    系统将自动计算：
+        - 10,000,000金币 = 1灵魂
+        - 1祝福 = 3灵魂
 
-    - 1灵魂 ≈ 10,000,000金币
-    - 1祝福 ≈ 30,000,000金币
+        系统将自动计算：
 
-    ---
+        - 1灵魂 ≈ 10,000,000金币
+        - 1祝福 ≈ 30,000,000金币
 
-    ### 3. 材料价值设置
+        ---
 
-    以下材料均支持三种设置方式：
+        ## 3. 材料价值设置
 
-    - 灵魂换算：X材料 = Y灵魂
-    - 金币换算：X材料 = Y金币
-    - 祝福换算：X材料 = Y祝福
+        以下材料均支持三种设置方式：
 
-    支持的材料包括：
+        - 灵魂换算：X材料 = Y灵魂
+        - 金币换算：X材料 = Y金币
+        - 祝福换算：X材料 = Y祝福
 
-    - 生命宝石
-    - 玛雅宝石
-    - +4不追加玛雅武器
-    - 低级魔晶石
+        支持的材料包括：
 
-    例如：
+        - 生命宝石
+        - 玛雅宝石
+        - +4不追加玛雅武器
+        - 低级魔晶石
 
-    - 1生命 = 1灵魂
-    - 1玛雅 = 500,000金币
-    - 1低级魔晶石 = 1祝福
+        例如：
 
-    系统会自动换算为：
+        - 1生命 = 1灵魂
+        - 1玛雅 = 500,000金币
+        - 1低级魔晶石 = 1祝福
 
-    - 1生命 = ?灵魂
-    - 1玛雅 = ?灵魂
-    - 1魔晶石 = ?灵魂
+        系统会自动换算为：
 
-    ---
+        - 1生命 = ?灵魂
+        - 1玛雅 = ?灵魂
+        - 1魔晶石 = ?灵魂
 
-    ### 4. 圣物合成与转化费用
+        ---
 
-    圣物相关费用属于系统固定金币消耗：
+        ## 4. 圣物合成与转化费用
 
-    - 圣物合成费用
-    - 圣物转化费用
+        圣物相关费用属于系统固定金币消耗：
 
-    输入金币后，系统会自动折算为灵魂价值。
+        - 圣物合成费用
+        - 圣物转化费用
 
-    ---
+        输入金币后，系统会自动折算为灵魂价值。
 
-    ### 5. 生命宝石追加
+        ---
 
-    用于计算：
+        ## 5. 生命宝石追加
 
-    - 追4
-    - 追8
-    - 追12
-    - 追16
+        用于计算：
 
-    所需的生命宝石期望消耗量。
+        - 追4
+        - 追8
+        - 追12
+        - 追16
 
-    模型假设：
+        所需的生命宝石期望消耗量。
 
-    - 成功则追加等级 +1；
-    - 失败则归零重新开始。
+        模型假设：
 
-    系统采用连续成功期望模型自动计算平均消耗。
+        - 成功则追加等级 +1；
+        - 失败则归零重新开始。
 
-    ---
+        系统采用连续成功期望模型自动计算平均消耗。
 
-    ### 6. 翅膀转化
+        ---
 
-    设置：
+        ## 6. 翅膀转化
 
-    - 基础成功率
-    - 成功率上限
-    - 每颗低级魔晶石成功率加成
+        设置：
 
-    例如：
+        - 基础成功率
+        - 成功率上限
+        - 每颗低级魔晶石成功率加成
 
-    - 基础成功率：20%
-    - 每颗魔晶石：+5%
-    - 成功率上限：100%
+        例如：
 
-    系统将自动计算：
+        - 基础成功率：20%
+        - 每颗魔晶石：+5%
+        - 成功率上限：100%
 
-    - 最大需要使用的魔晶石数量；
-    - 枚举所有可能方案；
-    - 自动寻找最低期望成本方案。
+        系统将自动计算：
 
-    ---
+        - 最大需要使用的魔晶石数量；
+        - 枚举所有可能方案；
+        - 自动寻找最低期望成本方案。
 
-    ### 7. 结果解读
+        ---
 
-    程序会输出：
+        ## 7. 结果解读
 
-    - 推荐魔晶石数量
-    - 最终成功率
-    - 单次尝试成本
-    - 合成期望总成本
+        程序会输出：
 
-    同时提供：
+        - 推荐魔晶石数量
+        - 最终成功率
+        - 单次尝试成本
+        - 合成期望总成本
 
-    - 材料价值换算表
-    - 成本拆解表
-    - 全部枚举结果
-    - 期望成本曲线
+        同时提供：
 
-    用于分析不同策略之间的差异。
+        - 材料价值换算表
+        - 成本拆解表
+        - 全部枚举结果
+        - 期望成本曲线
 
-    ---
+        用于分析不同策略之间的差异。
 
-    ### 8. 免责声明
+        ---
 
-    本工具基于用户输入参数进行计算。
+        ## 8. 免责声明
 
-    实际游戏中的：
+        本工具基于用户输入参数进行计算。
 
-    - 合成成功率
-    - 市场价格
-    - 宝石价值
-    - 金币价值
+        实际游戏中的：
 
-    可能随服务器、时间及市场环境发生变化。
+        - 合成成功率
+        - 市场价格
+        - 宝石价值
+        - 金币价值
 
-    因此本工具仅提供理论计算结果与决策参考，不保证与实际游戏环境完全一致。
+        可能随服务器、时间及市场环境发生变化。
 
-    ---
+        因此本工具仅提供理论计算结果与决策参考，不保证与实际游戏环境完全一致。
+        """)
 
-    # English Version
+    with guide_tab_en:
+        st.markdown("""
+        # User Guide
 
-    ## 1. Purpose
+        ## 1. Purpose
 
-    This calculator estimates the expected cost of synthesizing a Level 1 Wing in MU Online and automatically identifies the optimal Magic Stone strategy under the current assumptions.
+        This calculator estimates the expected cost of synthesizing a Level 1 Wing in MU Online and automatically identifies the optimal Magic Stone strategy under the current assumptions.
 
-    All costs are converted into Soul-equivalent value for comparison across different market environments.
+        All costs are converted into Soul-equivalent value for comparison across different market environments.
 
-    ---
+        ---
 
-    ## 2. Base Exchange Rates
+        ## 2. Base Exchange Rates
 
-    Soul is used as the universal value unit.
+        Soul is used as the universal value unit.
 
-    You must first define:
+        You must first define:
 
-    - Gold ↔ Soul relationship;
-    - Bless ↔ Soul relationship;
-    - or Bless ↔ Gold relationship.
+        - Gold ↔ Soul relationship;
+        - Bless ↔ Soul relationship;
+        - or Bless ↔ Gold relationship.
 
-    Example:
+        Example:
 
-    - 10,000,000 Gold = 1 Soul
-    - 1 Bless = 3 Soul
+        - 10,000,000 Gold = 1 Soul
+        - 1 Bless = 3 Soul
 
-    The calculator will automatically derive:
+        The calculator will automatically derive:
 
-    - 1 Soul ≈ 10,000,000 Gold
-    - 1 Bless ≈ 30,000,000 Gold
+        - 1 Soul ≈ 10,000,000 Gold
+        - 1 Bless ≈ 30,000,000 Gold
 
-    ---
+        ---
 
-    ## 3. Material Value Settings
+        ## 3. Material Value Settings
 
-    Each material supports three valuation methods:
+        Each material supports three valuation methods:
 
-    - X Material = Y Soul
-    - X Material = Y Gold
-    - X Material = Y Bless
+        - X Material = Y Soul
+        - X Material = Y Gold
+        - X Material = Y Bless
 
-    Supported materials:
+        Supported materials:
 
-    - Life Jewel
-    - Chaos Jewel
-    - +4 Maya Weapon without Option
-    - Low Magic Stone
+        - Life Jewel
+        - Chaos Jewel
+        - +4 Maya Weapon without Option
+        - Low Magic Stone
 
-    Examples:
+        Examples:
 
-    - 1 Life Jewel = 1 Soul
-    - 1 Chaos Jewel = 500,000 Gold
-    - 1 Low Magic Stone = 1 Bless
+        - 1 Life Jewel = 1 Soul
+        - 1 Chaos Jewel = 500,000 Gold
+        - 1 Low Magic Stone = 1 Bless
 
-    The calculator automatically converts all values into Soul-equivalent cost.
+        The calculator automatically converts all values into Soul-equivalent cost.
 
-    ---
+        ---
 
-    ## 4. Relic Costs
+        ## 4. Relic Costs
 
-    The following are fixed system Gold costs:
+        The following are fixed system Gold costs:
 
-    - Relic Synthesis Fee
-    - Relic-to-Wing Conversion Fee
+        - Relic Synthesis Fee
+        - Relic-to-Wing Conversion Fee
 
-    Gold costs are automatically converted into Soul-equivalent value.
+        Gold costs are automatically converted into Soul-equivalent value.
 
-    ---
+        ---
 
-    ## 5. Life Jewel Option Enhancement
+        ## 5. Life Jewel Option Enhancement
 
-    The calculator estimates the expected Life Jewel consumption required for:
+        The calculator estimates the expected Life Jewel consumption required for:
 
-    - +4 Option
-    - +8 Option
-    - +12 Option
-    - +16 Option
+        - +4 Option
+        - +8 Option
+        - +12 Option
+        - +16 Option
 
-    Model assumptions:
+        Model assumptions:
 
-    - Success increases option level by one step;
-    - Failure resets progress to zero.
+        - Success increases option level by one step;
+        - Failure resets progress to zero.
 
-    Expected consumption is calculated using a consecutive-success expectation model.
+        Expected consumption is calculated using a consecutive-success expectation model.
 
-    ---
+        ---
 
-    ## 6. Wing Conversion
+        ## 6. Wing Conversion
 
-    Configure:
+        Configure:
 
-    - Base Success Rate
-    - Maximum Success Rate
-    - Success Rate Bonus per Magic Stone
+        - Base Success Rate
+        - Maximum Success Rate
+        - Success Rate Bonus per Magic Stone
 
-    Example:
+        Example:
 
-    - Base Success Rate: 20%
-    - Magic Stone Bonus: +5%
-    - Maximum Success Rate: 100%
+        - Base Success Rate: 20%
+        - Magic Stone Bonus: +5%
+        - Maximum Success Rate: 100%
 
-    The calculator automatically:
+        The calculator automatically:
 
-    - Determines the maximum required Magic Stone count;
-    - Enumerates all feasible strategies;
-    - Finds the minimum expected-cost solution.
+        - Determines the maximum required Magic Stone count;
+        - Enumerates all feasible strategies;
+        - Finds the minimum expected-cost solution.
 
-    ---
+        ---
 
-    ## 7. Results
+        ## 7. Results
 
-    The program provides:
+        The program provides:
 
-    - Recommended Magic Stone count;
-    - Final Success Rate;
-    - Cost per Attempt;
-    - Expected Total Cost.
+        - Recommended Magic Stone count;
+        - Final Success Rate;
+        - Cost per Attempt;
+        - Expected Total Cost.
 
-    Additional outputs include:
+        Additional outputs include:
 
-    - Material Value Conversion Table;
-    - Cost Breakdown Table;
-    - Full Enumeration Results;
-    - Expected Cost Curve.
+        - Material Value Conversion Table;
+        - Cost Breakdown Table;
+        - Full Enumeration Results;
+        - Expected Cost Curve.
 
-    ---
+        ---
 
-    ## 8. Disclaimer
+        ## 8. Disclaimer
 
-    All results are calculated using user-defined assumptions.
+        All results are calculated using user-defined assumptions.
 
-    Actual in-game:
+        Actual in-game:
 
-    - Success rates;
-    - Market prices;
-    - Jewel values;
-    - Gold values;
+        - Success rates;
+        - Market prices;
+        - Jewel values;
+        - Gold values;
 
-    may vary across servers and over time.
+        may vary across servers and over time.
 
-    Therefore, this tool should be regarded as a decision-support calculator rather than a guarantee of actual game outcomes.
-    """)
+        Therefore, this tool should be regarded as a decision-support calculator rather than a guarantee of actual game outcomes.
+        """)
+   
 # ============================================================
 # 7. author / 作者
 # ============================================================
