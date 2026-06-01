@@ -302,6 +302,28 @@ with st.expander("🎯 用途和说明 Purpose & Notes", expanded=False):
     注意：  
     金币和祝福不能同时只通过彼此换算，否则无法唯一确定“灵魂”基准。
     因此至少需要金币或祝福中的一个直接与灵魂建立换算关系。
+
+    ---
+### English Version
+
+This tool evaluates the expected synthesis cost of
+Level 1 Wings in MU Online.
+
+Current version features:
+
+- Gold can be valued through Soul or Bless conversion;
+- Bless can be valued through Soul or Gold conversion;
+- Life Jewels, Chaos Jewels, +4 Maya Weapons and Low Magic Stones can all be valued by:
+  - X items = Y Soul
+  - X items = Y Gold
+  - X items = Y Bless
+- Relic synthesis fee and relic conversion fee are fixed Gold costs;
+- All values are ultimately converted into Soul-equivalent cost for calculation.
+
+Note:
+
+Gold and Bless cannot both be defined solely through each other.
+At least one of them must be directly linked to Soul value.
     """)
 
 
