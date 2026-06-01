@@ -1359,10 +1359,10 @@ with st.expander("📘 使用说明 User Guide", expanded=False):
 # ============================================================
 
 st.markdown("---")
-#st.markdown("#### Developed by 作者：Razz")
-#st.markdown("GitHub: https://github.com/razzer1114/MuOnline_item_upgrade_cost_calculator")
-#st.markdown("💬 如果有问题、意见或建议，请移步贴吧讨论：")
-#st.markdown("https://tieba.baidu.com/p/10761263145")
+st.markdown("#### Developed by 作者：Razz")
+st.markdown("GitHub: https://github.com/razzer1114/MuOnline_item_upgrade_cost_calculator")
+st.markdown("💬 如果有问题、意见或建议，请移步贴吧讨论：")
+st.markdown("https://tieba.baidu.com/p/10761263145")
 
 # ============================================================
 # 8. Disclaimer / 免责声明
