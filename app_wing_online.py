@@ -656,7 +656,6 @@ else:
 
 st.sidebar.info(
     f"""
-自动计算结果：
 
 基础成功率：{base_success_rate_pct:.2f}%
 
