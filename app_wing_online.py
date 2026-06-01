@@ -1019,9 +1019,17 @@ with st.expander("📘 使用说明 Guide", expanded=False):
     增加低级魔晶石会提高成功率，但也会增加单次尝试成本，因此最优方案需要枚举比较。
     """)
 
+# ============================================================
+# 7. author / 作者
+# ============================================================
+
+st.markdown("---")
+st.markdown("#### Developed by 作者：Razz")
+st.markdown("GitHub: https://github.com/razzer1114/MuOnline_item_upgrade_cost_calculator")
+
 
 # ============================================================
-# 7. Disclaimer / 免责声明
+# 8. Disclaimer / 免责声明
 # ============================================================
 
 st.markdown("---")
@@ -1057,13 +1065,7 @@ official probabilities or real market values.
 )
 
 
-# ============================================================
-# 8. Footer / 页脚
-# ============================================================
 
-st.markdown("---")
-st.markdown("#### Developed by 作者：Razz")
-st.markdown("GitHub: https://github.com/razzer1114/MuOnline_item_upgrade_cost_calculator")
 
 
 # ============================================================
