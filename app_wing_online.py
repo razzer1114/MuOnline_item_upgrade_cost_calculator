@@ -284,46 +284,136 @@ st.caption(
 # ============================================================
 
 with st.expander("🎯 用途和说明 Purpose & Notes", expanded=False):
-    st.markdown("""
-    本工具针对**一代翅膀合成**过程进行期望成本计算。
 
-    当前版本中：
+    purpose_tab_cn, purpose_tab_en = st.tabs([
+        "中文版",
+        "English Version"
+    ])
 
-    - 金币可以按“金币 = 灵魂”或“金币 = 祝福”设置；
-    - 祝福可以按“祝福 = 灵魂”或“祝福 = 金币”设置；
-    - 生命宝石、玛雅宝石、+4不追加玛雅武器、低级魔晶石均可按：
-      - X材料 = Y灵魂；
-      - X材料 = Y金币；
-      - X材料 = Y祝福；
-      三种方式输入；
-    - 圣物合成费用、圣物转化费用固定按金币输入；
-    - 所有成本最终统一折算为灵魂单位参与计算。
+    with purpose_tab_cn:
+        st.markdown("""
+        ## 工具用途
 
-    注意：  
-    金币和祝福不能同时只通过彼此换算，否则无法唯一确定“灵魂”基准。
-    因此至少需要金币或祝福中的一个直接与灵魂建立换算关系。
+        本工具针对**奇迹MU一代翅膀合成**过程进行期望成本计算。
 
-    ---
-       
-    This tool evaluates the expected synthesis cost of
-    Level 1 Wings in MU Online.
-    
-    Current version features:
-    
-    - Gold can be valued through Soul or Bless conversion;
-    - Bless can be valued through Soul or Gold conversion;
-    - Life Jewels, Chaos Jewels, +4 Maya Weapons and Low Magic Stones can all be valued by:
-      - X items = Y Soul
-      - X items = Y Gold
-      - X items = Y Bless
-    - Relic synthesis fee and relic conversion fee are fixed Gold costs;
-    - All values are ultimately converted into Soul-equivalent cost for calculation.
-    
-    Note:
-    
-    Gold and Bless cannot both be defined solely through each other.
-    At least one of them must be directly linked to Soul value.
-    """)
+        在游戏中，翅膀合成涉及多种材料、成功率以及不同服务器经济环境下的市场价格差异。单纯依靠经验判断往往难以准确评估真实成本。
+
+        本工具通过统一价值换算体系，将所有材料最终折算为灵魂宝石价值，并自动计算不同魔晶石使用策略下的期望成本，从而帮助玩家寻找更优甚至最优方案。
+
+        ---
+
+        ## 当前版本支持
+
+        - 金币可按：
+          - 金币 = 灵魂
+          - 金币 = 祝福
+          两种方式设置；
+
+        - 祝福可按：
+          - 祝福 = 灵魂
+          - 祝福 = 金币
+          两种方式设置；
+
+        - 以下材料支持三种价值输入方式：
+          - X材料 = Y灵魂
+          - X材料 = Y金币
+          - X材料 = Y祝福
+
+          包括：
+
+          - 生命宝石
+          - 玛雅宝石
+          - +4不追加玛雅武器
+          - 低级魔晶石
+
+        - 圣物合成费用与圣物转化费用采用固定金币输入；
+
+        - 所有成本最终统一折算为灵魂价值进行计算。
+
+        ---
+
+        ## 注意事项
+
+        金币和祝福不能同时仅通过彼此进行换算，否则无法唯一确定灵魂价值基准。
+
+        因此：
+
+        - 金币或祝福至少有一个需要直接与灵魂建立换算关系；
+        - 系统会自动根据输入关系计算完整的价值换算体系。
+
+        ---
+
+        ## 适用场景
+
+        本工具特别适用于：
+
+        - 经常合成翅膀的玩家；
+        - 希望评估翅膀真实价值的玩家；
+        - 对不同服务器经济环境进行比较分析的玩家；
+        - 关注材料配置效率与长期成本的商人型玩家。
+        """)
+
+    with purpose_tab_en:
+        st.markdown("""
+        ## Purpose
+
+        This calculator evaluates the expected synthesis cost of **Level 1 Wings in MU Online**.
+
+        Wing synthesis involves multiple materials, success rates, and market-dependent values. Relying solely on experience often makes it difficult to estimate the true expected cost.
+
+        This tool converts all materials into Soul-equivalent value and automatically evaluates different Magic Stone strategies to identify more efficient or even optimal solutions.
+
+        ---
+
+        ## Current Features
+
+        - Gold can be valued through:
+          - Gold ↔ Soul
+          - Gold ↔ Bless
+
+        - Bless can be valued through:
+          - Bless ↔ Soul
+          - Bless ↔ Gold
+
+        - The following materials support three valuation methods:
+
+          - X Material = Y Soul
+          - X Material = Y Gold
+          - X Material = Y Bless
+
+          Including:
+
+          - Life Jewel
+          - Chaos Jewel
+          - +4 Maya Weapon without Option
+          - Low Magic Stone
+
+        - Relic synthesis fee and relic-to-wing conversion fee are fixed Gold costs;
+
+        - All values are ultimately converted into Soul-equivalent cost for calculation.
+
+        ---
+
+        ## Important Notes
+
+        Gold and Bless cannot both be defined solely through each other.
+
+        Therefore:
+
+        - At least one of them must be directly linked to Soul value;
+        - The calculator will automatically derive the complete exchange system based on user inputs.
+
+        ---
+
+        ## Recommended Use Cases
+
+        This calculator is particularly useful for:
+
+        - Players who frequently synthesize wings;
+        - Players evaluating the real value of wings;
+        - Comparing different server economies;
+        - Traders interested in long-term cost optimization and resource allocation.
+        """)
 
 
 # ============================================================
