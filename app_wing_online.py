@@ -1029,8 +1029,6 @@ st.markdown("### 免责声明 Disclaimer")
 
 st.info(
     """
-【中文】
-
 本项目基于用户输入的成功率、金币换算比例与宝石相对价值进行计算，
 输出结果仅在所设定参数条件下成立。
 
@@ -1041,8 +1039,6 @@ st.info(
 而非对游戏实际机制、官方概率或市场价格的判定或保证。
 
 --------------------------------------------------
-
-【English】
 
 This project calculates expected synthesis cost based on
 user-defined success rates, exchange ratios and market values.
