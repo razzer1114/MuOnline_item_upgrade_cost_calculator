@@ -463,7 +463,6 @@ soul_value = 1.0
 
 st.sidebar.info(
     f"""
-当前基础换算
 
 1 灵魂
 ≈ {gold_per_soul:,.0f} 金币
