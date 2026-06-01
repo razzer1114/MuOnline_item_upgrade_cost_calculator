@@ -21,44 +21,6 @@ def bless_to_soul(bless_count: float, bless_value: float) -> float:
     return bless_count * bless_value
 
 
-def calc_gold_per_soul_from_ratio(
-    mode: str,
-    soul_count: float,
-    gold_count: float
-) -> float:
-    """
-    Calculate gold-per-soul conversion ratio.
-    计算金币与灵魂之间的基础换算比例。
-    """
-    if mode == "灵魂换金币：X灵魂 = Y金币":
-        return gold_count / soul_count
-
-    if mode == "金币换灵魂：X金币 = Y灵魂":
-        return soul_count / gold_count
-
-    raise ValueError("Unknown gold conversion mode")
-
-
-def calc_bless_value_from_ratio(
-    mode: str,
-    bless_count: float,
-    soul_count: float,
-    gold_count: float,
-    gold_per_soul: float
-) -> float:
-    """
-    Calculate Bless value in Soul units.
-    计算 1 祝福折算为多少灵魂。
-    """
-    if mode == "祝福换灵魂：X祝福 = Y灵魂":
-        return soul_count / bless_count
-
-    if mode == "祝福换金币：X祝福 = Y金币":
-        return gold_to_soul(gold_count, gold_per_soul) / bless_count
-
-    raise ValueError("Unknown bless conversion mode")
-
-
 def material_value_ratio_input(
     label_cn: str,
     label_en: str,
@@ -72,14 +34,10 @@ def material_value_ratio_input(
     Universal material value input by ratio.
     通用材料价值比例输入。
 
-    Three modes:
-    1. X item = Y Soul
-    2. X item = Y Gold
-    3. X item = Y Bless
-
-    Returns:
-    - single item value in Soul units
-    - original input description
+    Supported modes:
+    1. X material = Y Soul
+    2. X material = Y Gold
+    3. X material = Y Bless
     """
 
     st.sidebar.markdown(f"#### {label_cn} / {label_en}")
@@ -91,8 +49,7 @@ def material_value_ratio_input(
             "金币换算：X材料 = Y金币",
             "祝福换算：X材料 = Y祝福"
         ],
-        key=f"{key}_mode",
-        horizontal=False
+        key=f"{key}_mode"
     )
 
     item_count = st.sidebar.number_input(
@@ -324,30 +281,21 @@ with st.expander("🎯 用途和说明 Purpose & Notes", expanded=False):
     st.markdown("""
     本工具针对**一代翅膀合成**过程进行期望成本计算。
 
-    当前版本中，材料价值采用“比例换算”方式输入：
+    当前版本中：
 
-    - X颗材料 = Y颗灵魂；
-    - X颗材料 = Y金币；
-    - X颗材料 = Y颗祝福。
+    - 金币可以按“金币 = 灵魂”或“金币 = 祝福”设置；
+    - 祝福可以按“祝福 = 灵魂”或“祝福 = 金币”设置；
+    - 生命宝石、玛雅宝石、+4不追加玛雅武器、低级魔晶石均可按：
+      - X材料 = Y灵魂；
+      - X材料 = Y金币；
+      - X材料 = Y祝福；
+      三种方式输入；
+    - 圣物合成费用、圣物转化费用固定按金币输入；
+    - 所有成本最终统一折算为灵魂单位参与计算。
 
-    系统会将所有材料最终统一折算为灵魂单位参与计算。
-
-    可自由设置价值的材料包括：
-
-    - 生命宝石；
-    - 玛雅宝石；
-    - +4不追加玛雅武器；
-    - 低级魔晶石。
-
-    基础货币换算包括：
-
-    - 灵魂与金币；
-    - 祝福与灵魂或金币。
-
-    固定金币费用包括：
-
-    - 圣物合成费用；
-    - 圣物转化费用。
+    注意：  
+    金币和祝福不能同时只通过彼此换算，否则无法唯一确定“灵魂”基准。
+    因此至少需要金币或祝福中的一个直接与灵魂建立换算关系。
     """)
 
 
@@ -358,6 +306,7 @@ with st.expander("🎯 用途和说明 Purpose & Notes", expanded=False):
 st.sidebar.header("执行操作 Run")
 run_button = st.sidebar.button("运行计算 Run Calculation")
 
+
 # ============================================================
 # 4.1 Basic Exchange Rates / 基础换算比例
 # ============================================================
@@ -365,150 +314,159 @@ run_button = st.sidebar.button("运行计算 Run Calculation")
 st.sidebar.markdown("---")
 st.sidebar.header("基础换算比例 Basic Exchange Rates")
 
+# ---------- Gold Conversion / 金币换算 ----------
+
 st.sidebar.markdown("#### 金币 / Gold")
 
 gold_mode = st.sidebar.radio(
-    "金币换算方式 Gold Conversion Mode",
+    "金币价值设置方式 Gold Value Setting",
     [
-        "灵魂换金币：X灵魂 = Y金币",
-        "金币换灵魂：X金币 = Y灵魂"
+        "金币与灵魂换算：X金币 = Y灵魂",
+        "金币与祝福换算：X金币 = Y祝福"
     ],
     key="gold_mode"
 )
 
-if gold_mode == "灵魂换金币：X灵魂 = Y金币":
-    gold_soul_count = st.sidebar.number_input(
-        "灵魂数量 X / Soul Count X",
+gold_x = st.sidebar.number_input(
+    "金币数量 X / Gold Count X",
+    min_value=0.0001,
+    max_value=999999999999.0,
+    value=10_000_000.0,
+    step=100_000.0,
+    format="%.0f",
+    key="gold_x"
+)
+
+if gold_mode == "金币与灵魂换算：X金币 = Y灵魂":
+    gold_y_soul = st.sidebar.number_input(
+        "等于多少灵魂 Y / Equivalent Soul Y",
         min_value=0.0001,
         max_value=999999999.0,
         value=1.0,
         step=1.0,
         format="%.4f",
-        key="gold_soul_count_a"
+        key="gold_y_soul"
     )
-
-    gold_count = st.sidebar.number_input(
-        "金币数量 Y / Gold Count Y",
-        min_value=0.0001,
-        max_value=999999999999.0,
-        value=10_000_000.0,
-        step=100_000.0,
-        format="%.0f",
-        key="gold_count_a"
-    )
-
-    gold_per_soul = calc_gold_per_soul_from_ratio(
-        gold_mode,
-        soul_count=gold_soul_count,
-        gold_count=gold_count
-    )
-
-    gold_original_text = f"{gold_soul_count:g} 灵魂 = {gold_count:,.0f} 金币"
-
+    gold_y_bless = None
+    gold_original_text = f"{gold_x:,.0f} 金币 = {gold_y_soul:g} 灵魂"
 else:
-    gold_count = st.sidebar.number_input(
-        "金币数量 X / Gold Count X",
-        min_value=0.0001,
-        max_value=999999999999.0,
-        value=10_000_000.0,
-        step=100_000.0,
-        format="%.0f",
-        key="gold_count_b"
-    )
-
-    gold_soul_count = st.sidebar.number_input(
-        "灵魂数量 Y / Soul Count Y",
+    gold_y_bless = st.sidebar.number_input(
+        "等于多少祝福 Y / Equivalent Bless Y",
         min_value=0.0001,
         max_value=999999999.0,
-        value=1.0,
-        step=1.0,
+        value=1.0 / 3.0,
+        step=0.01,
         format="%.4f",
-        key="gold_soul_count_b"
+        key="gold_y_bless"
     )
+    gold_y_soul = None
+    gold_original_text = f"{gold_x:,.0f} 金币 = {gold_y_bless:g} 祝福"
 
-    gold_per_soul = calc_gold_per_soul_from_ratio(
-        gold_mode,
-        soul_count=gold_soul_count,
-        gold_count=gold_count
-    )
 
-    gold_original_text = f"{gold_count:,.0f} 金币 = {gold_soul_count:g} 灵魂"
-
-st.sidebar.caption(f"折算结果：1 灵魂 = {gold_per_soul:,.0f} 金币")
+# ---------- Bless Conversion / 祝福换算 ----------
 
 st.sidebar.markdown("#### 祝福 / Bless")
 
 bless_mode = st.sidebar.radio(
-    "祝福换算方式 Bless Conversion Mode",
+    "祝福价值设置方式 Bless Value Setting",
     [
-        "祝福换灵魂：X祝福 = Y灵魂",
-        "祝福换金币：X祝福 = Y金币"
+        "祝福与灵魂换算：X祝福 = Y灵魂",
+        "祝福与金币换算：X祝福 = Y金币"
     ],
     key="bless_mode"
 )
 
-bless_count = st.sidebar.number_input(
+bless_x = st.sidebar.number_input(
     "祝福数量 X / Bless Count X",
     min_value=0.0001,
     max_value=999999999.0,
     value=1.0,
     step=1.0,
     format="%.4f",
-    key="bless_count"
+    key="bless_x"
 )
 
-if bless_mode == "祝福换灵魂：X祝福 = Y灵魂":
-    bless_soul_count = st.sidebar.number_input(
-        "灵魂数量 Y / Soul Count Y",
-        min_value=0.0,
+if bless_mode == "祝福与灵魂换算：X祝福 = Y灵魂":
+    bless_y_soul = st.sidebar.number_input(
+        "等于多少灵魂 Y / Equivalent Soul Y",
+        min_value=0.0001,
         max_value=999999999.0,
         value=3.0,
         step=0.01,
         format="%.4f",
-        key="bless_soul_count"
+        key="bless_y_soul"
     )
-
-    bless_gold_count = 0.0
-
-    bless_value = calc_bless_value_from_ratio(
-        bless_mode,
-        bless_count=bless_count,
-        soul_count=bless_soul_count,
-        gold_count=bless_gold_count,
-        gold_per_soul=gold_per_soul
-    )
-
-    bless_original_text = f"{bless_count:g} 祝福 = {bless_soul_count:g} 灵魂"
-
+    bless_y_gold = None
+    bless_original_text = f"{bless_x:g} 祝福 = {bless_y_soul:g} 灵魂"
 else:
-    bless_gold_count = st.sidebar.number_input(
-        "金币数量 Y / Gold Count Y",
-        min_value=0.0,
+    bless_y_gold = st.sidebar.number_input(
+        "等于多少金币 Y / Equivalent Gold Y",
+        min_value=0.0001,
         max_value=999999999999.0,
         value=30_000_000.0,
         step=100_000.0,
         format="%.0f",
-        key="bless_gold_count"
+        key="bless_y_gold"
     )
+    bless_y_soul = None
+    bless_original_text = f"{bless_x:g} 祝福 = {bless_y_gold:,.0f} 金币"
 
-    bless_soul_count = 0.0
 
-    bless_value = calc_bless_value_from_ratio(
-        bless_mode,
-        bless_count=bless_count,
-        soul_count=bless_soul_count,
-        gold_count=bless_gold_count,
-        gold_per_soul=gold_per_soul
+# ---------- Solve Exchange System / 求解基础换算 ----------
+
+gold_direct_to_soul = gold_mode == "金币与灵魂换算：X金币 = Y灵魂"
+bless_direct_to_soul = bless_mode == "祝福与灵魂换算：X祝福 = Y灵魂"
+
+if not gold_direct_to_soul and not bless_direct_to_soul:
+    st.sidebar.error(
+        "当前设置无法唯一确定灵魂基准：金币按祝福换算，祝福又按金币换算。"
+        "请至少让金币或祝福中的一个直接与灵魂换算。"
     )
+    st.error(
+        "基础换算比例设置错误：金币和祝福不能同时只通过彼此换算。"
+        "请在左侧将金币或祝福至少一个设置为与灵魂换算。"
+    )
+    st.stop()
 
-    bless_original_text = f"{bless_count:g} 祝福 = {bless_gold_count:,.0f} 金币"
+# Case 1: Bless directly defines Soul value.
+# 情况1：祝福直接与灵魂换算，先求祝福价值。
+if bless_direct_to_soul:
+    bless_value = bless_y_soul / bless_x
+
+    if gold_direct_to_soul:
+        gold_per_soul = gold_x / gold_y_soul
+    else:
+        gold_per_soul = gold_x / (gold_y_bless * bless_value)
+
+# Case 2: Gold directly defines Soul value, Bless depends on Gold.
+# 情况2：金币直接与灵魂换算，祝福可由金币推导。
+else:
+    gold_per_soul = gold_x / gold_y_soul
+
+    if bless_direct_to_soul:
+        bless_value = bless_y_soul / bless_x
+    else:
+        bless_value = gold_to_soul(bless_y_gold, gold_per_soul) / bless_x
+
+# If Gold is direct and Bless is Gold-based, calculate Bless value here.
+# 如果金币直接与灵魂换算，祝福按金币换算，则由金币推导祝福价值。
+if gold_direct_to_soul and not bless_direct_to_soul:
+    bless_value = gold_to_soul(bless_y_gold, gold_per_soul) / bless_x
+
+# If Bless is direct and Gold is Bless-based, calculate Gold-per-Soul here.
+# 如果祝福直接与灵魂换算，金币按祝福换算，则由祝福推导金币价值。
+if bless_direct_to_soul and not gold_direct_to_soul:
+    gold_per_soul = gold_x / (gold_y_bless * bless_value)
 
 soul_value = 1.0
 
+st.sidebar.caption(f"折算结果：1 灵魂 = {gold_per_soul:,.0f} 金币")
 st.sidebar.caption(f"折算结果：1 祝福 = {bless_value:.6f} 灵魂")
+
 st.sidebar.info(
     f"当前基础换算：1 灵魂 = {gold_per_soul:,.0f} 金币；1 祝福 = {bless_value:.4f} 灵魂"
 )
+
 
 # ============================================================
 # 4.2 Material Values / 材料价值
@@ -557,6 +515,7 @@ magic_stone_value, magic_stone_original_text = material_value_ratio_input(
     key="magic_stone"
 )
 
+
 # ============================================================
 # 4.3 System Gold Fees / 系统金币费用
 # ============================================================
@@ -570,7 +529,8 @@ relic_synthesis_gold = st.sidebar.number_input(
     max_value=999999999999.0,
     value=10_000.0,
     step=1_000.0,
-    format="%.0f"
+    format="%.0f",
+    key="relic_synthesis_gold"
 )
 
 wing_conversion_gold = st.sidebar.number_input(
@@ -579,7 +539,8 @@ wing_conversion_gold = st.sidebar.number_input(
     max_value=999999999999.0,
     value=1_000_000.0,
     step=10_000.0,
-    format="%.0f"
+    format="%.0f",
+    key="wing_conversion_gold"
 )
 
 relic_synthesis_gold_value = gold_to_soul(
@@ -600,6 +561,7 @@ st.sidebar.caption(
     f"圣物转化费用折算：{wing_conversion_gold_value:.6f} 灵魂"
 )
 
+
 # ============================================================
 # 4.4 Life Option / 生命宝石追加
 # ============================================================
@@ -611,7 +573,8 @@ target_option_level = st.sidebar.selectbox(
     "目标追加 Target Option",
     options=[0, 1, 2, 3, 4],
     format_func=lambda x: option_name(x),
-    index=1
+    index=1,
+    key="target_option_level"
 )
 
 life_success_rate = st.sidebar.number_input(
@@ -620,8 +583,10 @@ life_success_rate = st.sidebar.number_input(
     max_value=0.99,
     value=0.50,
     step=0.01,
-    format="%.2f"
+    format="%.2f",
+    key="life_success_rate"
 )
+
 
 # ============================================================
 # 4.5 Wing Conversion / 翅膀转化
@@ -636,7 +601,8 @@ base_success_rate = st.sidebar.number_input(
     max_value=1.00,
     value=0.20,
     step=0.01,
-    format="%.2f"
+    format="%.2f",
+    key="base_success_rate"
 )
 
 max_success_rate = st.sidebar.number_input(
@@ -645,7 +611,8 @@ max_success_rate = st.sidebar.number_input(
     max_value=1.00,
     value=1.00,
     step=0.01,
-    format="%.2f"
+    format="%.2f",
+    key="max_success_rate"
 )
 
 magic_stone_bonus = st.sidebar.number_input(
@@ -654,7 +621,8 @@ magic_stone_bonus = st.sidebar.number_input(
     max_value=1.00,
     value=0.05,
     step=0.01,
-    format="%.2f"
+    format="%.2f",
+    key="magic_stone_bonus"
 )
 
 max_magic_stone_count = st.sidebar.number_input(
@@ -662,7 +630,8 @@ max_magic_stone_count = st.sidebar.number_input(
     min_value=0,
     max_value=100,
     value=16,
-    step=1
+    step=1,
+    key="max_magic_stone_count"
 )
 
 
@@ -933,14 +902,23 @@ with st.expander("📘 使用说明 Guide", expanded=False):
     st.markdown("""
     ### 1. 基础换算比例
 
-    需要先设置两个基础比例：
+    金币支持两种设置方式：
 
-    - 金币与灵魂之间的换算；
-    - 祝福与灵魂或金币之间的换算。
+    - `X金币 = Y灵魂`
+    - `X金币 = Y祝福`
 
-    灵魂作为最终成本基准，固定为：
+    祝福支持两种设置方式：
 
-    `1 灵魂 = 1 灵魂`
+    - `X祝福 = Y灵魂`
+    - `X祝福 = Y金币`
+
+    但金币和祝福不能同时只通过彼此换算。  
+    也就是说，不能同时设置为：
+
+    - `X金币 = Y祝福`
+    - `X祝福 = Y金币`
+
+    因为这样无法唯一确定“灵魂”基准。
 
     ### 2. 材料价值比例输入
 
@@ -967,8 +945,6 @@ with st.expander("📘 使用说明 Guide", expanded=False):
 
     - 圣物合成费用；
     - 圣物转化费用。
-
-    因为它们属于系统收取的金币费用，而不是玩家市场交易物品。
 
     ### 4. 期望总成本
 
