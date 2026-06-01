@@ -994,19 +994,12 @@ st.sidebar.markdown("### 📊 Visits / 访问量")
 
 st.sidebar.markdown(
     """
-    <!-- hitwebcounter Code START -->
-    <a href="https://www.hitwebcounter.com/" target="_blank" rel="noopener" title="Styles Counter">
+    <a href="https://www.hitwebcounter.com/" target="_blank" rel="noopener">
         <img src="https://www.hitwebcounter.com/counter/counter.php?page=21501228&style=0032&nbdigits=5&type=page"
-        alt="Styles Counter"
+        alt="Visit Counter"
         decoding="async"
         style="border:0;max-width:100%;height:auto;" />
     </a>
-    <br />
-    <a href="https://www.hitwebcounter.com/" target="_blank" rel="noopener"
-       style="font-family:Geneva, Arial, Helvetica, sans-serif;font-size:9px;color:#76766B;text-decoration:none;font-weight:bold;">
-       This Website Visits
-    </a>
-    <!-- hitwebcounter Code END -->
     """,
     unsafe_allow_html=True
 )
