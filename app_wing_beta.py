@@ -8,7 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
 # ============================================================
-# note: Chaos weapon is named as Chaos weapon.
+# note: Chaos weapon is named as Maya weapon.
 # ============================================================
 
 # ============================================================
@@ -336,7 +336,7 @@ with st.expander("🎯 用途和说明 Purpose & Notes", expanded=False):
           包括：
 
           - 生命宝石
-          - 玛雅
+          - 玛雅宝石
           - +4追4玛雅武器（可选择自动计算或直接输入）
             - 自动计算时，+4不追加玛雅武器作为子项输入
           - 低级魔晶石
@@ -399,8 +399,8 @@ with st.expander("🎯 用途和说明 Purpose & Notes", expanded=False):
           Including:
 
           - Life Jewel
-          - Chaos
-          - +4+4 Chaos Weapon (automatic calculation or direct input)
+          - Chaos Jewel
+          - +4+4 Maya Weapon (automatic calculation or direct input)
             - When automatic calculation is selected, +4 Chaos Weapon without Option is entered as a sub-item
           - Low Magic Stone
 
@@ -717,16 +717,16 @@ with life_section:
 
 
 # ============================================================
-# 4.5 Chaos / 玛雅
+# 4.5 Chaos Jewel / 玛雅宝石
 # ============================================================
 
 with chaos_section:
     st.sidebar.markdown("---")
-    st.sidebar.header("玛雅 / Chaos")
+    st.sidebar.header("玛雅宝石 / Chaos Jewel")
 
     chaos_value, chaos_original_text = material_value_ratio_input(
-        "玛雅",
-        "Chaos",
+        "玛雅宝石",
+        "Chaos Jewel",
         default_item_count=1.0,
         default_soul_equivalent=0.05,
         gold_per_soul=gold_per_soul,
@@ -737,15 +737,15 @@ with chaos_section:
 
 
 # ============================================================
-# 4.6 Chaos Weapon / 玛雅武器
+# 4.6 Maya Weapon / 玛雅武器
 # ============================================================
 
 with maya_weapon_section:
     st.sidebar.markdown("---")
-    st.sidebar.header("+4追4玛雅武器 / +4+4 Chaos Weapon")
+    st.sidebar.header("+4追4玛雅武器 / +4+4 Maya Weapon")
 
     maya_weapon_with_option_mode = st.sidebar.radio(
-        "+4追4玛雅武器成本设置方式 / +4+4 Chaos Weapon Cost Mode",
+        "+4追4玛雅武器成本设置方式 / +4+4 Maya Weapon Cost Mode",
         [
             "自动计算：+4不追加玛雅武器 + 生命追加期望成本",
             "直接输入：手动设置+4追4玛雅武器价值"
@@ -831,7 +831,7 @@ with maya_weapon_section:
 生命追加期望成本 / Expected Life Option Cost:
 {expected_option_cost_preview:.6f} 灵魂 / Soul
 
-1 +4追4玛雅武器 / 1 +4+4 Chaos Weapon
+1 +4追4玛雅武器 / 1 +4+4 Maya Weapon
 ≈ {maya_weapon_plus4_with_option_auto_value:.6f} 灵魂 / Soul
 """
         )
@@ -842,7 +842,7 @@ with maya_weapon_section:
 
         maya_weapon_plus4_with_option_direct_value, maya_weapon_plus4_with_option_direct_text = material_value_ratio_input(
             "+4追4玛雅武器",
-            "+4+4 Chaos Weapon",
+            "+4+4 Maya Weapon",
             default_item_count=1.0,
             default_soul_equivalent=1.5,
             gold_per_soul=gold_per_soul,
@@ -856,7 +856,7 @@ with maya_weapon_section:
 +4追4玛雅武器成本模式 / Cost Mode:
 直接输入 / Direct Input
 
-1 +4追4玛雅武器 / 1 +4+4 Chaos Weapon
+1 +4追4玛雅武器 / 1 +4+4 Maya Weapon
 ≈ {maya_weapon_plus4_with_option_direct_value:.6f} 灵魂 / Soul
 """
         )
@@ -1021,19 +1021,19 @@ if run_button:
 
     if maya_weapon_plus4_with_option_direct_value is None:
         maya_weapon_value_rows.append({
-            "item / 项目": "+4不追加玛雅武器 +4 Chaos Weapon without Option",
+            "item / 项目": "+4不追加玛雅武器 +4 Maya Weapon without Option",
             "original_value / 原始值": maya_weapon_original_text,
             "value_soul / 折算灵魂": maya_weapon_plus4_no_option_value
         })
 
         maya_weapon_value_rows.append({
-            "item / 项目": "+4追4玛雅武器 +4+4 Chaos Weapon",
+            "item / 项目": "+4追4玛雅武器 +4+4 Maya Weapon",
             "original_value / 原始值": maya_weapon_plus4_with_option_direct_text,
             "value_soul / 折算灵魂": summary["maya_weapon_plus4_with_option_cost"]
         })
     else:
         maya_weapon_value_rows.append({
-            "item / 项目": "+4追4玛雅武器 +4+4 Chaos Weapon",
+            "item / 项目": "+4追4玛雅武器 +4+4 Maya Weapon",
             "original_value / 原始值": maya_weapon_plus4_with_option_direct_text,
             "value_soul / 折算灵魂": maya_weapon_plus4_with_option_direct_value
         })
@@ -1060,7 +1060,7 @@ if run_button:
             "value_soul / 折算灵魂": life_value
         },
         {
-            "item / 项目": "玛雅 Chaos",
+            "item / 项目": "玛雅宝石 Chaos Jewel",
             "original_value / 原始值": chaos_original_text,
             "value_soul / 折算灵魂": chaos_value
         },
@@ -1122,7 +1122,7 @@ if run_button:
     if maya_weapon_plus4_with_option_direct_value is None:
         maya_weapon_breakdown_rows.extend([
             {
-                "item / 项目": "+4不追加玛雅武器 +4 Chaos Weapon without Option",
+                "item / 项目": "+4不追加玛雅武器 +4 Maya Weapon without Option",
                 "cost_soul / 成本_灵魂": maya_weapon_plus4_no_option_value
             },
             {
@@ -1130,19 +1130,19 @@ if run_button:
                 "cost_soul / 成本_灵魂": summary["expected_option_cost"]
             },
             {
-                "item / 项目": "+4追4玛雅武器 +4+4 Chaos Weapon",
+                "item / 项目": "+4追4玛雅武器 +4+4 Maya Weapon",
                 "cost_soul / 成本_灵魂": summary["maya_weapon_plus4_with_option_cost"]
             },
         ])
     else:
         maya_weapon_breakdown_rows.append({
-            "item / 项目": "+4追4玛雅武器 +4+4 Chaos Weapon",
+            "item / 项目": "+4追4玛雅武器 +4+4 Maya Weapon",
             "cost_soul / 成本_灵魂": summary["maya_weapon_plus4_with_option_cost"]
         })
 
     breakdown_df = pd.DataFrame([
         {
-            "item / 项目": "玛雅 Chaos",
+            "item / 项目": "玛雅宝石 Chaos Jewel",
             "cost_soul / 成本_灵魂": chaos_value
         },
         *maya_weapon_breakdown_rows,
@@ -1281,7 +1281,7 @@ with st.expander("📘 使用说明 User Guide", expanded=False):
         支持的材料包括：
 
         - 生命宝石
-        - 玛雅
+        - 玛雅宝石
         - +4不追加玛雅武器
         - +4追4玛雅武器（可选择自动计算或直接输入）
         - 低级魔晶石
@@ -1434,15 +1434,15 @@ with st.expander("📘 使用说明 User Guide", expanded=False):
         Supported materials:
 
         - Life Jewel
-        - Chaos
-        - +4 Chaos Weapon without Option
-        - +4+4 Chaos Weapon (automatic calculation or direct input)
+        - Chaos Jewel
+        - +4 Maya Weapon without Option
+        - +4+4 Maya Weapon (automatic calculation or direct input)
         - Low Magic Stone
 
         Examples:
 
         - 1 Life Jewel = 1 Soul
-        - 1 Chaos = 500,000 Gold
+        - 1 Chaos Jewel = 500,000 Gold
         - 1 Low Magic Stone = 1 Bless
 
         The calculator automatically converts all values into Soul-equivalent cost.
