@@ -8,7 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
 # ============================================================
-# note: Chaos weapon is named as Maya weapon.
+# note: Chao weapon is named as Maya weapon.
 # ============================================================
 
 # ============================================================
@@ -183,20 +183,24 @@ def calculate_wing_synthesis(
     magic_stone_value: float,
     max_magic_stone_count: int
 ):
-    expected_life_count = expected_life_jewels_to_target(
-        target_option_level,
-        life_success_rate
-    )
-
-    expected_option_cost = expected_life_count * life_value
-
+    # Life Jewel option cost is only used in automatic +4+4 Maya Weapon calculation.
+    # 生命宝石追加成本仅在“自动计算+4追4玛雅武器”时参与计算。
     if maya_weapon_plus4_with_option_direct_value is None:
+        expected_life_count = expected_life_jewels_to_target(
+            target_option_level,
+            life_success_rate
+        )
+
+        expected_option_cost = expected_life_count * life_value
+
         maya_weapon_plus4_with_option_cost = (
             maya_weapon_plus4_no_option_value
             + expected_option_cost
         )
         maya_weapon_plus4_with_option_cost_mode = "自动计算 / Auto Calculation"
     else:
+        expected_life_count = 0.0
+        expected_option_cost = 0.0
         maya_weapon_plus4_with_option_cost = maya_weapon_plus4_with_option_direct_value
         maya_weapon_plus4_with_option_cost_mode = "直接输入 / Direct Input" 
 
@@ -649,51 +653,7 @@ chaos_value, chaos_original_text = material_value_ratio_input(
 
 
 # ============================================================
-# 4.5 Life Jewel Option / 生命宝石追加
-# ============================================================
-
-st.sidebar.markdown("---")
-st.sidebar.header("生命宝石追加 Life Jewel Option")
-
-target_option_level = 1
-# Fixed for Level 1 wing material: +4 Option / 一代翅膀材料固定需要追4
-
-life_success_rate = st.sidebar.number_input(
-    "生命宝石成功率 Life Success Rate",
-    min_value=0.01,
-    max_value=0.99,
-    value=0.50,
-    step=0.01,
-    format="%.2f",
-    key="life_success_rate"
-)
-
-expected_life_count_preview = expected_life_jewels_to_target(
-    target_option_level,
-    life_success_rate
-)
-
-expected_option_cost_preview = expected_life_count_preview * life_value
-
-st.sidebar.info(
-    f"""
-目标追加 / Target Option:
-{option_name(target_option_level)}
-
-生命宝石成功率 / Life Success Rate:
-{life_success_rate:.2%}
-
-期望生命宝石消耗 / Expected Life Jewel Consumption:
-{expected_life_count_preview:.6f} 颗
-
-生命追加期望成本 / Expected Life Option Cost:
-{expected_option_cost_preview:.6f} 灵魂 / Soul
-"""
-)
-
-
-# ============================================================
-# 4.6 Maya Weapon / 玛雅武器
+# 4.5 Maya Weapon / 玛雅武器
 # ============================================================
 
 st.sidebar.markdown("---")
@@ -708,7 +668,51 @@ maya_weapon_with_option_mode = st.sidebar.radio(
     key="maya_weapon_with_option_mode"
 )
 
+target_option_level = 1
+# Fixed for Level 1 wing material: +4 Option / 一代翅膀材料固定需要追4
+
+# Default values used only to keep downstream function arguments valid in Direct Input mode.
+# 直接输入模式下不显示、不使用生命追加成本；此处仅为后续函数参数提供默认值。
+life_success_rate = 0.50
+expected_life_count_preview = 0.0
+expected_option_cost_preview = 0.0
+
 if maya_weapon_with_option_mode == "自动计算：+4不追加玛雅武器 + 生命追加期望成本":
+
+    st.sidebar.markdown("#### 生命宝石追加 / Life Jewel Option")
+
+    life_success_rate = st.sidebar.number_input(
+        "生命宝石成功率 Life Success Rate",
+        min_value=0.01,
+        max_value=0.99,
+        value=0.50,
+        step=0.01,
+        format="%.2f",
+        key="life_success_rate"
+    )
+
+    expected_life_count_preview = expected_life_jewels_to_target(
+        target_option_level,
+        life_success_rate
+    )
+
+    expected_option_cost_preview = expected_life_count_preview * life_value
+
+    st.sidebar.info(
+        f"""
+目标追加 / Target Option:
+{option_name(target_option_level)}
+
+生命宝石成功率 / Life Success Rate:
+{life_success_rate:.2%}
+
+期望生命宝石消耗 / Expected Life Jewel Consumption:
+{expected_life_count_preview:.6f} 颗
+
+生命追加期望成本 / Expected Life Option Cost:
+{expected_option_cost_preview:.6f} 灵魂 / Soul
+"""
+    )
 
     maya_weapon_plus4_no_option_value, maya_weapon_original_text = material_value_ratio_input(
         "+4不追加玛雅武器",
@@ -774,7 +778,7 @@ else:
 
 
 # ============================================================
-# 4.7 Low Magic Stone / 低级魔晶石
+# 4.6 Low Magic Stone / 低级魔晶石
 # ============================================================
 
 st.sidebar.markdown("---")
@@ -793,7 +797,7 @@ magic_stone_value, magic_stone_original_text = material_value_ratio_input(
 
 
 # ============================================================
-# 4.8 Synthesis System Gold Fees / 合成系统金币费用
+# 4.7 Synthesis System Gold Fees / 合成系统金币费用
 # ============================================================
 
 st.sidebar.markdown("---")
@@ -843,7 +847,7 @@ st.sidebar.info(
 
 
 # ============================================================
-# 4.9 Level 1 Relic Conversion / 一代圣物转化
+# 4.8 Level 1 Relic Conversion / 一代圣物转化
 # ============================================================
 
 st.sidebar.markdown("---")
@@ -1269,7 +1273,7 @@ with st.expander("📘 使用说明 User Guide", expanded=False):
         - 生命宝石
         - 玛雅宝石
         - +4不追加玛雅武器
-        - +4追4玛雅武器（可选择自动计算或直接输入）
+        - +4追4玛雅武器（可选择自动计算或直接输入；生命宝石追加仅在自动计算模式下作为子项显示）
         - 低级魔晶石
 
         例如：
@@ -1422,7 +1426,7 @@ with st.expander("📘 使用说明 User Guide", expanded=False):
         - Life Jewel
         - Chaos Jewel
         - +4 Maya Weapon without Option
-        - +4+4 Maya Weapon (automatic calculation or direct input)
+        - +4+4 Maya Weapon (automatic calculation or direct input; Life Jewel Option appears only as a sub-item in automatic mode)
         - Low Magic Stone
 
         Examples:
