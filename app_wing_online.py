@@ -7,7 +7,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
-
+# ============================================================
+# note: Chao weapon is named as Maya weapon.
+# ============================================================
 
 # ============================================================
 # 1. Helper Functions / 工具函数
