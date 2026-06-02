@@ -8,7 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
 # ============================================================
-# note: Chao weapon is named as Maya weapon.
+# note: Chaos weapon is named as Maya weapon.
 # ============================================================
 
 # ============================================================
