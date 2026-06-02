@@ -638,13 +638,8 @@ chaos_value, chaos_original_text = material_value_ratio_input(
 st.sidebar.markdown("---")
 st.sidebar.header("生命宝石追加 Life Jewel Option")
 
-target_option_level = st.sidebar.selectbox(
-    "目标追加 Target Option",
-    options=[0, 1, 2, 3, 4],
-    format_func=lambda x: option_name(x),
-    index=1,
-    key="target_option_level"
-)
+target_option_level = 1  
+# Fixed for Level 1 wing material: +4 Option / 一代翅膀材料固定需要追4
 
 life_success_rate = st.sidebar.number_input(
     "生命宝石成功率 Life Success Rate",
