@@ -1067,10 +1067,10 @@ with magic_stone_section:
 追0至追16期望生命消耗 / Expected Life Count from +0 to +16 Option:
 {magic_stone_auto_breakdown['expected_life_count_from_0_to_16']:.6f} 颗
 
-失败后继续追加成本 / Continue after Failure Cost:
+方案一：失败后继续追加成本 / Strategy 1: Continue after Failure Cost:
 {magic_stone_auto_breakdown['cost_12_to_16_continue']:.6f} 灵魂 / Soul
 
-失败后重新购买成本 / Rebuy after Failure Cost:
+方案二：失败后重新购买成本 / Strategy 2: Rebuy after Failure Cost:
 {magic_stone_auto_breakdown['cost_12_to_16_rebuy']:.6f} 灵魂 / Soul
 
 采用策略 / Selected Failure Strategy:
