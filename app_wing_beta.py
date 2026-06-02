@@ -167,6 +167,7 @@ def calculate_wing_synthesis(
     life_value: float,
     chaos_value: float,
     maya_weapon_plus4_no_option_value: float,
+    maya_weapon_plus4_with_option_direct_value: float | None,
     relic_synthesis_gold_value: float,
     wing_conversion_gold_value: float,
     life_success_rate: float,
@@ -184,10 +185,15 @@ def calculate_wing_synthesis(
 
     expected_option_cost = expected_life_count * life_value
 
-    maya_weapon_plus4_with_option_cost = (
-        maya_weapon_plus4_no_option_value
-        + expected_option_cost
-    )
+    if maya_weapon_plus4_with_option_direct_value is None:
+        maya_weapon_plus4_with_option_cost = (
+            maya_weapon_plus4_no_option_value
+            + expected_option_cost
+        )
+        maya_weapon_plus4_with_option_cost_mode = "自动计算 / Auto Calculation"
+    else:
+        maya_weapon_plus4_with_option_cost = maya_weapon_plus4_with_option_direct_value
+        maya_weapon_plus4_with_option_cost_mode = "直接输入 / Direct Input" 
 
     relic_cost = (
         maya_weapon_plus4_with_option_cost
@@ -232,6 +238,7 @@ def calculate_wing_synthesis(
         "expected_life_count": expected_life_count,
         "expected_option_cost": expected_option_cost,
         "maya_weapon_plus4_with_option_cost": maya_weapon_plus4_with_option_cost,
+        "maya_weapon_plus4_with_option_cost_mode": maya_weapon_plus4_with_option_cost_mode,
         "relic_cost": relic_cost,
         "best_row": best_row
     }
@@ -326,6 +333,7 @@ with st.expander("🎯 用途和说明 Purpose & Notes", expanded=False):
           - 生命宝石
           - 玛雅宝石
           - +4不追加玛雅武器
+          - +4追4玛雅武器（可选择自动计算或直接输入）
           - 低级魔晶石
 
         - 圣物合成费用与圣物转化费用采用固定金币输入；
@@ -388,6 +396,7 @@ with st.expander("🎯 用途和说明 Purpose & Notes", expanded=False):
           - Life Jewel
           - Chaos Jewel
           - +4 Chaos Weapon without Option
+          - +4+4 Maya Weapon (automatic calculation or direct input)
           - Low Magic Stone
 
         - Relic synthesis fee and relic-to-wing conversion fee are fixed Gold costs;
@@ -629,6 +638,40 @@ maya_weapon_plus4_no_option_value, maya_weapon_original_text = material_value_ra
     key="maya_weapon"
 )
 
+# ---------- +4+4 Maya Weapon Cost Mode / +4追4玛雅武器成本设置 ----------
+# The calculator can either estimate the +4+4 Maya Weapon cost automatically
+# from a +4 Maya Weapon without option plus expected Life Jewel option cost,
+# or use a direct market value entered by the user.
+# 程序既可以根据“+4不追加玛雅武器 + 生命追加期望成本”自动计算+4追4玛雅武器成本，
+# 也可以直接使用用户输入的市场价值。
+
+st.sidebar.markdown("#### +4追4玛雅武器 / +4+4 Maya Weapon")
+
+maya_weapon_with_option_mode = st.sidebar.radio(
+    "+4追4玛雅武器成本设置方式 / +4+4 Maya Weapon Cost Mode",
+    [
+        "自动计算：+4不追加玛雅武器 + 生命追加期望成本",
+        "直接输入：手动设置+4追4玛雅武器价值"
+    ],
+    key="maya_weapon_with_option_mode"
+)
+
+if maya_weapon_with_option_mode == "直接输入：手动设置+4追4玛雅武器价值":
+    maya_weapon_plus4_with_option_direct_value, maya_weapon_plus4_with_option_direct_text = material_value_ratio_input(
+        "+4追4玛雅武器",
+        "+4+4 Maya Weapon",
+        default_item_count=1.0,
+        default_soul_equivalent=1.5,
+        gold_per_soul=gold_per_soul,
+        bless_value=bless_value,
+        key="maya_weapon_with_option_direct"
+    )
+else:
+    maya_weapon_plus4_with_option_direct_value = None
+    maya_weapon_plus4_with_option_direct_text = (
+        "自动计算：+4不追加玛雅武器 + 生命追加期望成本"
+    )
+
 magic_stone_value, magic_stone_original_text = material_value_ratio_input(
     "低级魔晶石",
     "Low Magic Stone",
@@ -803,6 +846,7 @@ if run_button:
         life_value=life_value,
         chaos_value=chaos_value,
         maya_weapon_plus4_no_option_value=maya_weapon_plus4_no_option_value,
+        maya_weapon_plus4_with_option_direct_value=maya_weapon_plus4_with_option_direct_value,
         relic_synthesis_gold_value=relic_synthesis_gold_value,
         wing_conversion_gold_value=wing_conversion_gold_value,
         life_success_rate=life_success_rate,
@@ -818,7 +862,7 @@ if run_button:
 
     st.subheader("当前模型参数 Current Model Settings")
 
-    setting_col1, setting_col2, setting_col3, setting_col4 = st.columns(4)
+    setting_col1, setting_col2, setting_col3, setting_col4, setting_col5 = st.columns(5)
 
     setting_col1.metric(
         "金币换算 Gold per Soul",
@@ -836,6 +880,11 @@ if run_button:
     )
 
     setting_col4.metric(
+        "+4追4玛雅武器",
+        summary["maya_weapon_plus4_with_option_cost_mode"]
+    )
+
+    setting_col5.metric(
         "低级魔晶石价值",
         f"{magic_stone_value:.4f} 灵魂"
     )
@@ -900,6 +949,15 @@ if run_button:
             "item / 项目": "+4不追加玛雅武器 +4 Maya Weapon without Option",
             "original_value / 原始值": maya_weapon_original_text,
             "value_soul / 折算灵魂": maya_weapon_plus4_no_option_value
+        },
+        {
+            "item / 项目": "+4追4玛雅武器 +4+4 Maya Weapon",
+            "original_value / 原始值": maya_weapon_plus4_with_option_direct_text,
+            "value_soul / 折算灵魂": (
+                maya_weapon_plus4_with_option_direct_value
+                if maya_weapon_plus4_with_option_direct_value is not None
+                else "自动计算"
+            )
         },
         {
             "item / 项目": "低级魔晶石 Low Magic Stone",
@@ -967,7 +1025,7 @@ if run_button:
             "cost_soul / 成本_灵魂": summary["expected_option_cost"]
         },
         {
-            "item / 项目": "+4追属性玛雅武器 +4 Maya Weapon with Option",
+            "item / 项目": "+4追4玛雅武器 +4+4 Maya Weapon",
             "cost_soul / 成本_灵魂": summary["maya_weapon_plus4_with_option_cost"]
         },
         {
@@ -1107,6 +1165,7 @@ with st.expander("📘 使用说明 User Guide", expanded=False):
         - 生命宝石
         - 玛雅宝石
         - +4不追加玛雅武器
+        - +4追4玛雅武器（可选择自动计算或直接输入）
         - 低级魔晶石
 
         例如：
@@ -1259,6 +1318,7 @@ with st.expander("📘 使用说明 User Guide", expanded=False):
         - Life Jewel
         - Chaos Jewel
         - +4 Maya Weapon without Option
+        - +4+4 Maya Weapon (automatic calculation or direct input)
         - Low Magic Stone
 
         Examples:
