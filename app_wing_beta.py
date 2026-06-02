@@ -699,6 +699,11 @@ maya_weapon_with_option_mode = st.sidebar.radio(
 
 if maya_weapon_with_option_mode == "自动计算：+4不追加玛雅武器 + 生命追加期望成本":
 
+    st.sidebar.caption(
+        "↳ +4不追加玛雅武器 / +4 Chaos Weapon without Option"
+    )    
+
+    
     maya_weapon_plus4_no_option_value, maya_weapon_original_text = material_value_ratio_input(
         "+4不追加玛雅武器",
         "+4 Chaos Weapon without Option",
