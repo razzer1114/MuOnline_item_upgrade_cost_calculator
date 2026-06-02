@@ -283,7 +283,8 @@ st.set_page_config(
 
 st.title("奇迹MU 一代翅膀合成期望成本计算器")
 st.title("MU Online Level one Wing Synthesis Expected Cost Calculator")
-
+st.title("尝鲜版-最新功能 Beta Version")
+st.title("https://muwingbeta.streamlit.app/")
 
 st.caption(
     "基于一代翅膀圣物合成与圣物转化规则，计算不同低级魔晶石数量下的合成期望成本，并自动给出当前参数下的最优方案。"
