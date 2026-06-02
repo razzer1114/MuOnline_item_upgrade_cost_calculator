@@ -116,9 +116,12 @@ def material_value_ratio_input(
 
     st.sidebar.info(
         f"""
-    1 {label_cn}
-    ≈ {value_soul:.6f} 灵魂
-    """
+1 {label_cn}
+≈ {value_soul:.6f} 灵魂
+
+1 {label_en}
+≈ {value_soul:.6f} Soul
+"""
     )
 
     return value_soul, original_text
@@ -590,13 +593,12 @@ soul_value = 1.0
 
 st.sidebar.info(
     f"""
+1 灵魂 / 1 Soul
+≈ {gold_per_soul:,.0f} 金币 / Gold
 
-1 灵魂
-≈ {gold_per_soul:,.0f} 金币
-
-1 祝福
-≈ {bless_value:.4f} 灵魂
-≈ {bless_value * gold_per_soul:,.0f} 金币
+1 祝福 / 1 Bless
+≈ {bless_value:.4f} 灵魂 / Soul
+≈ {bless_value * gold_per_soul:,.0f} 金币 / Gold
 """
 )
 
@@ -628,12 +630,67 @@ chaos_value, chaos_original_text = material_value_ratio_input(
     key="chaos"
 )
 
+
+# ============================================================
+# 4.3 Life Option / 生命宝石追加
+# ============================================================
+
+st.sidebar.markdown("---")
+st.sidebar.header("生命宝石追加 Life Jewel Option")
+
+target_option_level = st.sidebar.selectbox(
+    "目标追加 Target Option",
+    options=[0, 1, 2, 3, 4],
+    format_func=lambda x: option_name(x),
+    index=1,
+    key="target_option_level"
+)
+
+life_success_rate = st.sidebar.number_input(
+    "生命宝石成功率 Life Success Rate",
+    min_value=0.01,
+    max_value=0.99,
+    value=0.50,
+    step=0.01,
+    format="%.2f",
+    key="life_success_rate"
+)
+
+expected_life_count_preview = expected_life_jewels_to_target(
+    target_option_level,
+    life_success_rate
+)
+
+expected_option_cost_preview = expected_life_count_preview * life_value
+
+st.sidebar.info(
+    f"""
+期望生命宝石消耗：
+{expected_life_count_preview:.6f} 颗
+
+Expected Life Jewel consumption:
+{expected_life_count_preview:.6f}
+
+生命追加期望成本：
+{expected_option_cost_preview:.6f} 灵魂
+
+Expected Life option cost:
+{expected_option_cost_preview:.6f} Soul
+"""
+)
+
+
+# ============================================================
+# 4.4 Maya Weapon / 玛雅武器
+# ============================================================
+
 # ---------- +4+4 Maya Weapon Cost Mode / +4追4玛雅武器成本设置 ----------
 # The +4 Maya Weapon without Option is treated as a sub-item of the +4+4 Maya Weapon.
 # It is only shown and used when the automatic calculation mode is selected.
 # “+4不追加玛雅武器”作为“+4追4玛雅武器”的子项处理，
 # 仅在选择自动计算模式时显示并参与计算。
 
+st.sidebar.markdown("---")
 st.sidebar.markdown("#### +4追4玛雅武器 / +4+4 Maya Weapon")
 
 maya_weapon_with_option_mode = st.sidebar.radio(
@@ -646,7 +703,6 @@ maya_weapon_with_option_mode = st.sidebar.radio(
 )
 
 if maya_weapon_with_option_mode == "自动计算：+4不追加玛雅武器 + 生命追加期望成本":
-    st.sidebar.markdown("##### 子项：+4不追加玛雅武器 / Sub-item: +4 Chaos Weapon without Option")
 
     maya_weapon_plus4_no_option_value, maya_weapon_original_text = material_value_ratio_input(
         "+4不追加玛雅武器",
@@ -658,10 +714,26 @@ if maya_weapon_with_option_mode == "自动计算：+4不追加玛雅武器 + 生
         key="maya_weapon"
     )
 
+    maya_weapon_plus4_with_option_auto_value = (
+        maya_weapon_plus4_no_option_value
+        + expected_option_cost_preview
+    )
+
     maya_weapon_plus4_with_option_direct_value = None
     maya_weapon_plus4_with_option_direct_text = (
         "自动计算：+4不追加玛雅武器 + 生命追加期望成本"
     )
+
+    st.sidebar.info(
+        f"""
+1 +4追4玛雅武器
+≈ {maya_weapon_plus4_with_option_auto_value:.6f} 灵魂
+
+1 +4+4 Maya Weapon
+≈ {maya_weapon_plus4_with_option_auto_value:.6f} Soul
+"""
+    )
+
 else:
     maya_weapon_plus4_no_option_value = 0.0
     maya_weapon_original_text = "未启用 / Not used"
@@ -727,40 +799,14 @@ wing_conversion_gold_value = gold_to_soul(
 
 st.sidebar.info(
     f"""
-圣物合成费用：
-{relic_synthesis_gold:,.0f} 金币
-≈ {relic_synthesis_gold_value:.6f} 灵魂
+圣物合成费用 / Relic Synthesis Fee:
+{relic_synthesis_gold:,.0f} 金币 / Gold
+≈ {relic_synthesis_gold_value:.6f} 灵魂 / Soul
 
-圣物转化费用：
-{wing_conversion_gold:,.0f} 金币
-≈ {wing_conversion_gold_value:.6f} 灵魂
+圣物转化费用 / Relic-to-Wing Conversion Fee:
+{wing_conversion_gold:,.0f} 金币 / Gold
+≈ {wing_conversion_gold_value:.6f} 灵魂 / Soul
 """
-)
-
-
-# ============================================================
-# 4.4 Life Option / 生命宝石追加
-# ============================================================
-
-st.sidebar.markdown("---")
-st.sidebar.header("生命宝石追加 Life Jewel Option")
-
-target_option_level = st.sidebar.selectbox(
-    "目标追加 Target Option",
-    options=[0, 1, 2, 3, 4],
-    format_func=lambda x: option_name(x),
-    index=1,
-    key="target_option_level"
-)
-
-life_success_rate = st.sidebar.number_input(
-    "生命宝石成功率 Life Success Rate",
-    min_value=0.01,
-    max_value=0.99,
-    value=0.50,
-    step=0.01,
-    format="%.2f",
-    key="life_success_rate"
 )
 
 
@@ -826,15 +872,17 @@ else:
 
 st.sidebar.info(
     f"""
+基础成功率 / Base Success Rate:
+{base_success_rate_pct:.2f}%
 
-基础成功率：{base_success_rate_pct:.2f}%
+每颗魔晶石加成 / Bonus per Magic Stone:
+{magic_stone_bonus_pct:.2f}%
 
-每颗魔晶石加成：{magic_stone_bonus_pct:.2f}%
+成功率上限 / Max Success Rate:
+{max_success_rate_pct:.2f}%
 
-成功率上限：{max_success_rate_pct:.2f}%
-
-最大需要枚举：
-{max_magic_stone_count} 颗低级魔晶石
+最大需要枚举 / Max Enumerated Count:
+{max_magic_stone_count} 颗低级魔晶石 / Low Magic Stones
 """
 )
 
@@ -927,7 +975,7 @@ if run_button:
 
     if maya_weapon_plus4_with_option_direct_value is None:
         maya_weapon_value_rows.append({
-            "item / 项目": "子项：+4不追加玛雅武器 Sub-item: +4 Maya Weapon without Option",
+            "item / 项目": "+4不追加玛雅武器 +4 Maya Weapon without Option",
             "original_value / 原始值": maya_weapon_original_text,
             "value_soul / 折算灵魂": maya_weapon_plus4_no_option_value
         })
@@ -1028,11 +1076,11 @@ if run_button:
     if maya_weapon_plus4_with_option_direct_value is None:
         maya_weapon_breakdown_rows.extend([
             {
-                "item / 项目": "子项：+4不追加玛雅武器 Sub-item: +4 Maya Weapon without Option",
+                "item / 项目": "+4不追加玛雅武器 +4 Maya Weapon without Option",
                 "cost_soul / 成本_灵魂": maya_weapon_plus4_no_option_value
             },
             {
-                "item / 项目": "子项：生命追加期望成本 Sub-item: Expected Life Option Cost",
+                "item / 项目": "生命追加期望成本 Expected Life Option Cost",
                 "cost_soul / 成本_灵魂": summary["expected_option_cost"]
             },
             {
