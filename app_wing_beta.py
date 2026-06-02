@@ -30,7 +30,8 @@ def material_value_ratio_input(
     default_soul_equivalent: float,
     gold_per_soul: float,
     bless_value: float,
-    key: str
+    key: str,
+    show_title: bool = True
 ):
     """
     Universal material value input by ratio.
@@ -42,7 +43,8 @@ def material_value_ratio_input(
     3. X material = Y Bless
     """
 
-    st.sidebar.markdown(f"#### {label_cn} / {label_en}")
+    if show_title:
+        st.sidebar.markdown(f"#### {label_cn} / {label_en}")
 
     mode = st.sidebar.radio(
         "设置方式 Input Mode",
@@ -439,18 +441,14 @@ run_button = st.sidebar.button("运行计算 Run Calculation")
 
 
 # ============================================================
-# 4.1 Basic Exchange Rates / 基础换算比例
+# 4.1 Gold / 金币
 # ============================================================
 
 st.sidebar.markdown("---")
-st.sidebar.header("基础换算比例 Basic Exchange Rates")
-
-# ---------- Gold Conversion / 金币换算 ----------
-
-st.sidebar.markdown("#### 金币 / Gold")
+st.sidebar.header("金币 / Gold")
 
 gold_mode = st.sidebar.radio(
-    "金币价值设置方式 Gold Value Setting", 
+    "金币价值设置方式 Gold Value Setting",
     [
         "金币与灵魂换算：X金币 = Y灵魂",
         "金币与祝福换算：X金币 = Y祝福"
@@ -493,10 +491,17 @@ else:
     gold_y_soul = None
     gold_original_text = f"{gold_x:,.0f} 金币 = {gold_y_bless:g} 祝福"
 
+# Placeholder filled after the exchange system is solved.
+# 占位容器：完成基础换算求解后，将金币折算结果回填到金币分区。
+gold_result_box = st.sidebar.empty()
 
-# ---------- Bless Conversion / 祝福换算 ----------
 
-st.sidebar.markdown("#### 祝福 / Bless")
+# ============================================================
+# 4.2 Bless / 祝福
+# ============================================================
+
+st.sidebar.markdown("---")
+st.sidebar.header("祝福 / Bless")
 
 bless_mode = st.sidebar.radio(
     "祝福价值设置方式 Bless Value Setting",
@@ -542,6 +547,10 @@ else:
     bless_y_soul = None
     bless_original_text = f"{bless_x:g} 祝福 = {bless_y_gold:,.0f} 金币"
 
+# Placeholder filled after the exchange system is solved.
+# 占位容器：完成基础换算求解后，将祝福折算结果回填到祝福分区。
+bless_result_box = st.sidebar.empty()
+
 
 # ---------- Solve Exchange System / 求解基础换算 ----------
 
@@ -559,8 +568,6 @@ if not gold_direct_to_soul and not bless_direct_to_soul:
     )
     st.stop()
 
-# Case 1: Bless directly defines Soul value.
-# 情况1：祝福直接与灵魂换算，先求祝福价值。
 if bless_direct_to_soul:
     bless_value = bless_y_soul / bless_x
 
@@ -568,47 +575,47 @@ if bless_direct_to_soul:
         gold_per_soul = gold_x / gold_y_soul
     else:
         gold_per_soul = gold_x / (gold_y_bless * bless_value)
-
-# Case 2: Gold directly defines Soul value, Bless depends on Gold.
-# 情况2：金币直接与灵魂换算，祝福可由金币推导。
 else:
     gold_per_soul = gold_x / gold_y_soul
-
-    if bless_direct_to_soul:
-        bless_value = bless_y_soul / bless_x
-    else:
-        bless_value = gold_to_soul(bless_y_gold, gold_per_soul) / bless_x
-
-# If Gold is direct and Bless is Gold-based, calculate Bless value here.
-# 如果金币直接与灵魂换算，祝福按金币换算，则由金币推导祝福价值。
-if gold_direct_to_soul and not bless_direct_to_soul:
     bless_value = gold_to_soul(bless_y_gold, gold_per_soul) / bless_x
-
-# If Bless is direct and Gold is Bless-based, calculate Gold-per-Soul here.
-# 如果祝福直接与灵魂换算，金币按祝福换算，则由祝福推导金币价值。
-if bless_direct_to_soul and not gold_direct_to_soul:
-    gold_per_soul = gold_x / (gold_y_bless * bless_value)
 
 soul_value = 1.0
 
-st.sidebar.info(
+gold_value_soul = 1 / gold_per_soul
+
+# Gold section result / 金币分区结果
+gold_result_box.info(
     f"""
+金币设置 / Gold Setting:
+{gold_original_text}
+
+1 金币 / 1 Gold
+≈ {gold_value_soul:.10f} 灵魂 / Soul
+
 1 灵魂 / 1 Soul
 ≈ {gold_per_soul:,.0f} 金币 / Gold
+"""
+)
+
+# Bless section result / 祝福分区结果
+bless_result_box.info(
+    f"""
+祝福设置 / Bless Setting:
+{bless_original_text}
 
 1 祝福 / 1 Bless
-≈ {bless_value:.4f} 灵魂 / Soul
+≈ {bless_value:.6f} 灵魂 / Soul
 ≈ {bless_value * gold_per_soul:,.0f} 金币 / Gold
 """
 )
 
 
 # ============================================================
-# 4.2 Material Values / 材料价值
+# 4.3 Life / 生命
 # ============================================================
 
 st.sidebar.markdown("---")
-st.sidebar.header("材料价值设置 Material Value Settings")
+st.sidebar.header("生命 / Life")
 
 life_value, life_original_text = material_value_ratio_input(
     "生命宝石",
@@ -617,8 +624,17 @@ life_value, life_original_text = material_value_ratio_input(
     default_soul_equivalent=1.0,
     gold_per_soul=gold_per_soul,
     bless_value=bless_value,
-    key="life"
+    key="life",
+    show_title=False
 )
+
+
+# ============================================================
+# 4.4 Chaos Jewel / 玛雅宝石
+# ============================================================
+
+st.sidebar.markdown("---")
+st.sidebar.header("玛雅宝石 / Chaos Jewel")
 
 chaos_value, chaos_original_text = material_value_ratio_input(
     "玛雅宝石",
@@ -627,18 +643,19 @@ chaos_value, chaos_original_text = material_value_ratio_input(
     default_soul_equivalent=0.05,
     gold_per_soul=gold_per_soul,
     bless_value=bless_value,
-    key="chaos"
+    key="chaos",
+    show_title=False
 )
 
 
 # ============================================================
-# 4.3 Life Option / 生命宝石追加
+# 4.5 Life Jewel Option / 生命宝石追加
 # ============================================================
 
 st.sidebar.markdown("---")
 st.sidebar.header("生命宝石追加 Life Jewel Option")
 
-target_option_level = 1  
+target_option_level = 1
 # Fixed for Level 1 wing material: +4 Option / 一代翅膀材料固定需要追4
 
 life_success_rate = st.sidebar.number_input(
@@ -660,33 +677,27 @@ expected_option_cost_preview = expected_life_count_preview * life_value
 
 st.sidebar.info(
     f"""
-期望生命宝石消耗：
+目标追加 / Target Option:
+{option_name(target_option_level)}
+
+生命宝石成功率 / Life Success Rate:
+{life_success_rate:.2%}
+
+期望生命宝石消耗 / Expected Life Jewel Consumption:
 {expected_life_count_preview:.6f} 颗
 
-Expected Life Jewel consumption:
-{expected_life_count_preview:.6f}
-
-生命追加期望成本：
-{expected_option_cost_preview:.6f} 灵魂
-
-Expected Life option cost:
-{expected_option_cost_preview:.6f} Soul
+生命追加期望成本 / Expected Life Option Cost:
+{expected_option_cost_preview:.6f} 灵魂 / Soul
 """
 )
 
 
 # ============================================================
-# 4.4 Maya Weapon / 玛雅武器
+# 4.6 Maya Weapon / 玛雅武器
 # ============================================================
 
-# ---------- +4+4 Maya Weapon Cost Mode / +4追4玛雅武器成本设置 ----------
-# The +4 Maya Weapon without Option is treated as a sub-item of the +4+4 Maya Weapon.
-# It is only shown and used when the automatic calculation mode is selected.
-# “+4不追加玛雅武器”作为“+4追4玛雅武器”的子项处理，
-# 仅在选择自动计算模式时显示并参与计算。
-
 st.sidebar.markdown("---")
-st.sidebar.markdown("#### +4追4玛雅武器 / +4+4 Maya Weapon")
+st.sidebar.header("+4追4玛雅武器 / +4+4 Maya Weapon")
 
 maya_weapon_with_option_mode = st.sidebar.radio(
     "+4追4玛雅武器成本设置方式 / +4+4 Maya Weapon Cost Mode",
@@ -701,12 +712,13 @@ if maya_weapon_with_option_mode == "自动计算：+4不追加玛雅武器 + 生
 
     maya_weapon_plus4_no_option_value, maya_weapon_original_text = material_value_ratio_input(
         "+4不追加玛雅武器",
-        "+4 Chaos Weapon without Option",        
+        "+4 Chaos Weapon without Option",
         default_item_count=1.0,
         default_soul_equivalent=0.5,
         gold_per_soul=gold_per_soul,
         bless_value=bless_value,
-        key="maya_weapon"
+        key="maya_weapon",
+        show_title=True
     )
 
     maya_weapon_plus4_with_option_auto_value = (
@@ -721,11 +733,17 @@ if maya_weapon_with_option_mode == "自动计算：+4不追加玛雅武器 + 生
 
     st.sidebar.info(
         f"""
-1 +4追4玛雅武器
-≈ {maya_weapon_plus4_with_option_auto_value:.6f} 灵魂
++4追4玛雅武器成本模式 / Cost Mode:
+自动计算 / Auto Calculation
 
-1 +4+4 Maya Weapon
-≈ {maya_weapon_plus4_with_option_auto_value:.6f} Soul
++4不追加玛雅武器 / +4 Weapon without Option:
+{maya_weapon_plus4_no_option_value:.6f} 灵魂 / Soul
+
+生命追加期望成本 / Expected Life Option Cost:
+{expected_option_cost_preview:.6f} 灵魂 / Soul
+
+1 +4追4玛雅武器 / 1 +4+4 Maya Weapon
+≈ {maya_weapon_plus4_with_option_auto_value:.6f} 灵魂 / Soul
 """
     )
 
@@ -740,8 +758,27 @@ else:
         default_soul_equivalent=1.5,
         gold_per_soul=gold_per_soul,
         bless_value=bless_value,
-        key="maya_weapon_with_option_direct"
+        key="maya_weapon_with_option_direct",
+        show_title=False
     )
+
+    st.sidebar.info(
+        f"""
++4追4玛雅武器成本模式 / Cost Mode:
+直接输入 / Direct Input
+
+1 +4追4玛雅武器 / 1 +4+4 Maya Weapon
+≈ {maya_weapon_plus4_with_option_direct_value:.6f} 灵魂 / Soul
+"""
+    )
+
+
+# ============================================================
+# 4.7 Low Magic Stone / 低级魔晶石
+# ============================================================
+
+st.sidebar.markdown("---")
+st.sidebar.header("低级魔晶石 / Low Magic Stone")
 
 magic_stone_value, magic_stone_original_text = material_value_ratio_input(
     "低级魔晶石",
@@ -750,13 +787,13 @@ magic_stone_value, magic_stone_original_text = material_value_ratio_input(
     default_soul_equivalent=bless_value,
     gold_per_soul=gold_per_soul,
     bless_value=bless_value,
-    key="magic_stone"
+    key="magic_stone",
+    show_title=False
 )
 
 
-
 # ============================================================
-# 4.3 Synthesis System Gold Fees / 合成系统金币费用
+# 4.8 Synthesis System Gold Fees / 合成系统金币费用
 # ============================================================
 
 st.sidebar.markdown("---")
@@ -773,7 +810,7 @@ relic_synthesis_gold = st.sidebar.number_input(
 )
 
 wing_conversion_gold = st.sidebar.number_input(
-    "圣物转化费用（金币） Relic-to-Wing Conversion Fee (Gold)",
+    "圣物转化费用（金币） Relic Conversion Fee (Gold)",
     min_value=0.0,
     max_value=999999999999.0,
     value=1_000_000.0,
@@ -798,7 +835,7 @@ st.sidebar.info(
 {relic_synthesis_gold:,.0f} 金币 / Gold
 ≈ {relic_synthesis_gold_value:.6f} 灵魂 / Soul
 
-圣物转化费用 / Relic-to-Wing Conversion Fee:
+圣物转化费用 / Relic Conversion Fee:
 {wing_conversion_gold:,.0f} 金币 / Gold
 ≈ {wing_conversion_gold_value:.6f} 灵魂 / Soul
 """
@@ -806,11 +843,11 @@ st.sidebar.info(
 
 
 # ============================================================
-# 4.5 Wing Conversion / 翅膀转化
+# 4.9 Level 1 Relic Conversion / 一代圣物转化
 # ============================================================
 
 st.sidebar.markdown("---")
-st.sidebar.header("一代翅膀转化 Level 1 Wing Conversion")
+st.sidebar.header("一代圣物转化 Level 1 Relic Conversion")
 
 base_success_rate_pct = st.sidebar.number_input(
     "基础成功率 Base Success Rate (%)",
