@@ -387,7 +387,7 @@ with st.expander("🎯 用途和说明 Purpose & Notes", expanded=False):
 
           - Life Jewel
           - Chaos Jewel
-          - +4 Maya Weapon without Option
+          - +4 Chaos Weapon without Option
           - Low Magic Stone
 
         - Relic synthesis fee and relic-to-wing conversion fee are fixed Gold costs;
@@ -621,7 +621,7 @@ chaos_value, chaos_original_text = material_value_ratio_input(
 
 maya_weapon_plus4_no_option_value, maya_weapon_original_text = material_value_ratio_input(
     "+4不追加玛雅武器",
-    "+4 Maya Weapon without Option",
+    "+4 Chaos Weapon without Option",
     default_item_count=1.0,
     default_soul_equivalent=0.5,
     gold_per_soul=gold_per_soul,
