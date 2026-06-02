@@ -445,10 +445,10 @@ run_button = st.sidebar.button("运行计算 Run Calculation")
 relic_conversion_section = st.sidebar.container()
 maya_weapon_section = st.sidebar.container()
 magic_stone_section = st.sidebar.container()
+bless_section = st.sidebar.container()
 life_section = st.sidebar.container()
 chaos_section = st.sidebar.container()
 gold_section = st.sidebar.container()
-bless_section = st.sidebar.container()
 synthesis_fee_section = st.sidebar.container()
 
 
