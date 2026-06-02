@@ -144,6 +144,94 @@ def expected_life_jewels_to_target(target_level: int, p: float = 0.5) -> float:
     return (1 - p ** target_level) / ((1 - p) * (p ** target_level))
 
 
+
+
+def calculate_low_magic_stone_auto_value(
+    shop_plus9_option12_value: float,
+    life_value: float,
+    life_success_rate: float,
+    synthesis_gold_value: float,
+    output_count: int = 3
+):
+    """
+    Calculate Low Magic Stone value by synthesis rule.
+    按低级魔晶石合成规则自动计算价值。
+
+    Rule / 规则：
+    - +9+12 normal shop equipment can be purchased directly.
+      商店可直接购买 +9追12 普通装备。
+    - To synthesize Low Magic Stones, one +9+16 normal equipment is required.
+      合成低级魔晶石需要 1 件 +9追16 普通装备。
+    - Synthesis success rate is 100%, costs 50,000 Gold by default,
+      and produces 3 Low Magic Stones.
+      合成成功率 100%，默认消耗 50,000 金币，产出 3 颗低级魔晶石。
+
+    Life Jewel option rule / 生命追加规则：
+    - Success increases option by one level.
+      成功则追加等级 +1。
+    - Failure resets option to zero.
+      失败则追加归零。
+
+    After failing from +12 to +16, the player has two rational choices:
+    追12冲追16失败后，玩家有两条理性路径：
+    1. Continue enhancing from +0 to +16.
+       在当前装备上从追0继续追加到追16。
+    2. Buy another +9+12 shop equipment and try again.
+       重新购买一件 +9追12 商店装备，再次尝试追16。
+    """
+
+    if output_count <= 0:
+        raise ValueError("低级魔晶石产出数量必须大于 0")
+
+    if not 0 < life_success_rate < 1:
+        raise ValueError("生命宝石成功率必须在 0 和 1 之间")
+
+    p = life_success_rate
+
+    # Cost of enhancing from +0 option to +16 option.
+    # 从追0连续追加到追16的期望生命成本。
+    expected_life_count_from_0_to_16 = expected_life_jewels_to_target(4, p)
+    cost_from_0_to_16 = expected_life_count_from_0_to_16 * life_value
+
+    # Strategy A: if +12 -> +16 fails, continue enhancing the same item from +0 to +16.
+    # 策略A：追12冲追16失败后，在原装备上从追0继续追加到追16。
+    cost_12_to_16_continue = life_value + (1 - p) * cost_from_0_to_16
+
+    # Strategy B: if +12 -> +16 fails, buy another +9+12 shop item and retry.
+    # 策略B：追12冲追16失败后，重新购买商店+9追12装备并再次尝试。
+    cost_12_to_16_rebuy = (life_value + (1 - p) * shop_plus9_option12_value) / p
+
+    cost_12_to_16 = min(cost_12_to_16_continue, cost_12_to_16_rebuy)
+
+    if cost_12_to_16_continue <= cost_12_to_16_rebuy:
+        failure_strategy = "失败后继续追加 / Continue after Failure"
+    else:
+        failure_strategy = "失败后重新购买商店装 / Rebuy Shop Equipment after Failure"
+
+    total_synthesis_cost = (
+        shop_plus9_option12_value
+        + cost_12_to_16
+        + synthesis_gold_value
+    )
+
+    low_magic_stone_value = total_synthesis_cost / output_count
+
+    breakdown = {
+        "shop_plus9_option12_value": shop_plus9_option12_value,
+        "expected_life_count_from_0_to_16": expected_life_count_from_0_to_16,
+        "cost_from_0_to_16": cost_from_0_to_16,
+        "cost_12_to_16_continue": cost_12_to_16_continue,
+        "cost_12_to_16_rebuy": cost_12_to_16_rebuy,
+        "cost_12_to_16": cost_12_to_16,
+        "failure_strategy": failure_strategy,
+        "synthesis_gold_value": synthesis_gold_value,
+        "total_synthesis_cost": total_synthesis_cost,
+        "output_count": output_count,
+        "low_magic_stone_value": low_magic_stone_value,
+    }
+
+    return low_magic_stone_value, breakdown
+
 def option_name(level: int) -> str:
     mapping = {
         0: "无追加 / No Option",
@@ -876,17 +964,133 @@ with magic_stone_section:
     st.markdown("---")
     st.header("低级魔晶石 / Low Magic Stone")
 
-    magic_stone_value, magic_stone_original_text = material_value_ratio_input(
-        "低级魔晶石",
-        "Low Magic Stone",
-        default_item_count=1.0,
-        default_soul_equivalent=bless_value,
-        gold_per_soul=gold_per_soul,
-        bless_value=bless_value,
-        key="magic_stone",
-        show_title=False,
-        parent=magic_stone_section
+    magic_stone_cost_mode = st.radio(
+        "低级魔晶石价值设置方式 / Low Magic Stone Cost Mode",
+        [
+            "直接输入：手动设置低级魔晶石价值",
+            "自动计算：按低级魔晶石合成规则"
+        ],
+        key="magic_stone_cost_mode"
     )
+
+    if magic_stone_cost_mode == "直接输入：手动设置低级魔晶石价值":
+        magic_stone_value, magic_stone_original_text = material_value_ratio_input(
+            "低级魔晶石",
+            "Low Magic Stone",
+            default_item_count=1.0,
+            default_soul_equivalent=bless_value,
+            gold_per_soul=gold_per_soul,
+            bless_value=bless_value,
+            key="magic_stone",
+            show_title=False,
+            parent=magic_stone_section
+        )
+
+        magic_stone_auto_breakdown = None
+
+    else:
+        st.markdown("#### +9追12商店装备 / +9+12 Shop Equipment")
+
+        shop_plus9_option12_value, shop_plus9_option12_original_text = material_value_ratio_input(
+            "+9追12商店普通装备",
+            "+9+12 Normal Shop Equipment",
+            default_item_count=1.0,
+            default_soul_equivalent=0.3,
+            gold_per_soul=gold_per_soul,
+            bless_value=bless_value,
+            key="shop_plus9_option12_equipment",
+            show_title=False,
+            parent=magic_stone_section
+        )
+
+        low_magic_stone_life_success_rate = st.number_input(
+            "低级魔晶石装备追加生命成功率 Life Success Rate for Low Magic Stone Material",
+            min_value=0.01,
+            max_value=0.99,
+            value=float(life_success_rate),
+            step=0.01,
+            format="%.2f",
+            key="low_magic_stone_life_success_rate"
+        )
+
+        low_magic_stone_synthesis_gold = st.number_input(
+            "低级魔晶石合成金币费用 Low Magic Stone Synthesis Fee (Gold)",
+            min_value=0.0,
+            max_value=999999999999.0,
+            value=50_000.0,
+            step=1_000.0,
+            format="%.0f",
+            key="low_magic_stone_synthesis_gold"
+        )
+
+        low_magic_stone_output_count = st.number_input(
+            "每次合成产出数量 Output Count per Synthesis",
+            min_value=1,
+            max_value=999,
+            value=3,
+            step=1,
+            key="low_magic_stone_output_count"
+        )
+
+        low_magic_stone_synthesis_gold_value = gold_to_soul(
+            low_magic_stone_synthesis_gold,
+            gold_per_soul
+        )
+
+        magic_stone_value, magic_stone_auto_breakdown = calculate_low_magic_stone_auto_value(
+            shop_plus9_option12_value=shop_plus9_option12_value,
+            life_value=life_value,
+            life_success_rate=low_magic_stone_life_success_rate,
+            synthesis_gold_value=low_magic_stone_synthesis_gold_value,
+            output_count=int(low_magic_stone_output_count)
+        )
+
+        magic_stone_original_text = (
+            "自动计算：+9追12商店装备 + 追12至追16最优期望追加成本 "
+            "+ 50,000金币合成费，成功率100%，产出3颗"
+        )
+
+        st.info(
+            f"""
+低级魔晶石成本模式 / Cost Mode:
+自动计算 / Auto Calculation
+
+合成规则 / Synthesis Rule:
++9追16普通装备 × 1 + {low_magic_stone_synthesis_gold:,.0f} 金币
+→ 低级魔晶石 × {int(low_magic_stone_output_count)}
+
+商店+9追12装备 / +9+12 Shop Equipment:
+{magic_stone_auto_breakdown['shop_plus9_option12_value']:.6f} 灵魂 / Soul
+
+生命成功率 / Life Success Rate:
+{low_magic_stone_life_success_rate:.2%}
+
+追0至追16期望生命消耗 / Expected Life Count from +0 to +16 Option:
+{magic_stone_auto_breakdown['expected_life_count_from_0_to_16']:.6f} 颗
+
+方案一：失败后继续追加成本 / Strategy 1: Continue after Failure Cost:
+{magic_stone_auto_breakdown['cost_12_to_16_continue']:.6f} 灵魂 / Soul
+
+方案二：失败后重新购买成本 / Strategy 2: Rebuy after Failure Cost:
+{magic_stone_auto_breakdown['cost_12_to_16_rebuy']:.6f} 灵魂 / Soul
+
+采用策略 / Selected Failure Strategy:
+{magic_stone_auto_breakdown['failure_strategy']}
+
+追12至追16最优期望成本 / Optimal Expected Cost from +12 to +16:
+{magic_stone_auto_breakdown['cost_12_to_16']:.6f} 灵魂 / Soul
+
+合成金币费用 / Synthesis Gold Fee:
+{low_magic_stone_synthesis_gold:,.0f} 金币 / Gold
+≈ {magic_stone_auto_breakdown['synthesis_gold_value']:.6f} 灵魂 / Soul
+
+一次合成总成本 / Total Cost per Synthesis:
+{magic_stone_auto_breakdown['total_synthesis_cost']:.6f} 灵魂 / Soul
+
+1 低级魔晶石 / 1 Low Magic Stone:
+≈ {magic_stone_auto_breakdown['low_magic_stone_value']:.6f} 灵魂 / Soul
+"""
+        )
 
 
 # ============================================================
