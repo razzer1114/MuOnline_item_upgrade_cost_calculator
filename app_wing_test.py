@@ -743,7 +743,7 @@ Wing synthesis involves multiple materials, success rates, and market-dependent 
 st.sidebar.header("功能入口 Function Entry")
 
 app_mode = st.sidebar.radio(
-    "请选择计算模块 / Select Calculator Module",
+    "",
     ["一代翅膀 / Level 1 Wing", "二代翅膀 / Level 2 Wing"],
     key="app_mode_radio",
 )
@@ -753,9 +753,6 @@ run_button = st.sidebar.button("运行计算 Run Calculation")
 # ============================================================
 # 5. Common Exchange System / 通用换算体系
 # ============================================================
-
-st.sidebar.markdown("---")
-st.sidebar.header("基础换算 Base Exchange")
 
 # Gold / 金币
 gold_section = st.sidebar.container()
@@ -835,11 +832,8 @@ bless_result_box.info(f"""
 # 6. Common Materials / 通用材料
 # ============================================================
 
-st.sidebar.markdown("---")
-st.sidebar.header("通用材料 Common Materials")
-
-life_value, life_original_text = material_value_ratio_input("生命宝石", "Life Jewel", 1.0, 1.0, gold_per_soul, bless_value, "life", show_title=True, parent=st.sidebar)
-chaos_value, chaos_original_text = material_value_ratio_input("玛雅宝石", "Chaos Jewel", 1.0, 0.05, gold_per_soul, bless_value, "chaos", show_title=True, parent=st.sidebar)
+life_value, life_original_text = material_value_ratio_input("生命", "Life", 1.0, 1.0, gold_per_soul, bless_value, "life", show_title=True, parent=st.sidebar)
+chaos_value, chaos_original_text = material_value_ratio_input("玛雅", "Chaos", 1.0, 0.05, gold_per_soul, bless_value, "chaos", show_title=True, parent=st.sidebar)
 
 # ============================================================
 # 7. Level 1 Wing Parameter Function / 一代参数模块
@@ -887,6 +881,7 @@ def level1_parameter_sidebar(prefix: str):
         life_success_rate = st.sidebar.number_input("生命宝石成功率 Life Success Rate", 0.01, 0.99, 0.50, 0.01, format="%.2f", key=f"{prefix}_life_success_rate")
         expected_life_count = expected_life_jewels_to_target(target_option_level, life_success_rate)
         expected_option_cost = expected_life_count * life_value
+        st.sidebar.markdown("##### +4不追玛雅武器价值 / +4 Chaos Weapon without Option Value")
         chaos_weapon_plus4_no_option_value, chaos_weapon_original_text = material_value_ratio_input(
             "+4不追加玛雅武器", "+4 Chaos Weapon without Option", 1.0, 0.5, gold_per_soul, bless_value, f"{prefix}_chaos_weapon_no_option", show_title=False, parent=st.sidebar
         )
