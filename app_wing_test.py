@@ -741,22 +741,12 @@ Wing synthesis involves multiple materials, success rates, and market-dependent 
 # ============================================================
 
 st.sidebar.header("功能入口 Function Entry")
-if "app_mode" not in st.session_state:
-    st.session_state.app_mode = "一代翅膀 / Level 1 Wing"
-
-col_btn1, col_btn2 = st.sidebar.columns(2)
-if col_btn1.button("一代翅膀"):
-    st.session_state.app_mode = "一代翅膀 / Level 1 Wing"
-if col_btn2.button("二代翅膀"):
-    st.session_state.app_mode = "二代翅膀 / Level 2 Wing"
 
 app_mode = st.sidebar.radio(
-    "当前模块 Current Module",
+    "请选择计算模块 / Select Calculator Module",
     ["一代翅膀 / Level 1 Wing", "二代翅膀 / Level 2 Wing"],
-    index=0 if st.session_state.app_mode == "一代翅膀 / Level 1 Wing" else 1,
     key="app_mode_radio",
 )
-st.session_state.app_mode = app_mode
 
 run_button = st.sidebar.button("运行计算 Run Calculation")
 
