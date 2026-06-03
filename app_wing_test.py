@@ -8,7 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
 # ============================================================
-# note: Chaos weapon is named as Maya weapon.
+# note: 玛雅武器 is translated as Chaos Weapon.
 # ============================================================
 
 # ============================================================
@@ -260,8 +260,8 @@ def calculate_wing_synthesis(
     soul_value: float,
     life_value: float,
     chaos_value: float,
-    maya_weapon_plus4_no_option_value: float,
-    maya_weapon_plus4_with_option_direct_value: float | None,
+    chaos_weapon_plus4_no_option_value: float,
+    chaos_weapon_plus4_with_option_direct_value: float | None,
     relic_synthesis_gold_value: float,
     wing_conversion_gold_value: float,
     life_success_rate: float,
@@ -279,18 +279,18 @@ def calculate_wing_synthesis(
 
     expected_option_cost = expected_life_count * life_value
 
-    if maya_weapon_plus4_with_option_direct_value is None:
-        maya_weapon_plus4_with_option_cost = (
-            maya_weapon_plus4_no_option_value
+    if chaos_weapon_plus4_with_option_direct_value is None:
+        chaos_weapon_plus4_with_option_cost = (
+            chaos_weapon_plus4_no_option_value
             + expected_option_cost
         )
-        maya_weapon_plus4_with_option_cost_mode = "自动计算 / Auto Calculation"
+        chaos_weapon_plus4_with_option_cost_mode = "自动计算 / Auto Calculation"
     else:
-        maya_weapon_plus4_with_option_cost = maya_weapon_plus4_with_option_direct_value
-        maya_weapon_plus4_with_option_cost_mode = "直接输入 / Direct Input" 
+        chaos_weapon_plus4_with_option_cost = chaos_weapon_plus4_with_option_direct_value
+        chaos_weapon_plus4_with_option_cost_mode = "直接输入 / Direct Input" 
 
     relic_cost = (
-        maya_weapon_plus4_with_option_cost
+        chaos_weapon_plus4_with_option_cost
         + bless_value
         + soul_value
         + chaos_value
@@ -331,8 +331,8 @@ def calculate_wing_synthesis(
     summary = {
         "expected_life_count": expected_life_count,
         "expected_option_cost": expected_option_cost,
-        "maya_weapon_plus4_with_option_cost": maya_weapon_plus4_with_option_cost,
-        "maya_weapon_plus4_with_option_cost_mode": maya_weapon_plus4_with_option_cost_mode,
+        "chaos_weapon_plus4_with_option_cost": chaos_weapon_plus4_with_option_cost,
+        "chaos_weapon_plus4_with_option_cost_mode": chaos_weapon_plus4_with_option_cost_mode,
         "relic_cost": relic_cost,
         "best_row": best_row
     }
@@ -490,7 +490,7 @@ with st.expander("🎯 用途和说明 Purpose & Notes", expanded=False):
 
           - Life Jewel
           - Chaos Jewel
-          - +4+4 Maya Weapon (automatic calculation or direct input)
+          - +4+4 Chaos Weapon (automatic calculation or direct input)
             - When automatic calculation is selected, +4 Chaos Weapon without Option is entered as a sub-item
           - Low Magic Stone
 
@@ -532,7 +532,7 @@ run_button = st.sidebar.button("运行计算 Run Calculation")
 # Sidebar layout containers are created first to control display order.
 # 先创建左侧栏容器，用于控制实际显示顺序。
 relic_conversion_section = st.sidebar.container()
-maya_weapon_section = st.sidebar.container()
+chaos_weapon_section = st.sidebar.container()
 magic_stone_section = st.sidebar.container()
 gold_section = st.sidebar.container()
 bless_section = st.sidebar.container()
@@ -829,20 +829,20 @@ with chaos_section:
 
 
 # ============================================================
-# 4.6 Maya Weapon / 玛雅武器
+# 4.6 Chaos Weapon / 玛雅武器
 # ============================================================
 
-with maya_weapon_section:
+with chaos_weapon_section:
     st.markdown("---")
-    st.header("+4追4玛雅武器 / +4+4 Maya Weapon")
+    st.header("+4追4玛雅武器 / +4+4 Chaos Weapon")
 
-    maya_weapon_with_option_mode = st.radio(
-        "+4追4玛雅武器成本设置方式 / +4+4 Maya Weapon Cost Mode",
+    chaos_weapon_with_option_mode = st.radio(
+        "+4追4玛雅武器成本设置方式 / +4+4 Chaos Weapon Cost Mode",
         [
             "自动计算：+4不追加玛雅武器 + 生命追加期望成本",
             "直接输入：手动设置+4追4玛雅武器价值"
         ],
-        key="maya_weapon_with_option_mode"
+        key="chaos_weapon_with_option_mode"
     )
 
     target_option_level = 1
@@ -854,7 +854,7 @@ with maya_weapon_section:
     expected_life_count_preview = 0.0
     expected_option_cost_preview = 0.0
 
-    if maya_weapon_with_option_mode == "自动计算：+4不追加玛雅武器 + 生命追加期望成本":
+    if chaos_weapon_with_option_mode == "自动计算：+4不追加玛雅武器 + 生命追加期望成本":
 
         st.markdown("#### 生命宝石追加 / Life Jewel Option")
 
@@ -891,25 +891,25 @@ with maya_weapon_section:
 """
         )
 
-        maya_weapon_plus4_no_option_value, maya_weapon_original_text = material_value_ratio_input(
+        chaos_weapon_plus4_no_option_value, chaos_weapon_original_text = material_value_ratio_input(
             "+4不追加玛雅武器",
             "+4 Chaos Weapon without Option",
             default_item_count=1.0,
             default_soul_equivalent=0.5,
             gold_per_soul=gold_per_soul,
             bless_value=bless_value,
-            key="maya_weapon",
+            key="chaos_weapon",
             show_title=True,
-            parent=maya_weapon_section
+            parent=chaos_weapon_section
         )
 
-        maya_weapon_plus4_with_option_auto_value = (
-            maya_weapon_plus4_no_option_value
+        chaos_weapon_plus4_with_option_auto_value = (
+            chaos_weapon_plus4_no_option_value
             + expected_option_cost_preview
         )
 
-        maya_weapon_plus4_with_option_direct_value = None
-        maya_weapon_plus4_with_option_direct_text = (
+        chaos_weapon_plus4_with_option_direct_value = None
+        chaos_weapon_plus4_with_option_direct_text = (
             "自动计算：+4不追加玛雅武器 + 生命追加期望成本"
         )
 
@@ -919,30 +919,30 @@ with maya_weapon_section:
 自动计算 / Auto Calculation
 
 +4不追加玛雅武器 / +4 Weapon without Option:
-{maya_weapon_plus4_no_option_value:.6f} 灵魂 / Soul
+{chaos_weapon_plus4_no_option_value:.6f} 灵魂 / Soul
 
 生命追加期望成本 / Expected Life Option Cost:
 {expected_option_cost_preview:.6f} 灵魂 / Soul
 
-1 +4追4玛雅武器 / 1 +4+4 Maya Weapon
-≈ {maya_weapon_plus4_with_option_auto_value:.6f} 灵魂 / Soul
+1 +4追4玛雅武器 / 1 +4+4 Chaos Weapon
+≈ {chaos_weapon_plus4_with_option_auto_value:.6f} 灵魂 / Soul
 """
         )
 
     else:
-        maya_weapon_plus4_no_option_value = 0.0
-        maya_weapon_original_text = "未启用 / Not used"
+        chaos_weapon_plus4_no_option_value = 0.0
+        chaos_weapon_original_text = "未启用 / Not used"
 
-        maya_weapon_plus4_with_option_direct_value, maya_weapon_plus4_with_option_direct_text = material_value_ratio_input(
+        chaos_weapon_plus4_with_option_direct_value, chaos_weapon_plus4_with_option_direct_text = material_value_ratio_input(
             "+4追4玛雅武器",
-            "+4+4 Maya Weapon",
+            "+4+4 Chaos Weapon",
             default_item_count=1.0,
             default_soul_equivalent=1.5,
             gold_per_soul=gold_per_soul,
             bless_value=bless_value,
-            key="maya_weapon_with_option_direct",
+            key="chaos_weapon_with_option_direct",
             show_title=False,
-            parent=maya_weapon_section
+            parent=chaos_weapon_section
         )
 
         st.info(
@@ -950,8 +950,8 @@ with maya_weapon_section:
 +4追4玛雅武器成本模式 / Cost Mode:
 直接输入 / Direct Input
 
-1 +4追4玛雅武器 / 1 +4+4 Maya Weapon
-≈ {maya_weapon_plus4_with_option_direct_value:.6f} 灵魂 / Soul
+1 +4追4玛雅武器 / 1 +4+4 Chaos Weapon
+≈ {chaos_weapon_plus4_with_option_direct_value:.6f} 灵魂 / Soul
 """
         )
 
@@ -1154,8 +1154,8 @@ if run_button:
         soul_value=soul_value,
         life_value=life_value,
         chaos_value=chaos_value,
-        maya_weapon_plus4_no_option_value=maya_weapon_plus4_no_option_value,
-        maya_weapon_plus4_with_option_direct_value=maya_weapon_plus4_with_option_direct_value,
+        chaos_weapon_plus4_no_option_value=chaos_weapon_plus4_no_option_value,
+        chaos_weapon_plus4_with_option_direct_value=chaos_weapon_plus4_with_option_direct_value,
         relic_synthesis_gold_value=relic_synthesis_gold_value,
         wing_conversion_gold_value=wing_conversion_gold_value,
         life_success_rate=life_success_rate,
@@ -1190,7 +1190,7 @@ if run_button:
 
     setting_col4.metric(
         "+4追4玛雅武器",
-        summary["maya_weapon_plus4_with_option_cost_mode"]
+        summary["chaos_weapon_plus4_with_option_cost_mode"]
     )
 
     setting_col5.metric(
@@ -1228,25 +1228,25 @@ if run_button:
 
     st.subheader("材料价值换算结果 Material Value Conversion")
 
-    maya_weapon_value_rows = []
+    chaos_weapon_value_rows = []
 
-    if maya_weapon_plus4_with_option_direct_value is None:
-        maya_weapon_value_rows.append({
-            "item / 项目": "+4不追加玛雅武器 +4 Maya Weapon without Option",
-            "original_value / 原始值": maya_weapon_original_text,
-            "value_soul / 折算灵魂": maya_weapon_plus4_no_option_value
+    if chaos_weapon_plus4_with_option_direct_value is None:
+        chaos_weapon_value_rows.append({
+            "item / 项目": "+4不追加玛雅武器 +4 Chaos Weapon without Option",
+            "original_value / 原始值": chaos_weapon_original_text,
+            "value_soul / 折算灵魂": chaos_weapon_plus4_no_option_value
         })
 
-        maya_weapon_value_rows.append({
-            "item / 项目": "+4追4玛雅武器 +4+4 Maya Weapon",
-            "original_value / 原始值": maya_weapon_plus4_with_option_direct_text,
-            "value_soul / 折算灵魂": summary["maya_weapon_plus4_with_option_cost"]
+        chaos_weapon_value_rows.append({
+            "item / 项目": "+4追4玛雅武器 +4+4 Chaos Weapon",
+            "original_value / 原始值": chaos_weapon_plus4_with_option_direct_text,
+            "value_soul / 折算灵魂": summary["chaos_weapon_plus4_with_option_cost"]
         })
     else:
-        maya_weapon_value_rows.append({
-            "item / 项目": "+4追4玛雅武器 +4+4 Maya Weapon",
-            "original_value / 原始值": maya_weapon_plus4_with_option_direct_text,
-            "value_soul / 折算灵魂": maya_weapon_plus4_with_option_direct_value
+        chaos_weapon_value_rows.append({
+            "item / 项目": "+4追4玛雅武器 +4+4 Chaos Weapon",
+            "original_value / 原始值": chaos_weapon_plus4_with_option_direct_text,
+            "value_soul / 折算灵魂": chaos_weapon_plus4_with_option_direct_value
         })
 
     value_df = pd.DataFrame([
@@ -1275,7 +1275,7 @@ if run_button:
             "original_value / 原始值": chaos_original_text,
             "value_soul / 折算灵魂": chaos_value
         },
-        *maya_weapon_value_rows,
+        *chaos_weapon_value_rows,
         {
             "item / 项目": "低级魔晶石 Low Magic Stone",
             "original_value / 原始值": magic_stone_original_text,
@@ -1320,7 +1320,7 @@ if run_button:
 
     cost_col3.metric(
         "+4追属性玛雅武器成本",
-        f"{summary['maya_weapon_plus4_with_option_cost']:.4f} 灵魂"
+        f"{summary['chaos_weapon_plus4_with_option_cost']:.4f} 灵魂"
     )
 
     cost_col4.metric(
@@ -1328,27 +1328,27 @@ if run_button:
         f"{summary['relic_cost']:.4f} 灵魂"
     )
 
-    maya_weapon_breakdown_rows = []
+    chaos_weapon_breakdown_rows = []
 
-    if maya_weapon_plus4_with_option_direct_value is None:
-        maya_weapon_breakdown_rows.extend([
+    if chaos_weapon_plus4_with_option_direct_value is None:
+        chaos_weapon_breakdown_rows.extend([
             {
-                "item / 项目": "+4不追加玛雅武器 +4 Maya Weapon without Option",
-                "cost_soul / 成本_灵魂": maya_weapon_plus4_no_option_value
+                "item / 项目": "+4不追加玛雅武器 +4 Chaos Weapon without Option",
+                "cost_soul / 成本_灵魂": chaos_weapon_plus4_no_option_value
             },
             {
                 "item / 项目": "生命追加期望成本 Expected Life Option Cost",
                 "cost_soul / 成本_灵魂": summary["expected_option_cost"]
             },
             {
-                "item / 项目": "+4追4玛雅武器 +4+4 Maya Weapon",
-                "cost_soul / 成本_灵魂": summary["maya_weapon_plus4_with_option_cost"]
+                "item / 项目": "+4追4玛雅武器 +4+4 Chaos Weapon",
+                "cost_soul / 成本_灵魂": summary["chaos_weapon_plus4_with_option_cost"]
             },
         ])
     else:
-        maya_weapon_breakdown_rows.append({
-            "item / 项目": "+4追4玛雅武器 +4+4 Maya Weapon",
-            "cost_soul / 成本_灵魂": summary["maya_weapon_plus4_with_option_cost"]
+        chaos_weapon_breakdown_rows.append({
+            "item / 项目": "+4追4玛雅武器 +4+4 Chaos Weapon",
+            "cost_soul / 成本_灵魂": summary["chaos_weapon_plus4_with_option_cost"]
         })
 
     breakdown_df = pd.DataFrame([
@@ -1356,7 +1356,7 @@ if run_button:
             "item / 项目": "玛雅宝石 Chaos Jewel",
             "cost_soul / 成本_灵魂": chaos_value
         },
-        *maya_weapon_breakdown_rows,
+        *chaos_weapon_breakdown_rows,
         {
             "item / 项目": "祝福宝石 Bless Jewel",
             "cost_soul / 成本_灵魂": bless_value
@@ -1646,8 +1646,8 @@ with st.expander("📘 使用说明 User Guide", expanded=False):
 
         - Life Jewel
         - Chaos Jewel
-        - +4 Maya Weapon without Option
-        - +4+4 Maya Weapon (automatic calculation or direct input)
+        - +4 Chaos Weapon without Option
+        - +4+4 Chaos Weapon (automatic calculation or direct input)
         - Low Magic Stone
 
         Examples:
@@ -1753,7 +1753,8 @@ st.markdown("---")
 st.markdown("#### Developed by 作者：Razz")
 st.markdown("GitHub: https://github.com/razzer1114/MuOnline_item_upgrade_cost_calculator")
 st.markdown("💬 如果有问题、意见或建议，请移步贴吧讨论：")
-st.markdown("https://tieba.baidu.com/p/10761263145")
+st.markdown("装备强化app贴：https://tieba.baidu.com/p/10677589188")
+st.markdown("翅膀合成app贴：https://tieba.baidu.com/p/10761263145")
 
 # ============================================================
 # 8. Disclaimer / 免责声明
