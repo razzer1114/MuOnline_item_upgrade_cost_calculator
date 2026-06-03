@@ -278,9 +278,9 @@ def material_value_ratio_input(
     mode = parent.radio(
         "设置方式 Input Mode",
         [
-            "灵魂换算：X材料 = Y灵魂",
-            "金币换算：X材料 = Y金币",
-            "祝福换算：X材料 = Y祝福",
+            "灵魂换算：X材料 = Y灵魂 / Material to Soul: X Material = Y Soul",
+            "金币换算：X材料 = Y金币 / Material to Gold: X Material = Y Gold",
+            "祝福换算：X材料 = Y祝福 / Material to Bless: X Material = Y Bless",
         ],
         key=f"{key}_mode",
     )
@@ -295,7 +295,7 @@ def material_value_ratio_input(
         key=f"{key}_item_count",
     )
 
-    if mode == "灵魂换算：X材料 = Y灵魂":
+    if mode == "灵魂换算：X材料 = Y灵魂 / Material to Soul: X Material = Y Soul":
         soul_equivalent = parent.number_input(
             f"等于多少灵魂 Y / Equivalent Soul Y",
             min_value=0.0,
@@ -308,7 +308,7 @@ def material_value_ratio_input(
         value_soul = soul_equivalent / item_count
         original_text = f"{item_count:g} {label_cn} = {soul_equivalent:g} 灵魂"
 
-    elif mode == "金币换算：X材料 = Y金币":
+    elif mode == "金币换算：X材料 = Y金币 / Material to Gold: X Material = Y Gold":
         default_gold_equivalent = default_soul_equivalent * gold_per_soul
         gold_equivalent = parent.number_input(
             f"等于多少金币 Y / Equivalent Gold Y",
@@ -476,13 +476,13 @@ def enhancement_cost_to_plus9_input(
     mode = parent.radio(
         f"{label_cn}强化至+9成本设置 / {label_en} Upgrade-to-+9 Cost Mode",
         [
-            "自动计算：调用强化App最优策略模型",
-            "直接输入：手动设置强化至+9期望成本",
+            "自动计算：调用强化App最优策略模型 / Auto: Use Upgrade App Optimal Strategy Model",
+            "直接输入：手动设置强化至+9期望成本 / Direct Input: Set Expected Upgrade Cost to +9",
         ],
         key=f"{key}_enhance_mode",
     )
 
-    if mode == "直接输入：手动设置强化至+9期望成本":
+    if mode == "直接输入：手动设置强化至+9期望成本 / Direct Input: Set Expected Upgrade Cost to +9":
         cost, text = soul_cost_input(
             f"{label_cn}强化至+9期望成本",
             f"{label_en} Expected Upgrade Cost to +9",
@@ -760,11 +760,11 @@ with gold_section:
     st.markdown("#### 金币 / Gold")
     gold_mode = st.radio(
         "金币价值设置方式 Gold Value Setting",
-        ["金币与灵魂换算：X金币 = Y灵魂", "金币与祝福换算：X金币 = Y祝福"],
+        ["金币与灵魂换算：X金币 = Y灵魂 / Gold to Soul: X Gold = Y Soul", "金币与祝福换算：X金币 = Y祝福 / Gold to Bless: X Gold = Y Bless"],
         key="gold_mode",
     )
     gold_x = st.number_input("金币数量 X / Gold Count X", min_value=0.0001, max_value=999999999999.0, value=10_000_000.0, step=100_000.0, format="%.0f", key="gold_x")
-    if gold_mode == "金币与灵魂换算：X金币 = Y灵魂":
+    if gold_mode == "金币与灵魂换算：X金币 = Y灵魂 / Gold to Soul: X Gold = Y Soul":
         gold_y_soul = st.number_input("等于多少灵魂 Y / Equivalent Soul Y", min_value=0.0001, max_value=999999999.0, value=1.0, step=1.0, format="%.4f", key="gold_y_soul")
         gold_y_bless = None
         gold_original_text = f"{gold_x:,.0f} 金币 = {gold_y_soul:g} 灵魂"
@@ -780,11 +780,11 @@ with bless_section:
     st.markdown("#### 祝福 / Bless")
     bless_mode = st.radio(
         "祝福价值设置方式 Bless Value Setting",
-        ["祝福与灵魂换算：X祝福 = Y灵魂", "祝福与金币换算：X祝福 = Y金币"],
+        ["祝福与灵魂换算：X祝福 = Y灵魂 / Bless to Soul: X Bless = Y Soul", "祝福与金币换算：X祝福 = Y金币 / Bless to Gold: X Bless = Y Gold"],
         key="bless_mode",
     )
     bless_x = st.number_input("祝福数量 X / Bless Count X", min_value=0.0001, max_value=999999999.0, value=1.0, step=1.0, format="%.4f", key="bless_x")
-    if bless_mode == "祝福与灵魂换算：X祝福 = Y灵魂":
+    if bless_mode == "祝福与灵魂换算：X祝福 = Y灵魂 / Bless to Soul: X Bless = Y Soul":
         bless_y_soul = st.number_input("等于多少灵魂 Y / Equivalent Soul Y", min_value=0.0001, max_value=999999999.0, value=3.0, step=0.01, format="%.4f", key="bless_y_soul")
         bless_y_gold = None
         bless_original_text = f"{bless_x:g} 祝福 = {bless_y_soul:g} 灵魂"
@@ -795,8 +795,8 @@ with bless_section:
     bless_result_box = st.empty()
 
 # Solve exchange system / 求解基础换算
-gold_direct_to_soul = gold_mode == "金币与灵魂换算：X金币 = Y灵魂"
-bless_direct_to_soul = bless_mode == "祝福与灵魂换算：X祝福 = Y灵魂"
+gold_direct_to_soul = gold_mode == "金币与灵魂换算：X金币 = Y灵魂 / Gold to Soul: X Gold = Y Soul"
+bless_direct_to_soul = bless_mode == "祝福与灵魂换算：X祝福 = Y灵魂 / Bless to Soul: X Bless = Y Soul"
 
 if not gold_direct_to_soul and not bless_direct_to_soul:
     st.sidebar.error("当前设置无法唯一确定灵魂基准：金币按祝福换算，祝福又按金币换算。请至少让金币或祝福中的一个直接与灵魂换算。")
@@ -867,7 +867,7 @@ def level1_parameter_sidebar(prefix: str):
     st.sidebar.markdown("#### +4追4玛雅武器 / +4+4 Chaos Weapon")
     chaos_weapon_mode = st.sidebar.radio(
         "+4追4玛雅武器成本设置 / +4+4 Chaos Weapon Cost Mode",
-        ["自动计算：+4不追加玛雅武器 + 生命追加期望成本", "直接输入：手动设置+4追4玛雅武器价值"],
+        ["自动计算：+4不追加玛雅武器 + 生命追加期望成本 / Auto: +4 Chaos Weapon without Option + Expected Life Option Cost", "直接输入：手动设置+4追4玛雅武器价值 / Direct Input: Set +4+4 Chaos Weapon Value"],
         key=f"{prefix}_chaos_weapon_mode",
     )
 
@@ -877,7 +877,7 @@ def level1_parameter_sidebar(prefix: str):
     chaos_weapon_plus4_no_option_value = 0.0
     chaos_weapon_detail = []
 
-    if chaos_weapon_mode == "自动计算：+4不追加玛雅武器 + 生命追加期望成本":
+    if chaos_weapon_mode == "自动计算：+4不追加玛雅武器 + 生命追加期望成本 / Auto: +4 Chaos Weapon without Option + Expected Life Option Cost":
         life_success_rate = st.sidebar.number_input("生命宝石成功率 Life Success Rate", 0.01, 0.99, 0.50, 0.01, format="%.2f", key=f"{prefix}_life_success_rate")
         expected_life_count = expected_life_jewels_to_target(target_option_level, life_success_rate)
         expected_option_cost = expected_life_count * life_value
@@ -901,11 +901,11 @@ def level1_parameter_sidebar(prefix: str):
     st.sidebar.markdown("#### 低级魔晶石 / Low Magic Stone")
     low_magic_stone_mode = st.sidebar.radio(
         "低级魔晶石价值设置 / Low Magic Stone Cost Mode",
-        ["直接输入：手动设置低级魔晶石价值", "自动计算：按低级魔晶石合成规则"],
+        ["直接输入：手动设置低级魔晶石价值 / Direct Input: Set Low Magic Stone Value", "自动计算：按低级魔晶石合成规则 / Auto: Use Low Magic Stone Synthesis Rule"],
         key=f"{prefix}_low_magic_stone_mode",
     )
     low_magic_breakdown = None
-    if low_magic_stone_mode == "直接输入：手动设置低级魔晶石价值":
+    if low_magic_stone_mode == "直接输入：手动设置低级魔晶石价值 / Direct Input: Set Low Magic Stone Value":
         low_magic_stone_value, low_magic_stone_text = soul_cost_input("低级魔晶石", "Low Magic Stone", bless_value, gold_per_soul, bless_value, f"{prefix}_low_magic_direct", st.sidebar)
     else:
         shop_plus9_option12_value, shop_text = soul_cost_input("+9追12商店普通装备", "+9+12 Normal Shop Equipment", 0.3, gold_per_soul, bless_value, f"{prefix}_shop_p9_o12", st.sidebar)
@@ -954,8 +954,8 @@ else:
     l1_wing_source_mode = st.sidebar.radio(
         "+9追4一代翅膀价值来源 / Value Source",
         [
-            "直接输入：手动设置+9追4一代翅膀价值",
-            "自动计算：一代翅膀合成成本 + 强化至+9 + 追加至追4",
+            "直接输入：手动设置+9追4一代翅膀价值 / Direct Input: Set +9+4 Level 1 Wing Value",
+            "自动计算：一代翅膀合成成本 + 强化至+9 + 追加至追4 / Auto: Level 1 Wing Cost + Upgrade to +9 + Option to +4",
         ],
         key="l2_l1_wing_source_mode",
     )
@@ -966,7 +966,7 @@ else:
     l1_upgrade_stage_table = pd.DataFrame()
     l1_option_detail = pd.DataFrame()
 
-    if l1_wing_source_mode == "直接输入：手动设置+9追4一代翅膀价值":
+    if l1_wing_source_mode == "直接输入：手动设置+9追4一代翅膀价值 / Direct Input: Set +9+4 Level 1 Wing Value":
         level1_plus9_option4_wing_value, level1_plus9_option4_text = soul_cost_input(
             "+9追4一代翅膀/披风", "+9+4 Level 1 Wing/Cloak", 30.0, gold_per_soul, bless_value, "l2_l1_plus9_option4_direct", st.sidebar
         )
@@ -1009,7 +1009,7 @@ else:
     st.sidebar.markdown("#### 中级魔晶石 / Medium Magic Stone")
     medium_magic_mode = st.sidebar.radio(
         "中级魔晶石价值设置 / Medium Magic Stone Cost Mode",
-        ["直接输入：手动设置中级魔晶石价值", "自动计算：按中级魔晶石合成规则"],
+        ["直接输入：手动设置中级魔晶石价值 / Direct Input: Set Medium Magic Stone Value", "自动计算：按中级魔晶石合成规则 / Auto: Use Medium Magic Stone Synthesis Rule"],
         key="l2_medium_magic_mode",
     )
     medium_breakdown = None
@@ -1017,15 +1017,15 @@ else:
     excellent_upgrade_top10 = pd.DataFrame()
     excellent_upgrade_stage_table = pd.DataFrame()
 
-    if medium_magic_mode == "直接输入：手动设置中级魔晶石价值":
+    if medium_magic_mode == "直接输入：手动设置中级魔晶石价值 / Direct Input: Set Medium Magic Stone Value":
         medium_magic_stone_value, medium_magic_text = soul_cost_input("中级魔晶石", "Medium Magic Stone", 3.0, gold_per_soul, bless_value, "l2_medium_direct", st.sidebar)
     else:
         material_mode = st.sidebar.radio(
             "+9追16卓越材料价值来源 / +9+16 Excellent Material Source",
-            ["直接输入：手动设置+9追16卓越材料价值", "自动计算：卓越基础装备 + 强化至+9 + 追加至追16"],
+            ["直接输入：手动设置+9追16卓越材料价值 / Direct Input: Set +9+16 Excellent Material Value", "自动计算：卓越基础装备 + 强化至+9 + 追加至追16 / Auto: Base Excellent Equipment + Upgrade to +9 + Option to +16"],
             key="l2_medium_material_mode",
         )
-        if material_mode == "直接输入：手动设置+9追16卓越材料价值":
+        if material_mode == "直接输入：手动设置+9追16卓越材料价值 / Direct Input: Set +9+16 Excellent Material Value":
             excellent_plus9_option16_value, excellent_text = soul_cost_input("+9追16卓越品质武器/防具", "+9+16 Excellent Weapon/Armor", 9.0, gold_per_soul, bless_value, "l2_excellent_p9_o16_direct", st.sidebar)
         else:
             excellent_base_value, excellent_base_text = soul_cost_input("卓越品质武器/防具基础价值", "Base Excellent Weapon/Armor", 1.0, gold_per_soul, bless_value, "l2_excellent_base", st.sidebar)
