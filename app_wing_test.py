@@ -5,6 +5,8 @@
 # ============================================================
 
 import math
+import itertools
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
@@ -14,6 +16,202 @@ import streamlit as st
 # note: All costs are internally converted into Soul-equivalent value.
 # 说明：所有成本最终统一折算为灵魂价值。
 # ============================================================
+
+
+# ============================================================
+# 1.0 Upgrade Core Model / 强化核心模型
+# ============================================================
+
+COST_SOUL = 1.0  # Cost of Soul gem / 灵魂宝石成本
+
+
+def fail_state(i: int) -> int:
+    """
+    Failure rollback rule for Soul upgrade.
+    灵魂宝石强化失败后的回退规则。
+    """
+    if i == 0:
+        return 0
+    if 1 <= i <= 6:
+        return i - 1
+    if i in [7, 8]:
+        return 0
+    raise ValueError("Invalid state / 无效状态")
+
+
+def get_model_config(target_level: int) -> dict:
+    """
+    Get Markov-chain model configuration according to target level.
+    根据目标等级获取马尔科夫链模型配置。
+
+    For target +9:
+    - +0 to +6: Bless or Soul can be selected.
+    - +6 to +9: fixed as Soul.
+    """
+    transient_states = list(range(target_level))
+    absorbing_state = target_level
+    decision_count = min(6, target_level)
+    total_stage_count = target_level
+    forced_soul_count = max(0, total_stage_count - decision_count)
+
+    return {
+        "transient_states": transient_states,
+        "absorbing_state": absorbing_state,
+        "decision_count": decision_count,
+        "total_stage_count": total_stage_count,
+        "forced_soul_count": forced_soul_count,
+    }
+
+
+def generate_strategies(target_level: int) -> list[list[str]]:
+    """
+    Generate all Bless/Soul strategies.
+    生成全部祝福/灵魂策略。
+    """
+    config = get_model_config(target_level)
+    strategies = []
+
+    for choices in itertools.product(["B", "S"], repeat=config["decision_count"]):
+        strategy = list(choices) + ["S"] * config["forced_soul_count"]
+        strategies.append(strategy)
+
+    return strategies
+
+
+def build_transition_matrix(strategy: list[str], soul_success_rate: float, target_level: int) -> np.ndarray:
+    """
+    Build transient transition matrix Q.
+    构建暂态转移矩阵 Q。
+    """
+    config = get_model_config(target_level)
+    transient_states = config["transient_states"]
+    absorbing_state = config["absorbing_state"]
+
+    q_soul = 1 - soul_success_rate
+    Q = np.zeros((target_level, target_level))
+
+    for i in transient_states:
+        action = strategy[i]
+
+        if action == "B":
+            next_state = i + 1
+            if next_state < absorbing_state:
+                Q[i, next_state] = 1.0
+
+        elif action == "S":
+            success_state = i + 1
+            failure_state = fail_state(i)
+
+            if success_state < absorbing_state:
+                Q[i, success_state] += soul_success_rate
+
+            if failure_state < absorbing_state:
+                Q[i, failure_state] += q_soul
+
+        else:
+            raise ValueError("Unknown action / 未知动作")
+
+    return Q
+
+
+def evaluate_upgrade_strategy(
+    strategy: list[str],
+    soul_success_rate: float,
+    bless_relative_cost: float,
+    target_level: int,
+) -> dict:
+    """
+    Evaluate one upgrade strategy using absorbing Markov chain.
+    用吸收型马尔科夫链评估单个强化策略。
+    """
+    config = get_model_config(target_level)
+    transient_states = config["transient_states"]
+
+    Q = build_transition_matrix(strategy, soul_success_rate, target_level)
+    N = np.linalg.inv(np.eye(target_level) - Q)
+
+    bless_cost_vector = np.zeros(target_level)
+    soul_cost_vector = np.zeros(target_level)
+    total_cost_vector = np.zeros(target_level)
+
+    for i in transient_states:
+        if strategy[i] == "B":
+            bless_cost_vector[i] = 1
+            total_cost_vector[i] = bless_relative_cost
+        else:
+            soul_cost_vector[i] = 1
+            total_cost_vector[i] = COST_SOUL
+
+    expected_bless = (N @ bless_cost_vector)[0]
+    expected_soul = (N @ soul_cost_vector)[0]
+    expected_total = (N @ total_cost_vector)[0]
+
+    return {
+        "strategy": "".join(strategy),
+        "expected_bless": expected_bless,
+        "expected_soul": expected_soul,
+        "expected_total_cost": expected_total,
+    }
+
+
+def find_optimal_upgrade_strategy(
+    soul_success_rate: float,
+    bless_relative_cost: float,
+    target_level: int = 9,
+) -> pd.DataFrame:
+    """
+    Enumerate all strategies and rank by expected total Soul-equivalent cost.
+    枚举全部策略，并按期望总成本升序排序。
+    """
+    results = []
+    for strategy in generate_strategies(target_level):
+        results.append(
+            evaluate_upgrade_strategy(
+                strategy=strategy,
+                soul_success_rate=soul_success_rate,
+                bless_relative_cost=bless_relative_cost,
+                target_level=target_level,
+            )
+        )
+
+    df = pd.DataFrame(results)
+    df = df.sort_values(by="expected_total_cost").reset_index(drop=True)
+    df.insert(0, "rank", range(1, len(df) + 1))
+    return df
+
+
+def strategy_to_stage_table(strategy: str) -> pd.DataFrame:
+    """
+    Convert strategy string into a stage-action table.
+    将策略字符串转换为“强化阶段—宝石选择”表。
+    """
+    rows = []
+    for i, action in enumerate(strategy):
+        rows.append({
+            "upgrade_stage / 强化阶段": f"+{i} → +{i + 1}",
+            "action / 宝石选择": "Bless / 祝福" if action == "B" else "Soul / 灵魂",
+            "symbol / 策略符号": action,
+        })
+    return pd.DataFrame(rows)
+
+
+UPGRADE_SUCCESS_RATE_PRESETS = {
+    "自定义 / Custom": None,
+    "镶宝 / Socket item, p = 0.40": 0.40,
+    "新版镶宝 / Socket item (New), p = 0.50": 0.50,
+    "卓越 / Excellent item, p = 0.50": 0.50,
+    "套装 / Set item, p = 0.50": 0.50,
+    "白装 / Normal item, p = 0.60": 0.60,
+    "卷轴 / Scroll, p = 0.60": 0.60,
+    "翅膀 / Wing, p = 0.60": 0.60,
+    "幸运镶宝 / Lucky socket item, p = 0.65": 0.65,
+    "新版幸运镶宝 / Lucky socket item (New), p = 0.75": 0.75,
+    "幸运卓越 / Lucky excellent item, p = 0.75": 0.75,
+    "幸运套装 / Lucky set item, p = 0.75": 0.75,
+    "幸运白装 / Lucky normal item, p = 0.85": 0.85,
+    "幸运翅膀 / Lucky wing, p = 0.85": 0.85,
+}
+
 
 # ============================================================
 # 1. Helper Functions / 工具函数
@@ -263,16 +461,23 @@ def calculate_low_magic_stone_auto_value(
     return low_magic_stone_value, breakdown
 
 
-def enhancement_cost_to_plus9_input(label_cn: str, label_en: str, gold_per_soul: float, bless_value: float, key: str, parent=st.sidebar):
+def enhancement_cost_to_plus9_input(
+    label_cn: str,
+    label_en: str,
+    gold_per_soul: float,
+    bless_value: float,
+    key: str,
+    parent=st.sidebar,
+):
     """
-    Placeholder-compatible enhancement module for +0 to +9.
-    强化至+9成本模块：当前支持直接输入或分段输入；后续可替换为强化App的马尔科夫/枚举核心函数。
+    Upgrade-to-+9 cost module using the Markov-chain optimizer.
+    强化至+9成本模块：接入强化App核心马尔科夫链函数。
     """
     mode = parent.radio(
         f"{label_cn}强化至+9成本设置 / {label_en} Upgrade-to-+9 Cost Mode",
         [
+            "自动计算：调用强化App最优策略模型",
             "直接输入：手动设置强化至+9期望成本",
-            "分段输入：+0至+6、+6至+7、+7至+8、+8至+9成本",
         ],
         key=f"{key}_enhance_mode",
     )
@@ -287,22 +492,91 @@ def enhancement_cost_to_plus9_input(label_cn: str, label_en: str, gold_per_soul:
             key=f"{key}_enhance_direct",
             parent=parent,
         )
-        detail = pd.DataFrame([{"item / 项目": f"{label_cn}强化至+9", "cost_soul / 成本_灵魂": cost}])
-        return cost, text, detail
+        detail = pd.DataFrame([
+            {"item / 项目": f"{label_cn}强化至+9成本来源", "value / 数值": "直接输入 / Direct Input"},
+            {"item / 项目": f"{label_cn}强化至+9期望成本", "value / 数值": cost},
+        ])
+        top10 = pd.DataFrame()
+        stage_table = pd.DataFrame()
+        return cost, text, detail, top10, stage_table
 
-    c06, t06 = soul_cost_input(f"{label_cn}+0至+6成本", f"{label_en} +0 to +6 Cost", 1.0, gold_per_soul, bless_value, f"{key}_0_6", parent)
-    c67, t67 = soul_cost_input(f"{label_cn}+6至+7成本", f"{label_en} +6 to +7 Cost", 1.0, gold_per_soul, bless_value, f"{key}_6_7", parent)
-    c78, t78 = soul_cost_input(f"{label_cn}+7至+8成本", f"{label_en} +7 to +8 Cost", 1.0, gold_per_soul, bless_value, f"{key}_7_8", parent)
-    c89, t89 = soul_cost_input(f"{label_cn}+8至+9成本", f"{label_en} +8 to +9 Cost", 1.0, gold_per_soul, bless_value, f"{key}_8_9", parent)
-    total = c06 + c67 + c78 + c89
+    parent.markdown("##### 强化模型参数 / Upgrade Model Parameters")
+
+    target_level = 9
+
+    item_type = parent.selectbox(
+        f"{label_cn}强化成功率/装备类型 / Success Rate Type",
+        list(UPGRADE_SUCCESS_RATE_PRESETS.keys()),
+        index=list(UPGRADE_SUCCESS_RATE_PRESETS.keys()).index("翅膀 / Wing, p = 0.60") if "翅膀" in label_cn else list(UPGRADE_SUCCESS_RATE_PRESETS.keys()).index("卓越 / Excellent item, p = 0.50"),
+        key=f"{key}_upgrade_item_type",
+    )
+
+    preset_rate = UPGRADE_SUCCESS_RATE_PRESETS[item_type]
+
+    if preset_rate is None:
+        soul_success_rate = parent.number_input(
+            f"{label_cn}灵魂成功率 Soul Success Rate",
+            min_value=0.01,
+            max_value=0.99,
+            value=0.50,
+            step=0.01,
+            format="%.2f",
+            key=f"{key}_upgrade_soul_rate",
+        )
+    else:
+        soul_success_rate = preset_rate
+        parent.info(f"使用预设成功率 / Using preset: p = {soul_success_rate:.2f}")
+
+    # bless_value is already Soul-equivalent Bless cost from the global exchange system.
+    # 祝福相对价值直接采用全局换算系统中的 1祝福 = X灵魂。
+    bless_relative_cost = bless_value
+
+    result_df = find_optimal_upgrade_strategy(
+        soul_success_rate=soul_success_rate,
+        bless_relative_cost=bless_relative_cost,
+        target_level=target_level,
+    )
+
+    best = result_df.iloc[0]
+    cost = float(best["expected_total_cost"])
+    top10 = result_df.head(10).copy()
+    stage_table = strategy_to_stage_table(str(best["strategy"]))
+
+    soul_only_strategy = list("S" * target_level)
+    soul_only_result = evaluate_upgrade_strategy(
+        strategy=soul_only_strategy,
+        soul_success_rate=soul_success_rate,
+        bless_relative_cost=bless_relative_cost,
+        target_level=target_level,
+    )
+
     detail = pd.DataFrame([
-        {"item / 项目": f"{label_cn}+0至+6", "cost_soul / 成本_灵魂": c06},
-        {"item / 项目": f"{label_cn}+6至+7", "cost_soul / 成本_灵魂": c67},
-        {"item / 项目": f"{label_cn}+7至+8", "cost_soul / 成本_灵魂": c78},
-        {"item / 项目": f"{label_cn}+8至+9", "cost_soul / 成本_灵魂": c89},
-        {"item / 项目": f"{label_cn}强化至+9合计", "cost_soul / 成本_灵魂": total},
+        {"item / 项目": f"{label_cn}强化目标", "value / 数值": f"+0 → +{target_level}"},
+        {"item / 项目": "装备类型 / Item Type", "value / 数值": item_type},
+        {"item / 项目": "灵魂成功率 / Soul Success Rate", "value / 数值": soul_success_rate},
+        {"item / 项目": "祝福相对价值 / Bless Relative Cost", "value / 数值": bless_relative_cost},
+        {"item / 项目": "最优策略 / Best Strategy", "value / 数值": best["strategy"]},
+        {"item / 项目": "期望祝福消耗 / Expected Bless", "value / 数值": float(best["expected_bless"])},
+        {"item / 项目": "期望灵魂消耗 / Expected Soul", "value / 数值": float(best["expected_soul"])},
+        {"item / 项目": "最优强化期望成本 / Optimal Expected Upgrade Cost", "value / 数值": cost},
+        {"item / 项目": "全灵魂策略期望成本 / Soul-only Expected Cost", "value / 数值": float(soul_only_result["expected_total_cost"])},
+        {"item / 项目": "相对全灵魂节省 / Cost Reduction vs Soul-only", "value / 数值": float(soul_only_result["expected_total_cost"] - cost)},
     ])
-    return total, "分段输入：强化至+9成本", detail
+
+    parent.success(
+        f"""
+{label_cn}强化至+9最优期望成本：
+{cost:.6f} 灵魂
+
+最优策略 / Best Strategy:
+{best["strategy"]}
+
+期望消耗：
+祝福 {float(best["expected_bless"]):.6f}，灵魂 {float(best["expected_soul"]):.6f}
+"""
+    )
+
+    return cost, "自动计算：强化App最优策略模型", detail, top10, stage_table
 
 
 def calculate_medium_magic_stone_value(
@@ -703,6 +977,8 @@ else:
 
     l2_nested_l1_params = None
     l1_upgrade_detail = pd.DataFrame()
+    l1_upgrade_top10 = pd.DataFrame()
+    l1_upgrade_stage_table = pd.DataFrame()
     l1_option_detail = pd.DataFrame()
 
     if l1_wing_source_mode == "直接输入：手动设置+9追4一代翅膀价值":
@@ -727,7 +1003,7 @@ else:
             max_magic_stone_count=l2_nested_l1_params["max_magic_stone_count"],
         )
         l1_base_wing_cost = float(summary_l1_auto["best_row"]["expected_total_cost_soul / 期望总成本_灵魂"])
-        l1_upgrade_cost, l1_upgrade_text, l1_upgrade_detail = enhancement_cost_to_plus9_input("一代翅膀/披风", "Level 1 Wing/Cloak", gold_per_soul, bless_value, "l2_l1_wing", st.sidebar)
+        l1_upgrade_cost, l1_upgrade_text, l1_upgrade_detail, l1_upgrade_top10, l1_upgrade_stage_table = enhancement_cost_to_plus9_input("一代翅膀/披风", "Level 1 Wing/Cloak", gold_per_soul, bless_value, "l2_l1_wing", st.sidebar)
         l1_life_success_rate_for_option = st.sidebar.number_input("一代翅膀追加至追4生命成功率 Life Success Rate for +4 Option", 0.01, 0.99, 0.50, 0.01, format="%.2f", key="l2_l1_option4_life_rate")
         l1_option4_cost = expected_life_jewels_to_target(1, l1_life_success_rate_for_option) * life_value
         l1_option_detail = pd.DataFrame([
@@ -753,6 +1029,8 @@ else:
     )
     medium_breakdown = None
     medium_material_detail = pd.DataFrame()
+    excellent_upgrade_top10 = pd.DataFrame()
+    excellent_upgrade_stage_table = pd.DataFrame()
 
     if medium_magic_mode == "直接输入：手动设置中级魔晶石价值":
         medium_magic_stone_value, medium_magic_text = soul_cost_input("中级魔晶石", "Medium Magic Stone", 3.0, gold_per_soul, bless_value, "l2_medium_direct", st.sidebar)
@@ -766,7 +1044,7 @@ else:
             excellent_plus9_option16_value, excellent_text = soul_cost_input("+9追16卓越品质武器/防具", "+9+16 Excellent Weapon/Armor", 9.0, gold_per_soul, bless_value, "l2_excellent_p9_o16_direct", st.sidebar)
         else:
             excellent_base_value, excellent_base_text = soul_cost_input("卓越品质武器/防具基础价值", "Base Excellent Weapon/Armor", 1.0, gold_per_soul, bless_value, "l2_excellent_base", st.sidebar)
-            excellent_upgrade_cost, excellent_upgrade_text, excellent_upgrade_detail = enhancement_cost_to_plus9_input("卓越装备", "Excellent Equipment", gold_per_soul, bless_value, "l2_excellent", st.sidebar)
+            excellent_upgrade_cost, excellent_upgrade_text, excellent_upgrade_detail, excellent_upgrade_top10, excellent_upgrade_stage_table = enhancement_cost_to_plus9_input("卓越装备", "Excellent Equipment", gold_per_soul, bless_value, "l2_excellent", st.sidebar)
             excellent_life_rate = st.sidebar.number_input("卓越装备追加至追16生命成功率 Life Success Rate for +16 Option", 0.01, 0.99, 0.50, 0.01, format="%.2f", key="l2_excellent_option16_life_rate")
             excellent_option16_cost = expected_life_jewels_to_target(4, excellent_life_rate) * life_value
             excellent_plus9_option16_value = excellent_base_value + excellent_upgrade_cost + excellent_option16_cost
@@ -907,10 +1185,26 @@ if run_button:
             upstream_l1_df = pd.concat([l1_option_detail, l1_upgrade_detail], ignore_index=True) if not l1_upgrade_detail.empty else l1_option_detail
             st.dataframe(upstream_l1_df, use_container_width=True)
 
+            if not l1_upgrade_stage_table.empty:
+                st.markdown("##### 一代翅膀强化至+9最优策略展开 / Level 1 Wing Upgrade Strategy")
+                st.dataframe(l1_upgrade_stage_table, use_container_width=True)
+
+            if not l1_upgrade_top10.empty:
+                st.markdown("##### 一代翅膀强化至+9成本最低前10策略 / Top 10 Upgrade Strategies")
+                st.dataframe(l1_upgrade_top10, use_container_width=True)
+
         if not medium_material_detail.empty:
             st.markdown("---")
             st.subheader("中级魔晶石材料成本 Medium Magic Stone Material Cost")
             st.dataframe(medium_material_detail, use_container_width=True)
+
+            if not excellent_upgrade_stage_table.empty:
+                st.markdown("##### 卓越装备强化至+9最优策略展开 / Excellent Equipment Upgrade Strategy")
+                st.dataframe(excellent_upgrade_stage_table, use_container_width=True)
+
+            if not excellent_upgrade_top10.empty:
+                st.markdown("##### 卓越装备强化至+9成本最低前10策略 / Top 10 Excellent Equipment Upgrade Strategies")
+                st.dataframe(excellent_upgrade_top10, use_container_width=True)
 
         st.markdown("---")
         st.subheader("二代枚举结果 Level 2 Enumeration Results")
@@ -989,7 +1283,15 @@ with st.expander("📘 使用说明 User Guide", expanded=False):
 
 ---
 
-## 4. 中级魔晶石规则
+## 4. 强化至+9规则
+
+二代上游材料中的 +9 一代翅膀/披风与 +9 卓越装备，均可调用强化 App 的吸收型马尔科夫链核心模型自动计算。
+
+模型会根据灵魂成功率、祝福相对价值，枚举 +0 至 +9 的全部祝福/灵魂使用策略，并选择期望成本最低的策略。
+
+---
+
+## 5. 中级魔晶石规则
 
 中级魔晶石可直接输入价值，也可按合成规则计算：
 
@@ -1000,7 +1302,7 @@ with st.expander("📘 使用说明 User Guide", expanded=False):
 
 ---
 
-## 5. 生命宝石追加
+## 6. 生命宝石追加
 
 模型假设：
 
@@ -1010,7 +1312,7 @@ with st.expander("📘 使用说明 User Guide", expanded=False):
 
 ---
 
-## 6. 免责声明
+## 7. 免责声明
 
 本工具基于用户输入参数进行计算。实际游戏中的合成成功率、市场价格、宝石价值和金币价值可能随服务器、时间及市场环境发生变化。本工具仅提供理论计算结果与决策参考。
 """)
