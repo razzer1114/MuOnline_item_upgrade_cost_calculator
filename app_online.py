@@ -346,7 +346,7 @@ st.caption(
 )
 
 st.caption(
-    "翅膀合成版 Wing Version ：https://muonlinewingsynthesis.streamlit.app/"
+    ""翅膀合成版 Wing Version ：https://muonlinewingsynthesis.streamlit.app/""
 )
 
 st.caption(
