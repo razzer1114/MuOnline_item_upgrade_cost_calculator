@@ -337,16 +337,9 @@ st.set_page_config(
 st.title("奇迹MU装备强化最优策略生成器 （+9 基础版）")
 
 st.title("MU Online Item Upgrade Optimizer (Standard +9)")
-st.title(
-    "尝鲜版 Beta Version (一路到+15 All the way up to +15)：https://muonlinebeta.streamlit.app/"
-)
 
 st.caption(
     "强化尝鲜版（一路到+15）Beta Version (+15)：https://muonlinebeta.streamlit.app/"
-)
-
-st.caption(
-    ""翅膀合成版 Wing Version ：https://muonlinewingsynthesis.streamlit.app/""
 )
 
 st.caption(
